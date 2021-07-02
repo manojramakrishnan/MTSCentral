@@ -8,10 +8,10 @@
 		<version>2.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.innovationstack.mts</groupId>
-	<artifactId>mts-estore</artifactId>
+	<groupId>com.multiplicandin.mts</groupId>
+	<artifactId>mts</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mts-estore</name>
+	<name>mts</name>
 	<description>Building interier and exterior management software</description>
 	<properties>
 		<java.version>1.8</java.version>
