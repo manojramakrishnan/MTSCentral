@@ -1,0 +1,61 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/fav.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container-fluid bg-login">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-12 login-card">
+                    <div class="row">
+                        <div class="col-md-5 detail-part">
+                            <h1>MTS e-Store</h1>
+                            <p>Please use your credentials to login.
+                                If you are not a member, please register. </p>
+                        </div>
+                        <div class="col-md-7 logn-part">
+                          <div class="row">
+                              <div class="col-lg-10 col-md-12 mx-auto">
+                                  <div class="logo-cover">
+                                       <img src="" alt="">
+                                   </div>
+                                    <form th:action="@{/login}" method="POST" class="form-cover">
+                                        <h6>Login Here</h6>
+                                         <input type="text" id="email" name="email" th:placeholder="Email" class="form-control" required=""/>
+                                         <input type="password" th:placeholder="Password" id="password" name="password" class="form-control" required=""/>
+                                         <div class="row form-footer">
+                                             <div class="col-md-6 forget-paswd">
+                                                 <a href="">Forget Password ?</a>    
+                                             </div>
+                                             <div class="col-md-6 button-div">
+                                                 <button class="btn btn-primary" name="submit" id="submit" value="Login" type="submit" th:text="Login">Login</button>
+                                             </div>
+                                         </div>
+                                         </form>
+                                    </div>
+                              </div>
+                          </div>
+                           
+                           
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</html>
