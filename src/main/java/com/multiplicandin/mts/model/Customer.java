@@ -31,15 +31,15 @@ public class Customer {
 
 	@ManyToOne
 	@JoinColumn
-	private Role Role;
+	private Role role;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "customer_role", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-	@ManyToOne
-	@JoinColumn
-	private Store store;
+//	@ManyToOne
+//	@JoinColumn
+//	private Store store;
 	
 	@Column(name = "active")
     private int active;
@@ -54,25 +54,9 @@ public class Customer {
 	@NotEmpty(message = "*Can't be blank")
 	private String name;
 	
-	public Customer(int id, @NotEmpty(message = "*Can't be blank") String email, com.multiplicandin.mts.model.Role role,
-			Set<com.multiplicandin.mts.model.Role> roles, Store store, int active,
-			@NotEmpty(message = "*Can't be blank") String password, @NotEmpty(message = "*Can't be blank") String name,
-			String rePassword) {
-		super();
-		this.id = id;
-		this.email = email;
-		Role = role;
-		this.roles = roles;
-		this.store = store;
-		this.active = active;
-		this.password = password;
-		this.name = name;
-		this.rePassword = rePassword;
-	}
+	
 
-	public Customer() {
-		
-	}
+	
 	@Transient
     private String rePassword;
 	
@@ -92,13 +76,7 @@ public class Customer {
 		this.email = email;
 	}
 
-	public Role getRole() {
-		return Role;
-	}
-
-	public void setRole(Role role) {
-		Role = role;
-	}
+	
 
 	public Set<Role> getRoles() {
 		return roles;
@@ -108,13 +86,13 @@ public class Customer {
 		this.roles = roles;
 	}
 
-	public Store getStore() {
-		return store;
-	}
-
-	public void setStore(Store store) {
-		this.store = store;
-	}
+//	public Store getStore() {
+//		return store;
+//	}
+//
+//	public void setStore(Store store) {
+//		this.store = store;
+//	}
 
 	public String getPassword() {
 		return password;
@@ -144,13 +122,22 @@ public class Customer {
 		this.active = active;
 	}
 
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", email=" + email + ", Role=" + Role + ", roles=" + roles + ", store=" + store
-				+ ", active=" + active + ", password=" + password + ", name=" + name + ", rePassword=" + rePassword
-				+ "]";
+	public Role getRole() {
+		return role;
 	}
 
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", email=" + email + ", role=" + role + ", roles=" + roles + ", active=" + active
+				+ ", password=" + password + ", name=" + name + ", rePassword=" + rePassword + "]";
+	}
+
+	
+	
 
 
 	

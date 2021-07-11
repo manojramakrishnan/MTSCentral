@@ -18,7 +18,7 @@ public class AdminController {
 	@Autowired
 	private CustomerService customerService;
 	
-	  @RequestMapping(value = {"/admin/dashboard"}, method = RequestMethod.POST)
+	  @RequestMapping(value = {"/admin/dashboard"}, method = RequestMethod.GET)
 	    public ModelAndView dashboard(){
 	    	ModelAndView modelAndView = new ModelAndView();
 	    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
