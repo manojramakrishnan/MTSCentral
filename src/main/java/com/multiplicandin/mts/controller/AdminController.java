@@ -60,14 +60,12 @@ public class AdminController {
 	    	}
 	    	else {
 	    		Role role = roleService.findById(1);
-	    		System.out.println(role.getId());
-	    		customers.setRoles(new HashSet<Role>(Arrays.asList(customer.getRole())));
-				customers.setRole(customer.getRole());
-	    		customers.setActive(1);
-	    		customerService.createCustomer(customers);
-	    		modelAndView.addObject("successMessage", "internal user registeration completed");
-	    		modelAndView.addObject("customer", customer);
-	    		modelAndView.setViewName("redirect:/admin/dashboard");
+				customer.setRole(role);
+				customer.setActive(1);
+				customerService.createCustomer(customer);
+				modelAndView.addObject("successMessage", "Internal User registration completed");
+				modelAndView.addObject("customer",customer);
+				modelAndView.setViewName("redirect:/admin/dashboard");
 	    	}
 	    	return modelAndView;
 	  }
