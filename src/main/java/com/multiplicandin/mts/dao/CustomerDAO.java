@@ -14,4 +14,12 @@ public interface CustomerDAO {
 
 	List<Customer> findAllCustomers();
 
+	Customer getOne(Integer id);
+
+	Customer update(Customer customer);
+
+	Customer findById(Integer id);
+
+	void deleteById(Integer id);
+
 }

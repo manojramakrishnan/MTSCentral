@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.multiplicandin.mts.model.Customer;
@@ -39,7 +40,7 @@ public class AdminController {
 			modelAndView.setViewName("admin/dashboard");
 	        return modelAndView;
 	    }
-	  @RequestMapping(value= {"/admin/user/list"}, method = RequestMethod.GET)
+	  @RequestMapping(value= {"/admin/user/list", "/admin/user"}, method = RequestMethod.GET)
 	  public ModelAndView listUser() {
 	    	ModelAndView modelAndView = new ModelAndView();
 	    	List<Customer> customers= customerService.findAllCustomers();
@@ -78,5 +79,42 @@ public class AdminController {
 	    	return modelAndView;
 		  
 	  }
+	  @RequestMapping(value= {"/admin/user/save"}, method= RequestMethod.POST)
+	  public ModelAndView editCustomerDetails(@RequestParam(name="customerId") String customerId, @RequestParam(name="name") String name,
+			  @RequestParam(name="email") String email ) {
+	    	ModelAndView modelAndView = new ModelAndView();
+	    	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
+	    	Customer customer1 = customerService.findCustomerByEmail(auth.getName());
+	    	Customer customer= customerService.getOne(Integer.valueOf(customerId));
+	    	customer.setName(name);
+	    	customer.setEmail(email);
+	    	customerService.update(customer);
+	    	modelAndView.addObject("customer", customer);
+	    	modelAndView.addObject("customername", customer.getName());
+	    	modelAndView.setViewName("redirect:/admin/user");
+	    	return modelAndView;
+	  }
+	  @RequestMapping(value= {"/admin/user/edit"}, method= RequestMethod.POST)
+	  public ModelAndView displayEdit(@RequestParam (name="customerId") String customerId) {
+	    	ModelAndView modelAndView = new ModelAndView();
+	    	Customer customer= customerService.findById(Integer.valueOf(customerId));
+	    	modelAndView.addObject("customer",customer);
+	    	modelAndView.addObject("customerId", customerId);
+	    	modelAndView.addObject("customername", customer.getName());
+	    	modelAndView.setViewName("/admin/user-edit");
+	    	return modelAndView;
+	  }
+	  @RequestMapping(value= {"/admin/user/delete"}, method= RequestMethod.POST)
+	  public ModelAndView deleteCustomer(@RequestParam(name="customerId") String customerId) {
+	    	ModelAndView modelAndView = new ModelAndView();
+	    	customerService.deleteById(Integer.valueOf(customerId));
+	    	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
+	    	Customer customer = customerService.findCustomerByEmail(auth.getName());
+	    	modelAndView.addObject("customername", customer.getName());
+	    	modelAndView.setViewName("redirect:/admin/user");
+	    	return modelAndView;
+	  }
+
+	  
 
 }

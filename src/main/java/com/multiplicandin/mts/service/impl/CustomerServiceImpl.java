@@ -52,5 +52,29 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		return customerDAO.findAllCustomers();
 	}
+
+	@Override
+	public Customer getOne(Integer id) {
+		// TODO Auto-generated method stub
+		return customerDAO.getOne(id);
+	}
+
+	@Override
+	public Customer update(Customer customer) {
+		// TODO Auto-generated method stub
+		return customerDAO.update(customer);
+	}
+
+	@Override
+	public Customer findById(Integer id) {
+		// TODO Auto-generated method stub
+		return customerDAO.findById(id);
+	}
+
+	@Override
+	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
+		customerDAO.deleteById(id);
+	}
 	
 }
