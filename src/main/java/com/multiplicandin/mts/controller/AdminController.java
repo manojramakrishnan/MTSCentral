@@ -107,6 +107,7 @@ public class AdminController {
 	  @RequestMapping(value= {"/admin/user/delete"}, method= RequestMethod.POST)
 	  public ModelAndView deleteCustomer(@RequestParam(name="customerId") String customerId) {
 	    	ModelAndView modelAndView = new ModelAndView();
+	    	
 	    	customerService.deleteById(Integer.valueOf(customerId));
 	    	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
 	    	Customer customer = customerService.findCustomerByEmail(auth.getName());
