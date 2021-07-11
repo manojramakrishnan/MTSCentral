@@ -2,6 +2,7 @@ package com.multiplicandin.mts.service.impl;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -45,4 +46,11 @@ public class CustomerServiceImpl implements CustomerService{
 		return customerDAO.createCustomer(customer);
 	}
 
+	
+	public List<Customer> findAllCustomers() {
+		// TODO Auto-generated method stub
+		
+		return customerDAO.findAllCustomers();
+	}
+	
 }

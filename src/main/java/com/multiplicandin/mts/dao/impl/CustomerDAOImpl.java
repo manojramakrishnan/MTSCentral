@@ -1,5 +1,7 @@
 package com.multiplicandin.mts.dao.impl;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public Customer createCustomer(@Valid Customer customer) {
 		// TODO Auto-generated method stub
 		customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
+		customer.setActive(1);
 		customerRepository.save(customer);
 		return customer;
+	}
+
+	@Override
+	public List<Customer> findAllCustomers() {
+		// TODO Auto-generated method stub
+		return customerRepository.findAll();
 	}
 	
 
