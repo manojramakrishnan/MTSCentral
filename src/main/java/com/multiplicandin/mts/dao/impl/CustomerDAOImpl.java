@@ -1,6 +1,7 @@
 package com.multiplicandin.mts.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -78,8 +79,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	@Transactional
 	public void deleteById(Integer id) {
-		customerRepository.deleteById(id);
+		
+		Customer customer = customerRepository.findCustomerById(id);
+		customer.getRoles().removeAll(customer.getRoles());
+		customerRepository.delete(customer);
 	}
+	
 	
 
 }
