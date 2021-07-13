@@ -49,31 +49,29 @@ public class ProductController {
     	return modelAndView;
     	
 	}
-	@RequestMapping(value={"/admin/products/add"}, method = RequestMethod.POST)
-    public ModelAndView addProduct(@Valid Product product, BindingResult result){
-        ModelAndView modelAndView = new ModelAndView();
-        StoreProduct storeProduct= new StoreProduct(); 
-        if(result.hasErrors()) {
-			modelAndView.setViewName("/admin/add-product.html");
-		}
-        else
-        {
-        	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    		Customer customer = customerService.findCustomerByEmail(auth.getName());
-    		Store store = customer.getStore();
-    		storeProduct.setStore(store);
-    		product=productService.findById(product.getId());
-    		productService.createNewProduct(product);
-    		List<Product> products = productService.findAllByProductId(product);
-            modelAndView.addObject("totalProducts", productService.findAll().size());
-            modelAndView.addObject("outOfStockProducts", productService.findAllOutOfStock().size());
-            List<Product> products2=productService.findAll();
-            modelAndView.addObject("products", products2);
-            modelAndView.addObject("customerFullName", customer.getName());
-    		modelAndView.setViewName("/admin/products");
-        	}
-		return modelAndView;
+	@RequestMapping(value = { "/admin/products/add" }, method = RequestMethod.GET)
+	public ModelAndView productAdd() {
+    	ModelAndView modelAndView = new ModelAndView();
+        Product product = new Product();
+         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.err.println("auth name :: "+auth.getName());
+        Customer customer = customerService.findCustomerByEmail(auth.getName());
+     
+        List<Alert> alerts = alertService.findAllByCustomerId(customer.getId());
+        int alertCount = 0;
+        if(alerts != null) {
+        alertCount = alerts.size();
         }
+        
+
+        modelAndView.addObject("alertCount", alertCount);
+        modelAndView.addObject("alerts", alerts);
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("userFullName", customer.getName());
+
+         modelAndView.setViewName("/admin/add-product");
+        return modelAndView;
+	}
 	@RequestMapping(value="/admin/products/edit", method = RequestMethod.POST)
     public ModelAndView editProduct(@RequestParam(name="productId") String productId) {
         ModelAndView modelAndView = new ModelAndView();

@@ -16,7 +16,7 @@ public interface ProductDAO {
 
 	Product createNewProduct(@Valid Product product);
 
-	List<Product> findAllByProductId(@Valid Product product);
+	List<Product> findAllByProductId(Integer productId);
 
 	Product getOne(Integer id);
 

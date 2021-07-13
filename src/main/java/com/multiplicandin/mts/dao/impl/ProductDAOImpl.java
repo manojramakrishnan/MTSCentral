@@ -48,7 +48,7 @@ public class ProductDAOImpl implements ProductDAO {
 		return productRepository.save(product);
 	}
 	@Override
-	public List<Product> findAllByProductId(@Valid Product product) {
+	public List<Product> findAllByProductId(Integer product) {
 		return productRepository.findAllByProductId(product);
 	}
 	

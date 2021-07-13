@@ -39,8 +39,8 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.createNewProduct(product);
 	}
 	@Override
-	public List<Product> findAllByProductId(@Valid Product product) {
-		return productDAO.findAllByProductId(product);
+	public List<Product> findAllByProductId(Integer productId) {
+		return productDAO.findAllByProductId(productId);
 	}
 	
 	@Override
