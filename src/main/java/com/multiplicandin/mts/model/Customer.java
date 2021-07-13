@@ -38,9 +38,9 @@ public class Customer {
 	@JoinTable(name = "customer_role", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-//	@ManyToOne
-//	@JoinColumn
-//	private Store store;
+	@ManyToOne
+	@JoinColumn
+	private Store store;
 	
 	@Column(name = "active")
     private int active;
@@ -87,13 +87,13 @@ public class Customer {
 		this.roles = roles;
 	}
 
-//	public Store getStore() {
-//		return store;
-//	}
-//
-//	public void setStore(Store store) {
-//		this.store = store;
-//	}
+	public Store getStore() {
+		return store;
+	}
+
+	public void setStore(Store store) {
+		this.store = store;
+	}
 
 	public String getPassword() {
 		return password;
@@ -133,9 +133,12 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", email=" + email + ", role=" + role + ", roles=" + roles + ", active=" + active
-				+ ", password=" + password + ", name=" + name + ", rePassword=" + rePassword + "]";
+		return "Customer [id=" + id + ", email=" + email + ", role=" + role + ", roles=" + roles + ", store=" + store
+				+ ", active=" + active + ", password=" + password + ", name=" + name + ", rePassword=" + rePassword
+				+ "]";
 	}
+
+	
 
 	
 	
