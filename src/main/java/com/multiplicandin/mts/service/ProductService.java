@@ -16,7 +16,7 @@ public interface ProductService {
 
 	public Product createNewProduct(@Valid Product product);
 
-	List<Product> findAllByProductId(@Valid Integer id);
+	Product findAllByProductId(Integer id);
 
 	Product getOne(Integer valueOf);
 

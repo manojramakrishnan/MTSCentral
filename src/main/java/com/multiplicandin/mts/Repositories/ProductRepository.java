@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	Product findProductById(Integer id);
 
 	@Query("SELECT p FROM Product p where p.id = :productId")
-	List<Product> findAllByProductId(Integer product);
+	Product findAllByProductId(Integer productId);
 
 	@Query("SELECT p FROM Product p where p.id = :productId")
 	List<Product> findAllByProductId(@Valid Product product);

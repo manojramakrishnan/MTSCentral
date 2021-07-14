@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.createNewProduct(product);
 	}
 	@Override
-	public List<Product> findAllByProductId(Integer productId) {
+	public Product findAllByProductId(Integer productId) {
 		return productDAO.findAllByProductId(productId);
 	}
 	

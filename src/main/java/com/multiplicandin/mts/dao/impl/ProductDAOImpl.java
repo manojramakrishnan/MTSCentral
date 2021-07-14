@@ -21,6 +21,7 @@ public class ProductDAOImpl implements ProductDAO {
     private EntityManager entityManager;
 	
 	private ProductRepository productRepository;
+	
 	public ProductDAOImpl(@Qualifier("productRepository") ProductRepository productRepository) {
 		this.productRepository=productRepository;
 		
@@ -48,8 +49,8 @@ public class ProductDAOImpl implements ProductDAO {
 		return productRepository.save(product);
 	}
 	@Override
-	public List<Product> findAllByProductId(Integer product) {
-		return productRepository.findAllByProductId(product);
+	public Product findAllByProductId(Integer productId) {
+		return productRepository.findAllByProductId(productId);
 	}
 	
 	@Override

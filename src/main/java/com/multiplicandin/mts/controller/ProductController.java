@@ -84,11 +84,11 @@ public class ProductController {
         {
         	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		Customer customer = customerService.findCustomerByEmail(auth.getName());
-    		Store store = customer.getStore();
-			storeProduct.setStore(store);
-    		product=productService.findById(product.getId());
-    		productService.createNewProduct(product);
-    		List<Product> products = productService.findAllByProductId(product);
+//    		Store store = customer.getStore();
+//			storeProduct.setStore(store);
+//    		product=productService.findById(product.getId());
+    		Product product1 = productService.createNewProduct(product);
+    		Product products = productService.findAllByProductId(product1.getId());
             modelAndView.addObject("totalProducts", productService.findAll().size());
             modelAndView.addObject("outOfStockProducts", productService.findAllOutOfStock().size());
             List<Product> products1=productService.findAll();
