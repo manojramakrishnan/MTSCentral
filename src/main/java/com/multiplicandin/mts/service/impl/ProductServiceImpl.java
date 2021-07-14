@@ -60,7 +60,15 @@ public class ProductServiceImpl implements ProductService {
 		
 		 productDAO.deleteById(id);
 		
+	
+}
+
+	@Override
+	public List<Product> findAllByProductId(@Valid Product product) {
+		// TODO Auto-generated method stub
+		return productDAO.fidnAllByProductId(product);
 	}
+
 
 
 }

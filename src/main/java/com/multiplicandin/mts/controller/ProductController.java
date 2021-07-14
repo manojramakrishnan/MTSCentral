@@ -72,6 +72,33 @@ public class ProductController {
          modelAndView.setViewName("/admin/add-product");
         return modelAndView;
 	}
+	
+	@RequestMapping(value={"/admin/products/add"}, method = RequestMethod.POST)
+    public ModelAndView addProduct(@Valid Product product, BindingResult result){
+        ModelAndView modelAndView = new ModelAndView();
+        StoreProduct storeProduct=new StoreProduct();
+        if(result.hasErrors()) {
+			modelAndView.setViewName("/admin/add-product.html");
+		}
+        else
+        {
+        	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		Customer customer = customerService.findCustomerByEmail(auth.getName());
+    		Store store = customer.getStore();
+			storeProduct.setStore(store);
+    		product=productService.findById(product.getId());
+    		productService.createNewProduct(product);
+    		List<Product> products = productService.findAllByProductId(product);
+            modelAndView.addObject("totalProducts", productService.findAll().size());
+            modelAndView.addObject("outOfStockProducts", productService.findAllOutOfStock().size());
+            List<Product> products1=productService.findAll();
+            modelAndView.addObject("products", products1);
+            modelAndView.addObject("customerFullName", customer.getName());
+    		modelAndView.setViewName("/admin/products");
+        	}
+		return modelAndView;
+        }
+	
 	@RequestMapping(value="/admin/products/edit", method = RequestMethod.POST)
     public ModelAndView editProduct(@RequestParam(name="productId") String productId) {
         ModelAndView modelAndView = new ModelAndView();

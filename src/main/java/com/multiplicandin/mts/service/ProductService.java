@@ -24,6 +24,10 @@ public interface ProductService {
 
 	void deleteById(Integer valueOf);
 
+	List<Product> findAllByProductId(@Valid Product product);
+
+
+
 	
 
 }

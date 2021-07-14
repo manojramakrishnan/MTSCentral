@@ -24,4 +24,9 @@ public interface ProductDAO {
 
 	void deleteById(Integer id);
 
+	List<Product> fidnAllByProductId(@Valid Product product);
+
+
+
+
 }

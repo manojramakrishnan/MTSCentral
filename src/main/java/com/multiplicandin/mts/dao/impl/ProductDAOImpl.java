@@ -78,4 +78,12 @@ public class ProductDAOImpl implements ProductDAO {
 		
 	}
 
+	@Override
+	public List<Product> fidnAllByProductId(@Valid Product product) {
+		// TODO Auto-generated method stub
+		return productRepository.findAllByProductId(product);
+	}
+
+	
+
 }
