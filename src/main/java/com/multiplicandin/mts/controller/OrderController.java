@@ -25,7 +25,7 @@ public class OrderController {
 	private OrderService orderService;
 	
 	@RequestMapping (value = {"admin/orderlist"}, method=RequestMethod.GET)
-	public ModelAndView productScreen() {
+	public ModelAndView orderScreen() {
 		ModelAndView modelAndView=new ModelAndView();
     	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
     	Customer customer = customerService.findCustomerByEmail(auth.getName());
@@ -36,5 +36,16 @@ public class OrderController {
     	modelAndView.setViewName("/admin/orders.html");
     	return modelAndView;
     	
+	}
+	@RequestMapping (value = {"admin/order/add"}, method=RequestMethod.GET)
+	public ModelAndView createOrderLandingScreen() {
+		ModelAndView modelAndView=new ModelAndView();
+        CustomerOrder customerOrder=new CustomerOrder();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerService.findCustomerByEmail(auth.getName());
+        modelAndView.addObject("order",customerOrder);
+        modelAndView.setViewName("/admin/add-order");
+		return modelAndView;
+        
 	}
 }
