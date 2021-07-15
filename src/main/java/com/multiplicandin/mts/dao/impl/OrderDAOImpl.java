@@ -2,6 +2,8 @@ package com.multiplicandin.mts.dao.impl;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +25,16 @@ private OrderRepository orderRepository;
 		// TODO Auto-generated method stub
 		return orderRepository.findAll();
 	}
+	@Override
+	public CustomerOrder createNewOrder(@Valid CustomerOrder customerOrder) {
+		// TODO Auto-generated method stub
+		return orderRepository.save(customerOrder);
+	}
+	@Override
+	public CustomerOrder findAllByOrderId(Integer orderId) {
+		// TODO Auto-generated method stub
+		return orderRepository.findAllByOrderId(orderId);
+	}
+	
 
 }
