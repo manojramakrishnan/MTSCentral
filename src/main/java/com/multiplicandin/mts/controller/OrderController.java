@@ -36,14 +36,14 @@ public class OrderController {
 	@Autowired
 	private AlertService alertService;
 	
-	@RequestMapping (value = {"admin/orderlist"}, method=RequestMethod.GET)
+	@RequestMapping (value = {"admin/orders"}, method=RequestMethod.GET)
 	public ModelAndView orderScreen() {
 		ModelAndView modelAndView=new ModelAndView();
     	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
     	Customer customer = customerService.findCustomerByEmail(auth.getName());
     	modelAndView.addObject("totalOrders",orderService.findAll().size());
     	List<CustomerOrder> customerOrder= orderService.findAll();
-    	modelAndView.addObject("orders",customerOrder);
+    	modelAndView.addObject("customerOrder",customerOrder);
     	modelAndView.addObject("customerName", customer.getName());
     	modelAndView.setViewName("/admin/orders.html");
     	return modelAndView;
@@ -147,7 +147,7 @@ public class OrderController {
 
          
 
-         modelAndView.setViewName("redirect:/admin/orderlist");
+         modelAndView.setViewName("redirect:/admin/orders");
 
         return modelAndView;
 
@@ -162,8 +162,9 @@ public class OrderController {
         Customer customer = customerService.findCustomerByEmail(auth.getName());
 
         modelAndView.addObject("customerFullName", customer.getName());
+        
 
-        modelAndView.setViewName("redirect:/admin/orderlist");
+        modelAndView.setViewName("redirect:/admin/orders");
         
         return modelAndView;
     }

@@ -135,15 +135,15 @@
                                         <p class="text-primary m-0 font-weight-bold">Edit Details</p>
                                     </div>
                                     <div class="card-body">
-                                        <form autocomplete="off" action="#" th:action="@{/admin/orders/save(orderId=${order.id})}"
-                                              th:object="${order}" method="post" class="form-horizontal"
+                                        <form autocomplete="off" action="#" th:action="@{/admin/orders/save(orderId=${customerOrder.id})}"
+                                              th:object="${customerOrder}" method="post" class="form-horizontal"
                                               role="form">
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <div class="form-group"><label for="id"><strong>ID</strong></label><input class="form-control" type="text" th:field="${order.id}" th:value="${order.id}" name="orderId" disabled></div>
-                                                    <div class="form-group"><label for="orderDate"><strong>Order Date</strong></label><input class="form-control" type="text" th:field="${order.orderDate}" th:value="${order.orderDate}" name="orderDate" ></div>
-                                                    <div class="form-group"><label for="orderStatus"><strong>Order Status</strong></label><input class="form-control" type="text" th:field="${order.orderStatus}" th:value="${order.orderStatus}" name="orderStatus"></div>
-                                                    <div class="form-group"><label for="orderTotal"><strong>Order Total</strong></label><input class="form-control" type="text" th:field="${order.orderTotal}" th:value="${order.orderTotal}" name="orderTotal"></div>
+                                                    <div class="form-group"><label for="id"><strong>ID</strong></label><input class="form-control" type="text" th:field="${customerOrder.id}" th:value="${customerOrder.id}" name="orderId" disabled></div>
+                                                    <div class="form-group"><label for="orderDate"><strong>Order Date</strong></label><input class="form-control" type="text" th:field="${customerOrder.orderDate}" th:value="${customerOrder.orderDate}" name="orderDate" ></div>
+                                                    <div class="form-group"><label for="orderStatus"><strong>Order Status</strong></label><input class="form-control" type="text" th:field="${customerOrder.orderStatus}" th:value="${customerOrder.orderStatus}" name="orderStatus"></div>
+                                                    <div class="form-group"><label for="orderTotal"><strong>Order Total</strong></label><input class="form-control" type="text" th:field="${customerOrder.orderTotal}" th:value="${customerOrder.orderTotal}" name="orderTotal"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save</button></div>
