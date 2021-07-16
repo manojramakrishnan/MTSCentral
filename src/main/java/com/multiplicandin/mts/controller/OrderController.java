@@ -63,7 +63,7 @@ public class OrderController {
 		return modelAndView;
         
 	}
-	@RequestMapping(value={"/admin/order/add"}, method = RequestMethod.POST)
+	@RequestMapping(value={"/admin/orders/add"}, method = RequestMethod.POST)
     public ModelAndView addOrder(@Valid CustomerOrder customerOrder , BindingResult result){
         ModelAndView modelAndView = new ModelAndView();
         if(result.hasErrors()) {
@@ -73,15 +73,20 @@ public class OrderController {
         {
         	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		Customer customer = customerService.findCustomerByEmail(auth.getName());
-
+    		customerOrder.setActive(true);
+        	customerOrder.setStore(customer.getStore());
+        	customerOrder.setSubmitted(true);
     		CustomerOrder customerOrder1 = orderService.createNewOrder(customerOrder);
     		CustomerOrder customerOrders = orderService.findAllByOrderId(customerOrder1.getId());
             modelAndView.addObject("totalOrders", orderService.findAll().size());
             List<CustomerOrder> customerOrders1 =orderService.findAll();
-            modelAndView.addObject("order", customerOrders1);
+            
+            modelAndView.addObject("orders", customerOrders1);
             modelAndView.addObject("customerFullName", customer.getName());
     		modelAndView.setViewName("/admin/orders");
-        	}
-		return modelAndView;
+        	
+        	
+        }
+        	return modelAndView;
         }
 }
