@@ -12,4 +12,7 @@ public interface OrderRepository extends JpaRepository<CustomerOrder,Integer> {
 	@Query("SELECT o FROM CustomerOrder o where o.id = :orderId")
 	CustomerOrder findAllByOrderId(Integer orderId);
 
+
+	CustomerOrder findOrderById(Integer id);
+
 }

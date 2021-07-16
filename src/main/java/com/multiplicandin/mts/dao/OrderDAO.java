@@ -14,5 +14,13 @@ public interface OrderDAO {
 
 	CustomerOrder findAllByOrderId(Integer orderId);
 
+	CustomerOrder findById(Integer id);
+
+	CustomerOrder getOne(Integer id);
+
+	CustomerOrder update(CustomerOrder customerOrder);
+
+	void deleteById(Integer id);
+
 
 }

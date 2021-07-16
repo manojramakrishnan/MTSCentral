@@ -35,4 +35,28 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.findAllByOrderId(orderId);
 	}
 
+	@Override
+	public CustomerOrder findById(Integer id) {
+		// TODO Auto-generated method stub
+		return orderDAO.findById(id);
+	}
+
+	@Override
+	public CustomerOrder getOne(Integer id) {
+		// TODO Auto-generated method stub
+		return orderDAO.getOne(id);
+	}
+
+	@Override
+	public CustomerOrder update(CustomerOrder customerOrder) {
+		// TODO Auto-generated method stub
+		return orderDAO.update(customerOrder);
+	}
+
+	@Override
+	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
+		orderDAO.deleteById(id);
+	}
+
 }

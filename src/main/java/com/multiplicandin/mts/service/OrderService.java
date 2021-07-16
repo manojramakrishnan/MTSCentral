@@ -14,4 +14,12 @@ public interface OrderService {
 
 	CustomerOrder findAllByOrderId(Integer id);
 
+	CustomerOrder findById(Integer id);
+
+	CustomerOrder getOne(Integer id);
+
+	CustomerOrder update(CustomerOrder customerOrder);
+
+	void deleteById(Integer id);
+
 }
