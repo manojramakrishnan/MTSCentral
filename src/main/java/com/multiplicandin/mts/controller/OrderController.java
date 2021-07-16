@@ -45,7 +45,7 @@ public class OrderController {
     	return modelAndView;
     	
 	}
-	@RequestMapping (value = {"admin/order/add"}, method=RequestMethod.GET)
+	@RequestMapping (value = {"admin/orders/add"}, method=RequestMethod.GET)
 	public ModelAndView createOrderLandingScreen() {
 		ModelAndView modelAndView=new ModelAndView();
         CustomerOrder customerOrder=new CustomerOrder();
@@ -58,7 +58,7 @@ public class OrderController {
         }
         modelAndView.addObject("alertCount", alertCount);
         modelAndView.addObject("alerts", alerts);
-        modelAndView.addObject("order",customerOrder);
+        modelAndView.addObject("customerOrder",customerOrder);
         modelAndView.setViewName("/admin/add-order");
 		return modelAndView;
         
@@ -66,27 +66,28 @@ public class OrderController {
 	@RequestMapping(value={"/admin/orders/add"}, method = RequestMethod.POST)
     public ModelAndView addOrder(@Valid CustomerOrder customerOrder , BindingResult result){
         ModelAndView modelAndView = new ModelAndView();
-        if(result.hasErrors()) {
-			modelAndView.setViewName("/admin/add-order.html");
-		}
-        else
-        {
+
+        	
         	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		Customer customer = customerService.findCustomerByEmail(auth.getName());
+    		System.out.println("auth"+auth.getName());
+    		System.out.println("store id"+customer.getStore().getId());
     		customerOrder.setActive(true);
         	customerOrder.setStore(customer.getStore());
+        	customerOrder.setCustomer(customer);
+        	customerOrder.getCustomer().setId(customer.getId());
+        	customerOrder.getStore().setId(customer.getStore().getId());
         	customerOrder.setSubmitted(true);
     		CustomerOrder customerOrder1 = orderService.createNewOrder(customerOrder);
     		CustomerOrder customerOrders = orderService.findAllByOrderId(customerOrder1.getId());
             modelAndView.addObject("totalOrders", orderService.findAll().size());
             List<CustomerOrder> customerOrders1 =orderService.findAll();
             
-            modelAndView.addObject("orders", customerOrders1);
+            modelAndView.addObject("customerOrder", customerOrders1);
             modelAndView.addObject("customerFullName", customer.getName());
     		modelAndView.setViewName("/admin/orders");
         	
         	
-        }
-        	return modelAndView;
+    		return modelAndView;
         }
 }

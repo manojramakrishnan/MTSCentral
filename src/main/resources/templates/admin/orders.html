@@ -105,7 +105,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <a href="order/add" class="btn btn-primary" role="button">Add Order</a>
+                        <a href="orders/add" class="btn btn-primary" role="button">Add Order</a>
                     </div>
                 </div>
                 <br>
@@ -122,11 +122,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="order : ${orders}">
+                            <tr th:each="order : ${customerOrder}">
                                 <td><span th:text="${order.id}"></span></td>
-                                <td><span th:text="${order.order_date}"></span></td>
-                                <td><span th:text="${order.order_status}"></span></td>
-                                <td><span th:text="${order.order_total}"></span></td>   
+                                <td><span th:text="${order.orderDate}"></span></td>
+                                <td><span th:text="${order.orderStatus}"></span></td>
+                                <td><span th:text="${order.orderTotal}"></span></td>   
                                  <td>
                                     <span>
                                         <form method="POST" th:action="@{/admin/orders/edit(orderId=${order.id})}">

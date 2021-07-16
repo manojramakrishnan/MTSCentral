@@ -132,6 +132,7 @@ public class CustomerOrder {
 
     private BigDecimal orderTotal;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date shippingDate;
 
     @ManyToOne
