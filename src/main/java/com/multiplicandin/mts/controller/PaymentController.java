@@ -39,7 +39,7 @@ public class PaymentController {
     	Customer customer = customerService.findCustomerByEmail(auth.getName());
     	modelAndView.addObject("totalPayments",paymentService.findAll().size());
     	List<PaymentMethod> paymentMethod= paymentService.findAll();
-    	modelAndView.addObject("PaymentMethod",paymentMethod);
+    	modelAndView.addObject("paymentMethods",paymentMethod);
     	modelAndView.addObject("customerName", customer.getName());
     	modelAndView.setViewName("/admin/payment.html");
     	return modelAndView;
@@ -64,7 +64,9 @@ public class PaymentController {
         	
         	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		Customer customer = customerService.findCustomerByEmail(auth.getName());
-    		
+    		paymentMethod.setCustomer(customer);
+    		//paymentMethod.getCustomer().
+    		System.out.println("customerId"+ customer.getId());
     		PaymentMethod paymentMethod1 = paymentService.createNewPayment(paymentMethod);
     		PaymentMethod paymentMethods = paymentService.findAllByPaymentId(paymentMethod1.getId());
             modelAndView.addObject("totalPayments", paymentService.findAll().size());
@@ -81,7 +83,7 @@ public class PaymentController {
 	@RequestMapping(value="/admin/payment/edit", method = RequestMethod.POST)
     public ModelAndView editayment(@RequestParam(name="paymentId") String paymentId) {
         ModelAndView modelAndView = new ModelAndView();
-        PaymentMethod paymentMethod = paymentService.findById(Integer.valueOf(paymentId));
+        PaymentMethod paymentMethod = paymentService.findAllByPaymentId(Integer.valueOf(paymentId));
         
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -98,5 +100,56 @@ public class PaymentController {
         return modelAndView;
 
 	}
+	@RequestMapping(value = "/admin/payment/save", method = RequestMethod.POST)
+    public ModelAndView savePaymentDetails(@RequestParam(name="paymentId") String paymentId,
+                                        @RequestParam(name="creditCardNumber") String creditCardNumber,
+                                        @RequestParam(name="expirationMonth") Integer expirationMonth,
+                                        @RequestParam(name="expirationYear") Integer expirationYear,
+                                        @RequestParam(name="cardOwner") String cardOwner,
+                                        @RequestParam(name="cardSecurityCode") Integer cardSecurityCode)
+                               	        
+                                       {
+		
+		ModelAndView modelAndView = new ModelAndView();
+
+        
+         
+         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+         Customer customer = customerService.findCustomerByEmail(auth.getName());
+         
+         
+         PaymentMethod paymentMethod = paymentService.getOne(Integer.valueOf(paymentId));
+         paymentMethod.setCardOwner(cardOwner);
+         paymentMethod.setCardSecurityCode(cardSecurityCode);
+         paymentMethod.setCreditCardNumber(creditCardNumber);
+         paymentMethod.setCustomer(customer);
+         paymentMethod.setExpirationMonth(expirationMonth);
+         paymentMethod.setExpirationYear(expirationYear);
+        
+         paymentService.update(paymentMethod);
+         modelAndView.addObject("customer", customer);
+         modelAndView.addObject("customerFullName", customer.getName());
+
+         
+
+         modelAndView.setViewName("redirect:/admin/payment");
+
+        return modelAndView;
+    }
+	@RequestMapping(value="/payment/delete", method = RequestMethod.POST)
+    public ModelAndView deletePayment (@RequestParam(name="paymentId")String paymentId) {
+		ModelAndView modelAndView = new ModelAndView();
+        paymentService.deleteById(Integer.valueOf(paymentId));
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerService.findCustomerByEmail(auth.getName());
+
+        modelAndView.addObject("customerFullName", customer.getName());
+
+        modelAndView.setViewName("redirect:/admin/payment");
+        
+        return modelAndView;
+    }
+	
 	
 }	

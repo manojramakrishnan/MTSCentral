@@ -14,6 +14,11 @@ public interface PaymentDAO {
 
 	PaymentMethod findAllByPaymentId(Integer id);
 
-	PaymentMethod findById(Integer id);
+	PaymentMethod getOne(Integer id);
+
+	PaymentMethod update(PaymentMethod paymentMethod);
+
+	void deleteById(Integer id);
+
 
 }

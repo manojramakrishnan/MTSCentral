@@ -2,6 +2,9 @@ package com.multiplicandin.mts.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ import com.multiplicandin.mts.model.PaymentMethod;
 public class PaymentDAOImpl implements PaymentDAO {
 
 	private PayementRepository paymentRepository;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
 	
 	@Autowired
 	public PaymentDAOImpl(@Qualifier("paymentRepository") PayementRepository paymentRepository) {
@@ -46,9 +52,35 @@ public class PaymentDAOImpl implements PaymentDAO {
 
 
 	@Override
-	public PaymentMethod findById(Integer id) {
+	public PaymentMethod getOne(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		return paymentRepository.getOne(id);
 	}
+
+
+	@Override
+	@Transactional
+	public PaymentMethod update(PaymentMethod paymentMethod) {
+		// TODO Auto-generated method stub
+		PaymentMethod payMethod= entityManager.find(PaymentMethod.class, paymentMethod.getId());
+		payMethod.setCardOwner(paymentMethod.getCardOwner());
+		payMethod.setCardSecurityCode(paymentMethod.getCardSecurityCode());
+		payMethod.setCreditCardNumber(paymentMethod.getCreditCardNumber());
+		payMethod.setCustomer(paymentMethod.getCustomer());
+		payMethod.setExpirationMonth(paymentMethod.getExpirationMonth());
+		payMethod.setExpirationYear(paymentMethod.getExpirationYear());
+		entityManager.merge(payMethod);
+		return payMethod;
+	}
+
+
+	@Override
+	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
+		paymentRepository.deleteById(id);
+	}
+
+
+	
 
 }

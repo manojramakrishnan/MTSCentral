@@ -14,6 +14,11 @@ public interface PaymentService {
 
 	PaymentMethod findAllByPaymentId(Integer id);
 
-	PaymentMethod findById(Integer id);
+	PaymentMethod getOne(Integer valueOf);
+
+	PaymentMethod update(PaymentMethod paymentMethod);
+
+	void deleteById(Integer valueOf);
+
 
 }

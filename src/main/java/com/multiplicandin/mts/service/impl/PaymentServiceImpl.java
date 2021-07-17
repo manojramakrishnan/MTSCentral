@@ -36,9 +36,23 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public PaymentMethod findById(Integer id) {
+	public PaymentMethod getOne(Integer id) {
 		// TODO Auto-generated method stub
-		return paymentDAO.findById(id);
+		return paymentDAO.getOne(id);
 	}
+
+	@Override
+	public PaymentMethod update(PaymentMethod paymentMethod) {
+		// TODO Auto-generated method stub
+		return paymentDAO.update(paymentMethod);
+	}
+
+	@Override
+	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
+		paymentDAO.deleteById(id);
+	}
+
+	
 
 }

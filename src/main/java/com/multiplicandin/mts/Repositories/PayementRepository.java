@@ -12,4 +12,6 @@ public interface PayementRepository extends JpaRepository<PaymentMethod,Integer>
 	@Query("SELECT p FROM PaymentMethod p where p.id = :paymentId")
 	PaymentMethod findAllPaymentId(Integer paymentId);
 
+
+
 }
