@@ -22,34 +22,12 @@
 </head>
 
 <body>
-<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-    <div class="container"><a class="navbar-brand logo" href="/" style="font-size: 27px;">&nbsp;<i class="fas fa-store" style="color: rgb(0,123,255);font-size: 27px;"></i>&nbsp;MTS e-Store</a>
-        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item" role="presentation"><a class="nav-link" href="home" style="color: rgb(0,0,0);">Home</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="faq" style="color: rgb(0,0,0);">FAQ</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="about" style="color: rgb(0,0,0);">ABOUT US</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="settings" style="font-weight: bold;color: #007bff;"><i class="fa fa-user-circle"></i>&nbsp;<span th:text="${userFullName}"></span></a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
 <main class="page contact-us-page">
     <section class="clean-block clean-form dark" style="padding-bottom: 1px;">
         <div class="row">
             <div class="col">
                 <div id="wrapper">
-                    <div id="sidebar-wrapper">
-                        <ul class="sidebar-nav">
-                            <li class="sidebar-brand"> </li>
-                            <li> <a href="home" style="color: rgb(255,255,255);"><i class="fas fa-home" style="font-size: 15px;"></i>&nbsp; Home</a><a href="create-order" style="color: rgb(255,255,255);"><i class="fas fa-plus" style="font-size: 15px;"></i>&nbsp; Create Order</a>
-                                <a href="orders" style="color: rgb(255,255,255);"><i class="fas fa-box-open" style="font-size: 15px;"></i>&nbsp; My Orders</a><a href="payment" style="color: rgb(255,255,255);"><i class="far fa-credit-card" style="font-size: 15px;"></i>&nbsp; Payment</a><a href="settings" style="color: rgb(255,255,255);"><i class="fas fa-user-cog" style="font-size: 15px;"></i>&nbsp; Settings</a><a href="#" style="color: rgb(255,255,255);"><i class="fas fa-sign-out-alt" style="font-size: 15px;"></i>&nbsp; Log-out</a></li>
-                            <li>
-                            </li>
-                            <li> </li>
-                        </ul>
-                    </div>
+                   
                     <div class="page-content-wrapper">
                         <div class="container-fluid" style="padding-top: 19px;"><a class="btn btn-link" role="button" id="menu-toggle" href="#menu-toggle"><i class="fa fa-bars" style="color: #999999;"></i></a>
                             <div class="row">
@@ -62,7 +40,7 @@
                             </div>
                         </div>
                         <div class="container-fluid" style="padding-top: 20px;background-color: #ffffff;">
-                            <form style="height: 625px;" autocomplete="off" action="#" th:action="@{/admin/add-payment}" th:object="${paymentMethod}" method="post" class="form-horizontal" role="form">
+                            <form style="height: 625px;" autocomplete="off" action="#" th:action="@{/admin/payment/add}" th:object="${paymentMethod}" method="post" class="form-horizontal" role="form">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="card-title">Add New Credit Card</h4>
