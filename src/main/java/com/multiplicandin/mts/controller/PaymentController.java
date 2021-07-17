@@ -52,8 +52,8 @@ public class PaymentController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.findCustomerByEmail(auth.getName());
       
-        modelAndView.addObject("paymentMethods",paymentMethod);
-        modelAndView.setViewName("/admin/payment.html");
+        modelAndView.addObject("paymentMethod",paymentMethod);
+        modelAndView.setViewName("/admin/add-payment.html");
 		return modelAndView;
           }
 	
