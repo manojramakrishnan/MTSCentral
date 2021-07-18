@@ -84,6 +84,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 		customer.getRoles().removeAll(customer.getRoles());
 		customerRepository.delete(customer);
 	}
+
+	@Override
+	@Transactional
+	public Customer changePassword(Customer customer1) {
+		Customer persistedCustomer=entityManager.find(Customer.class,customer1.getId());
+		persistedCustomer.setPassword(customer1.getPassword());
+		entityManager.merge(persistedCustomer);
+		return persistedCustomer;
+	}
 	
 	
 

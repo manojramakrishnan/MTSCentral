@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.multiplicandin.mts.dao.CustomerDAO;
@@ -23,6 +24,9 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
 	private RoleDAO roleDAO;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 	
 	@Override
 	public Customer findCustomerByEmail(String email) {
@@ -75,6 +79,30 @@ public class CustomerServiceImpl implements CustomerService{
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		customerDAO.deleteById(id);
+	}
+
+	@Override
+	public Customer changePassword(@Valid Customer customer, Customer customer1) {
+		boolean isValid = passwordvalidityCheck(customer,customer1);
+		if(isValid) {
+			System.out.println("inside valid if");
+			customer1.setPassword(encoder.encode(customer.getRePassword()));
+			Customer cust = customerDAO.changePassword(customer1);
+			return cust;
+		}
+		return null;
+	}
+
+	private boolean passwordvalidityCheck(@Valid Customer customer, Customer customer1) {
+		boolean isMatches = encoder.matches(customer.getPassword(), customer1.getPassword());
+		System.out.println("newPassword"+isMatches);
+		System.out.println();
+		if(!isMatches) {
+			return true;
+		}
+		else {
+		return false;
+		}
 	}
 	
 }

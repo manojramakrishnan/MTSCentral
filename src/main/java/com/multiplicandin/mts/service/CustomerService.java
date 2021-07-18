@@ -21,4 +21,6 @@ public interface CustomerService {
 	Customer findById(Integer id);
 
 	void deleteById(Integer id);
+
+	Customer changePassword(@Valid Customer customer, Customer customer1);
 }

@@ -22,4 +22,6 @@ public interface CustomerDAO {
 
 	void deleteById(Integer id);
 
+	Customer changePassword(Customer customer1);
+
 }

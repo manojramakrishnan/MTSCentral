@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Product Home page</title>
+    <title>Estimate Home page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/pharmacy/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
@@ -75,7 +75,7 @@
 <!--             </nav> -->
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mb-0">Store Products</h3>
+                    <h3 class="text-dark mb-0">Estimates</h3>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
@@ -107,7 +107,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <a href="storeproducts/add" class="btn btn-primary" role="button">Add Store Product</a>
+                        <a href="estimates/add" class="btn btn-primary" role="button">Add Estimate</a>
                     </div>
                 </div>
                 <br>
@@ -116,33 +116,38 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Brand</th>
+                                <th>Size</th>
+                                <th>Size Unit</th>
+                                <th>Total</th>
                                 <th>Price</th>
-                                <th>Stock</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="storeProduct : ${storeProducts}">
-                                <td><span th:text="${storeProduct.id}"></span></td>
-                                <td><span th:text="${storeProduct.product.product_name}"></span></td>
-                                <td><span th:text="${storeProduct.price}"></span></td>
-                                <td><span th:text="${storeProduct.quantity}"></span></td>
+                            <tr th:each="estimate : ${estimates}">
+                                <td><span th:text="${estimate.id}"></span></td>
+                                <td><span th:text="${estimate.brand}"></span></td>
+                                <td><span th:text="${estimate.size}"></span></td>
+                                <td><span th:text="${estimate.sizeUnit}"></span></td>  
+                                  <td><span th:text="${estimate.total}"></span></td> 
+                                <td><span th:text="${estimate.price}"></span></td> 
+                                 <td>
+                                    <span>
+                                        <form method="POST" th:action="@{/admin/estimates/edit(estimateId=${estimate.id})}">
+                                            <input type="submit" value="Edit" class="btn btn-outline-primary" />
+                                        </form>
+                                    </span>
+                                </td>                   
                                 <td>
                                     <span>
-                                        <form method="POST" th:action="@{/storeproducts/delete(storeProductId=${storeProduct.id})}">
+                                        <form method="POST" th:action="@{/estimates/delete(estimateId=${estimate.id})}">
                                             <input type="submit" value="Delete" class="btn btn-outline-danger" />
                                         </form>
                                     </span>
                                 </td>
-                                <td>
-                                    <span>
-                                        <form method="POST" th:action="@{/admin/storeproducts/edit(storeProductId=${storeProduct.id})}">
-                                            <input type="submit" value="Edit" class="btn btn-outline-primary" />
-                                        </form>
-                                    </span>
-                                </td>
+                               
                             </tr>
                         </tbody>
                     </table>

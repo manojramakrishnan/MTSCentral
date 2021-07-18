@@ -178,6 +178,7 @@ public class Estimate {
 				+ ", contactNumber=" + contactNumber + ", employee=" + employee + ", address=" + address + ", store="
 				+ store + ", customer=" + customer + ", product=" + product + "]";
 	}
+	public Estimate() {}
 
 	public Estimate(int id, String brand, int size, int sizeUnit, int total, int price, String deliveryPoint,
 			String place, int contactNumber, String employee, String address, Store store, Customer customer,

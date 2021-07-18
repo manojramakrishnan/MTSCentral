@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Edit Product - AyurMed Assist</title>
+    <title>Edit Estimate - MTS e-Store</title>
     <link rel="stylesheet" type="text/css" th:href="@{/pharmacy/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
@@ -73,7 +73,7 @@
 <!--                 </div> -->
 <!--             </nav> -->
             <div class="container-fluid">
-                <h3 class="text-dark mb-4">Edit Product</h3>
+                <h3 class="text-dark mb-4">Edit Estimate</h3>
                 <div class="row mb-3">
                     <div class="col-lg-2 offset-lg-0"></div>
                     <div class="col-lg-8">
@@ -111,18 +111,20 @@
                             <div class="col">
                                 <div class="card shadow mb-3">
                                     <div class="card-header py-3">
-                                        <p class="text-primary m-0 font-weight-bold">Store Product Details</p>
+                                        <p class="text-primary m-0 font-weight-bold">Edit Estimate</p>
                                     </div>
                                     <div class="card-body">
-                                        <form autocomplete="off" action="#" th:action="@{/admin/storeproducts/save(storeProductId=${storeProduct.id})}"
-                                              th:object="${storeProduct}" method="post" class="form-horizontal"
+                                        <form autocomplete="off" action="#" th:action="@{/admin/estimates/save(estimateId=${estimate.id})}"
+                                              th:object="${estimate}" method="post" class="form-horizontal"
                                               role="form">
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <div class="form-group"><label for="id"><strong>ID</strong></label><input class="form-control" type="text" th:field="${storeProduct.id}" th:value="${storeProduct.id}" name="storeProductId" disabled></div>
-                                                    <div class="form-group"><label for="product"><strong>Product Name</strong></label><input class="form-control" type="text" th:field="${storeProduct.product.product_name}" th:value="${storeProduct.product.product_name}" name="productName" disabled></div>
-                                                    <div class="form-group"><label for="quantity"><strong>Quantity</strong></label><input class="form-control" type="text" th:field="${storeProduct.quantity}" th:value="${storeProduct.quantity}" name="productQuantity"></div>
-                                                    <div class="form-group"><label for="price"><strong>Price</strong></label><input class="form-control" type="text" th:field="${storeProduct.price}" th:value="${storeProduct.price}" name="productPrice"></div>
+                                                    <div class="form-group"><label for="id"><strong>ID</strong></label><input class="form-control" type="text" th:field="${estimate.id}" th:value="${estimate.id}" name="estimateId" disabled></div>
+                                                    <div class="form-group"><label for="brand"><strong>Brand</strong></label><input class="form-control" type="text" th:field="${estimate.brand}" th:value="${estimate.brand}" name="brand" ></div>
+                                                    <div class="form-group"><label for="size"><strong>Size</strong></label><input class="form-control" type="text" th:field="${estimate.size}" th:value="${estimate.size}" name="size"></div>
+                                                    <div class="form-group"><label for="sizeUnit"><strong>Size Unit</strong></label><input class="form-control" type="text" th:field="${estimate.sizeUnit}" th:value="${estimate.sizeUnit}" name="sizeUnit"></div>
+                                                    <div class="form-group"><label for="total"><strong>Total</strong></label><input class="form-control" type="text" th:field="${estimate.total}" th:value="${estimate.total}" name="total"></div>
+                                                    <div class="form-group"><label for="price"><strong>Price</strong></label><input class="form-control" type="text" th:field="${estimate.price}" th:value="${estimate.price}" name="price"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Save</button></div>
