@@ -93,7 +93,7 @@ public class CustomerServiceImpl implements CustomerService{
 		boolean isValid = samePasswordCheck(customer,customer1);
 		if(isValid) {
 			System.out.println("inside valid if");
-			customer1.setPassword(encoder.encode(customer.getRePassword()));
+			customer1.setPassword(encoder.encode(customer.getNewPassword()));
 			Customer cust = customerDAO.changePassword(customer1);
 			return cust;
 		}
@@ -102,15 +102,15 @@ public class CustomerServiceImpl implements CustomerService{
 
 	private boolean samePasswordCheck(@Valid Customer customer, Customer customer1) {
 		boolean isMatches = encoder.matches(customer.getPassword(), customer1.getPassword());
-		System.out.println("newPassword"+isMatches);
+		System.out.println("oldPassword "+isMatches);
 		System.out.println();
 		if(!isMatches) {
 			System.out.println("matches " +isMatches);
-			return true;
+			return false;
 		}
 	
 		else {
-		return false;
+		return true;
 		}
 	}
 	
