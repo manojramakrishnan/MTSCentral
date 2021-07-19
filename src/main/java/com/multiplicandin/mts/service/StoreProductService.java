@@ -25,4 +25,6 @@ public interface StoreProductService {
 
 	void deleteById(Integer valueOf);
 
+	boolean getMappingData(Integer productId);
+
 }

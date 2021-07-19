@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.multiplicandin.mts.model.Product;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.model.StoreProduct;
 
@@ -20,4 +21,7 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Inte
 	List<StoreProduct> findAllOutOfStock(@Param("scode") Store scode);
 
 	StoreProduct findProductById(Integer id);
+	
+	@Query("SELECT p FROM StoreProduct p where p.product = :productId")
+	StoreProduct getProductById(@Param("productId") Product  productId);
 }

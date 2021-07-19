@@ -43,7 +43,11 @@ public class AdminController {
 	  @RequestMapping(value= {"/admin/user/list", "/admin/user"}, method = RequestMethod.GET)
 	  public ModelAndView listUser() {
 	    	ModelAndView modelAndView = new ModelAndView();
-	    	List<Customer> customers= customerService.findAllCustomers();
+	    	Role role=new Role();
+	    	role.setRole("admin");
+	    	role.setId(3);
+	    	List<Customer> customers= customerService.findAllCustomers(role);
+	    	modelAndView.addObject("totalRegistrations", customers.size());
 	    	modelAndView.addObject("Customers", customers);
 	    	modelAndView.setViewName("admin/user-list");
 	    	return modelAndView;
@@ -107,10 +111,16 @@ public class AdminController {
 	  @RequestMapping(value= {"/admin/user/delete"}, method= RequestMethod.POST)
 	  public ModelAndView deleteCustomer(@RequestParam(name="customerId") String customerId) {
 	    	ModelAndView modelAndView = new ModelAndView();
-	    	
-	    	customerService.deleteById(Integer.valueOf(customerId));
 	    	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
 	    	Customer customer = customerService.findCustomerByEmail(auth.getName());
+	    	if(customer.getRole().getRole().equals("admin")) {
+	    		customerService.deleteById(Integer.valueOf(customerId));	
+	    	}
+	    	
+	    	
+	    	
+	    	System.out.println("name " +auth.getName());
+	    	
 	    	modelAndView.addObject("customername", customer.getName());
 	    	modelAndView.setViewName("redirect:/admin/user");
 	    	return modelAndView;

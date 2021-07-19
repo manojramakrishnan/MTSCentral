@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.multiplicandin.mts.model.Customer;
+import com.multiplicandin.mts.model.Role;
 
 public interface CustomerDAO {
 
@@ -12,7 +13,7 @@ public interface CustomerDAO {
 
 	Customer createCustomer(@Valid Customer customer);
 
-	List<Customer> findAllCustomers();
+	List<Customer> findAllCustomers(Role role);
 
 	Customer getOne(Integer id);
 

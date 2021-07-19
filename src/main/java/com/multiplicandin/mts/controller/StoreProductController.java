@@ -135,7 +135,7 @@ public class StoreProductController {
 	    		modelAndView.addObject("storeProducts", storeProducts);
 	            modelAndView.addObject("storeName", store.getStore_name());
 	            modelAndView.addObject("customerFullName", customer.getName());
-	    		modelAndView.setViewName("/admin/storeproducts");
+	    		modelAndView.setViewName("redirect:/admin/storeproducts");
 	        	}
 			return modelAndView;
 	        }

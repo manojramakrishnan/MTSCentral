@@ -58,10 +58,10 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	
-	public List<Customer> findAllCustomers() {
+	public List<Customer> findAllCustomers(Role role) {
 		// TODO Auto-generated method stub
 		
-		return customerDAO.findAllCustomers();
+		return customerDAO.findAllCustomers(role);
 	}
 
 	@Override

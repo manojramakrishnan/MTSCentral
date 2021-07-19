@@ -51,4 +51,10 @@ public class StoreProductServiceImpl implements StoreProductService{
 		storeProductDAO.deleteById(id);
 		
 	}
+
+	@Override
+	public boolean getMappingData(Integer productId) {
+		// TODO Auto-generated method stub
+		return storeProductDAO.isMappingExist(productId);
+	}
 }

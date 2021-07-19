@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.multiplicandin.mts.Repositories.StoreProductRepository;
 import com.multiplicandin.mts.dao.StoreProductDAO;
+import com.multiplicandin.mts.model.Product;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.model.StoreProduct;
 
@@ -67,5 +68,21 @@ private StoreProductRepository storeProductRepository;
 	public void deleteById(Integer id) {
 		storeProductRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public boolean isMappingExist(Integer productId) {
+		// TODO Auto-generated method stub
+		Product product=new Product();
+		product.setId(productId);
+		StoreProduct storeProduct=storeProductRepository.getProductById(product);
+		System.out.println("storeProductName " + storeProduct.getId());
+		if(storeProduct !=null) {
+			return true;
+		}
+		else {
+		return false;
+	
+		}
 	}
 }

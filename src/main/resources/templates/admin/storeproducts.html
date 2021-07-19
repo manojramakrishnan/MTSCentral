@@ -131,18 +131,19 @@
                                 <td><span th:text="${storeProduct.quantity}"></span></td>
                                 <td>
                                     <span>
-                                        <form method="POST" th:action="@{/storeproducts/delete(storeProductId=${storeProduct.id})}">
-                                            <input type="submit" value="Delete" class="btn btn-outline-danger" />
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span>
                                         <form method="POST" th:action="@{/admin/storeproducts/edit(storeProductId=${storeProduct.id})}">
                                             <input type="submit" value="Edit" class="btn btn-outline-primary" />
                                         </form>
                                     </span>
                                 </td>
+                                <td>
+                                    <span>
+                                        <form method="POST" th:action="@{/storeproducts/delete(storeProductId=${storeProduct.id})}">
+                                            <input type="submit" value="Delete" class="btn btn-outline-danger" />
+                                        </form>
+                                    </span>
+                                </td>
+                                
                             </tr>
                         </tbody>
                     </table>

@@ -25,4 +25,6 @@ public interface StoreProductDAO {
 
 	void deleteById(Integer id);
 
+	boolean isMappingExist(Integer productId);
+
 }

@@ -22,10 +22,14 @@ import com.multiplicandin.mts.model.StoreProduct;
 import com.multiplicandin.mts.service.AlertService;
 import com.multiplicandin.mts.service.CustomerService;
 import com.multiplicandin.mts.service.ProductService;
+import com.multiplicandin.mts.service.StoreProductService;
 
 @Controller
 public class ProductController {
 
+	@Autowired
+	private StoreProductService storeProductService;
+	
 	@Autowired
 	private CustomerService customerService;
 	
@@ -94,7 +98,7 @@ public class ProductController {
             List<Product> products1=productService.findAll();
             modelAndView.addObject("products", products1);
             modelAndView.addObject("customerFullName", customer.getName());
-    		modelAndView.setViewName("/admin/products");
+    		modelAndView.setViewName("redirect:/admin/products");
         	}
 		return modelAndView;
         }
@@ -161,7 +165,15 @@ public class ProductController {
 	@RequestMapping(value="/products/delete", method = RequestMethod.POST)
     public ModelAndView deleteProduct (@RequestParam(name="productId")String productId) {
 		ModelAndView modelAndView = new ModelAndView();
-        productService.deleteById(Integer.valueOf(productId));
+		boolean mappingExist=storeProductService.getMappingData(Integer.valueOf(productId));
+        if(mappingExist) {
+        
+        }
+        else {
+        	productService.deleteById(Integer.valueOf(productId));
+        }
+		
+        
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.findCustomerByEmail(auth.getName());

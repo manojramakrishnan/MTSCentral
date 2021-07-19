@@ -18,7 +18,29 @@ import com.multiplicandin.mts.service.CustomerService;
 		@Autowired
 		private CustomerService customerService;
 		
-	
+		@RequestMapping(value = { "/index" }, method = RequestMethod.GET)
+		public ModelAndView homeScreen() {
+			System.err.println("inside default get method");
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("/index.html");
+			return modelAndView;
+		}
+		
+		@RequestMapping(value = { "/aboutus" }, method = RequestMethod.GET)
+		public ModelAndView aboutUsScreen() {
+			System.err.println("inside aboutus get method");
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("/aboutus.html");
+			return modelAndView;
+		}
+		
+		@RequestMapping(value = { "/contact" }, method = RequestMethod.GET)
+		public ModelAndView contactScreen() {
+			System.err.println("inside contact get method");
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("/contact.html");
+			return modelAndView;
+		}
 
 	@RequestMapping(value= {"/register" }, method=RequestMethod.GET)
 	public ModelAndView register() {

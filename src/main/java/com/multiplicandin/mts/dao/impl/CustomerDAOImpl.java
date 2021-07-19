@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.multiplicandin.mts.Repositories.CustomerRepository;
 import com.multiplicandin.mts.dao.CustomerDAO;
 import com.multiplicandin.mts.model.Customer;
+import com.multiplicandin.mts.model.Role;
 
 @Component("customerDAO")
 public class CustomerDAOImpl implements CustomerDAO {
@@ -48,9 +49,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<Customer> findAllCustomers() {
+	public List<Customer> findAllCustomers(Role role) {
 		// TODO Auto-generated method stub
-		return customerRepository.findAll();
+		return customerRepository.findAllWithoutAdminRole(role);
 	}
 
 	@Override
