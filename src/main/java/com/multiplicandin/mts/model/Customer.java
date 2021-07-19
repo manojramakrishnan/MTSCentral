@@ -56,8 +56,17 @@ public class Customer {
 	private String name;
 	
 	
-
+	@Transient
+    private String newPassword;
 	
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
 	@Transient
     private String rePassword;
 	
@@ -134,10 +143,31 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", email=" + email + ", role=" + role + ", roles=" + roles + ", store=" + store
-				+ ", active=" + active + ", password=" + password + ", name=" + name + ", rePassword=" + rePassword
-				+ "]";
+				+ ", active=" + active + ", password=" + password + ", name=" + name + ", newPassword=" + newPassword
+				+ ", rePassword=" + rePassword + "]";
 	}
 
+	public Customer() {
+		
+	}
+
+	public Customer(int id, @NotEmpty(message = "*Can't be blank") String email, Role role, Set<Role> roles,
+			Store store, int active, @NotEmpty(message = "*Can't be blank") String password,
+			@NotEmpty(message = "*Can't be blank") String name, String newPassword, String rePassword) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.role = role;
+		this.roles = roles;
+		this.store = store;
+		this.active = active;
+		this.password = password;
+		this.name = name;
+		this.newPassword = newPassword;
+		this.rePassword = rePassword;
+	}
+
+	
 	
 
 	

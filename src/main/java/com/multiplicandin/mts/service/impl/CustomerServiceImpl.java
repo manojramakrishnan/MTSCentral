@@ -12,13 +12,18 @@ import org.springframework.stereotype.Service;
 
 import com.multiplicandin.mts.dao.CustomerDAO;
 import com.multiplicandin.mts.dao.RoleDAO;
+import com.multiplicandin.mts.dao.StoreDAO;
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.Role;
+import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.service.CustomerService;
 
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService{
 
+	@Autowired
+	private StoreDAO storeDAO;
+	
 	@Autowired
 	private CustomerDAO customerDAO;
 	
@@ -42,10 +47,12 @@ public class CustomerServiceImpl implements CustomerService{
 			customer.setRole(customer.getRole());
 
 		} else {
-
+			Store store=storeDAO.getStoreId();
+			customer.setStore(store);
 			Role customerRole = roleDAO.findById(1);
 			customer.setRoles(new HashSet<Role>(Arrays.asList(customerRole)));
 			customer.setRole(customerRole);
+			
 		}
 		return customerDAO.createCustomer(customer);
 	}
@@ -83,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public Customer changePassword(@Valid Customer customer, Customer customer1) {
-		boolean isValid = passwordvalidityCheck(customer,customer1);
+		boolean isValid = samePasswordCheck(customer,customer1);
 		if(isValid) {
 			System.out.println("inside valid if");
 			customer1.setPassword(encoder.encode(customer.getRePassword()));
@@ -93,13 +100,15 @@ public class CustomerServiceImpl implements CustomerService{
 		return null;
 	}
 
-	private boolean passwordvalidityCheck(@Valid Customer customer, Customer customer1) {
+	private boolean samePasswordCheck(@Valid Customer customer, Customer customer1) {
 		boolean isMatches = encoder.matches(customer.getPassword(), customer1.getPassword());
 		System.out.println("newPassword"+isMatches);
 		System.out.println();
 		if(!isMatches) {
+			System.out.println("matches " +isMatches);
 			return true;
 		}
+	
 		else {
 		return false;
 		}

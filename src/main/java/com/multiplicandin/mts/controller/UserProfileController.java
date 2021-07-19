@@ -33,12 +33,14 @@ public class UserProfileController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println("post email "+auth.getName());
         Customer customer1 = customerService.findCustomerByEmail(auth.getName());
+        System.out.println("oldPassword  "+ customer.getPassword());
+        System.out.println("newPassword "+ customer.getRePassword());
 //        customer.setId(customer1.getId());
         Customer updatedCustomer = customerService.changePassword(customer,customer1);
         System.out.println("updated id"+updatedCustomer.getId());
         md.addObject("customer",updatedCustomer);
         
-        md.setViewName("/admin/changepassword.html");
+        md.setViewName("/admin/dashboard.html");
         return md;
 	}
 	@RequestMapping(value={"/admin/changepassword"}, method = RequestMethod.GET)
