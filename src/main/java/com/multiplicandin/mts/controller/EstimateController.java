@@ -113,7 +113,7 @@ public class EstimateController {
             List<Estimate> estimates1=estimateService.findAll();
             modelAndView.addObject("estimates", estimates1);
             modelAndView.addObject("customerFullName", customer.getName());
-    		modelAndView.setViewName("/admin/estimates.html");
+    		modelAndView.setViewName("redirect:/admin/estimates");
         	}
 		return modelAndView;
         }

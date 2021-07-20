@@ -74,7 +74,7 @@ public class PaymentController {
             
             modelAndView.addObject("paymentMethod", paymentMethods1);
             modelAndView.addObject("customerFullName", customer.getName());
-    		modelAndView.setViewName("/admin/payment");
+    		modelAndView.setViewName("redirect:/admin/payment");
         	
         	
     		return modelAndView;

@@ -89,7 +89,7 @@ public class OrderController {
             
             modelAndView.addObject("customerOrder", customerOrders1);
             modelAndView.addObject("customerFullName", customer.getName());
-    		modelAndView.setViewName("/admin/orders");
+    		modelAndView.setViewName("redirect:/admin/orders");
         	
         	
     		return modelAndView;
