@@ -2,7 +2,9 @@ package com.multiplicandin.mts.controller;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -23,6 +25,7 @@ import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.service.AlertService;
 import com.multiplicandin.mts.service.CustomerService;
 import com.multiplicandin.mts.service.OrderService;
+import com.multiplicandin.mts.util.service.UtilService;
 
 @Controller
 public class OrderController {
@@ -35,6 +38,9 @@ public class OrderController {
 	
 	@Autowired
 	private AlertService alertService;
+	
+	@Autowired
+	private UtilService utilService;
 	
 	@RequestMapping (value = {"admin/orders"}, method=RequestMethod.GET)
 	public ModelAndView orderScreen() {
@@ -169,6 +175,16 @@ public class OrderController {
         return modelAndView;
     }
 
-
-
+	@RequestMapping (value = {"admin/createPdf"}, method=RequestMethod.GET)
+	public ModelAndView createPdf(@Valid CustomerOrder customerOrder) {
+		Set<String> fieldNames= new HashSet<>();
+		fieldNames.add("Id");
+		fieldNames.add("OrderDate");
+		fieldNames.add("OrderStatus");
+		fieldNames.add("OrderTotal");
+		
+	
+		
+		utilService.createPdf(customerOrder,"orders",fieldNames);
+	}
 }
