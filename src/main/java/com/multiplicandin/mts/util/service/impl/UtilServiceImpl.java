@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
 
@@ -21,14 +22,20 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.multiplicandin.mts.model.Customer;
+import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.util.service.UtilService;
 
 @Service("utilService")
 public class UtilServiceImpl implements UtilService {
 
 	@Override
-	public boolean createPdf(List pdf, ServletContext context,String moduleName,Set<String> fieldNames) {
-		// TODO Auto-generated method stub
+	public boolean createPdf(Modules modules, ServletContext context) {
+		
+		return createCustomerPdf(modules.getCustomer(),context);
+		
+	}
+	private boolean createCustomerPdf(List<Customer> customer, ServletContext context) {
 		Document document=new Document(PageSize.A4, 15, 15, 45, 30);
 		try {
 			String filePath=context.getRealPath("/resources/reports");
@@ -37,10 +44,10 @@ public class UtilServiceImpl implements UtilService {
 			if(!exists) {
 				new File(filePath).mkdirs();
 			}
-			PdfWriter writer=PdfWriter.getInstance(document, new FileOutputStream(file+"/"+moduleName+".pdf"));
+			PdfWriter writer=PdfWriter.getInstance(document, new FileOutputStream(file+"/"+"customers"+".pdf"));
 			document.open();
 			Font mainFont=FontFactory.getFont("Arial",10,BaseColor.BLACK);
-			Paragraph paragraph=new Paragraph("All "+ moduleName,mainFont);
+			Paragraph paragraph=new Paragraph("All Customers",mainFont);
 			paragraph.setAlignment(Element.ALIGN_CENTER);
 			paragraph.setIndentationLeft(50);
 			paragraph.setIndentationRight(50);
@@ -54,27 +61,22 @@ public class UtilServiceImpl implements UtilService {
 			Font tableBody=FontFactory.getFont("Arial",9,BaseColor.BLACK);
 			float[] columnWidths= {2f,2f,2f,2f};
 			table.setWidths(columnWidths);
-			Font tableHeader=FontFactory.getFont("Arial",10,BaseColor.BLACK);
-			Font tableBody=FontFactory.getFont("Arial",9,BaseColor.BLACK);
-			float[] columnWidths= {2f,2f,2f,2f};
-			table.setWidths(columnWidths);
-			
-			PdfPCell firstName=new PdfPCell(new Paragraph("First Name",tableHeader));
-			firstName.setBorderColor(BaseColor.BLACK);
-			firstName.setPaddingLeft(10);
-			firstName.setHorizontalAlignment(Element.ALIGN_CENTER);
-			firstName.setVerticalAlignment(Element.ALIGN_CENTER);
-			firstName.setBackgroundColor(BaseColor.GRAY);
-			firstName.setExtraParagraphSpace(5f);
-			table.addCell(firstName);
-			PdfPCell lastName=new PdfPCell(new Paragraph("Last Name",tableHeader));
-			lastName.setBorderColor(BaseColor.BLACK);
-			lastName.setPaddingLeft(10);
-			lastName.setHorizontalAlignment(Element.ALIGN_CENTER);
-			lastName.setVerticalAlignment(Element.ALIGN_CENTER);
-			lastName.setBackgroundColor(BaseColor.GRAY);
-			lastName.setExtraParagraphSpace(5f);
-			table.addCell(lastName);
+			PdfPCell customerId=new PdfPCell(new Paragraph("Customer Id",tableHeader));
+			customerId.setBorderColor(BaseColor.BLACK);
+			customerId.setPaddingLeft(10);
+			customerId.setHorizontalAlignment(Element.ALIGN_CENTER);
+			customerId.setVerticalAlignment(Element.ALIGN_CENTER);
+			customerId.setBackgroundColor(BaseColor.GRAY);
+			customerId.setExtraParagraphSpace(5f);
+			table.addCell(customerId);
+			PdfPCell name=new PdfPCell(new Paragraph("Name",tableHeader));
+			name.setBorderColor(BaseColor.BLACK);
+			name.setPaddingLeft(10);
+			name.setHorizontalAlignment(Element.ALIGN_CENTER);
+			name.setVerticalAlignment(Element.ALIGN_CENTER);
+			name.setBackgroundColor(BaseColor.GRAY);
+			name.setExtraParagraphSpace(5f);
+			table.addCell(name);
 			PdfPCell email=new PdfPCell(new Paragraph("Email",tableHeader));
 			email.setBorderColor(BaseColor.BLACK);
 			email.setPaddingLeft(10);
@@ -83,32 +85,25 @@ public class UtilServiceImpl implements UtilService {
 			email.setBackgroundColor(BaseColor.GRAY);
 			email.setExtraParagraphSpace(5f);
 			table.addCell(email);
-			PdfPCell phoneNumber=new PdfPCell(new Paragraph("Phone Number",tableHeader));
-			phoneNumber.setBorderColor(BaseColor.BLACK);
-			phoneNumber.setPaddingLeft(10);
-			phoneNumber.setHorizontalAlignment(Element.ALIGN_CENTER);
-			phoneNumber.setVerticalAlignment(Element.ALIGN_CENTER);
-			phoneNumber.setBackgroundColor(BaseColor.GRAY);
-			phoneNumber.setExtraParagraphSpace(5f);
-			table.addCell(phoneNumber);
-			for(Employee employee: employees) {
-				PdfPCell firstNameValue=new PdfPCell(new Paragraph(employee.getFirstName(),tableBody));
-				firstNameValue.setBorderColor(BaseColor.BLACK);
-				firstNameValue.setPaddingLeft(10);
-				firstNameValue.setHorizontalAlignment(Element.ALIGN_CENTER);
-				firstNameValue.setVerticalAlignment(Element.ALIGN_CENTER);
-				firstNameValue.setBackgroundColor(BaseColor.WHITE);
-				firstNameValue.setExtraParagraphSpace(5f);
-				table.addCell(firstNameValue);
-				PdfPCell lastNameValue=new PdfPCell(new Paragraph(employee.getLastName(),tableBody));
-				lastNameValue.setBorderColor(BaseColor.BLACK);
-				lastNameValue.setPaddingLeft(10);
-				lastNameValue.setHorizontalAlignment(Element.ALIGN_CENTER);
-				lastNameValue.setVerticalAlignment(Element.ALIGN_CENTER);
-				lastNameValue.setBackgroundColor(BaseColor.WHITE);
-				lastNameValue.setExtraParagraphSpace(5f);
-				table.addCell(lastNameValue);
-				PdfPCell emailValue=new PdfPCell(new Paragraph(employee.getEmail(),tableBody));
+			
+			for(Customer customers: customer) {
+				PdfPCell customerIdValue=new PdfPCell(new Paragraph(String.valueOf(customers.getId()),tableBody));
+				customerIdValue.setBorderColor(BaseColor.BLACK);
+				customerIdValue.setPaddingLeft(10);
+				customerIdValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				customerIdValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				customerIdValue.setBackgroundColor(BaseColor.WHITE);
+				customerIdValue.setExtraParagraphSpace(5f);
+				table.addCell(customerIdValue);
+				PdfPCell nameValue=new PdfPCell(new Paragraph(customers.getName(),tableBody));
+				nameValue.setBorderColor(BaseColor.BLACK);
+				nameValue.setPaddingLeft(10);
+				nameValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				nameValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				nameValue.setBackgroundColor(BaseColor.WHITE);
+				nameValue.setExtraParagraphSpace(5f);
+				table.addCell(nameValue);
+				PdfPCell emailValue=new PdfPCell(new Paragraph(customers.getEmail(),tableBody));
 				emailValue.setBorderColor(BaseColor.BLACK);
 				emailValue.setPaddingLeft(10);
 				emailValue.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -116,16 +111,7 @@ public class UtilServiceImpl implements UtilService {
 				emailValue.setBackgroundColor(BaseColor.WHITE);
 				emailValue.setExtraParagraphSpace(5f);
 				table.addCell(emailValue);
-				PdfPCell phoneValue=new PdfPCell(new Paragraph(employee.getPhoneNumber(),tableBody));
-				phoneValue.setBorderColor(BaseColor.BLACK);
-				phoneValue.setPaddingLeft(10);
-				phoneValue.setHorizontalAlignment(Element.ALIGN_CENTER);
-				
-				phoneValue.setVerticalAlignment(Element.ALIGN_CENTER);
-				phoneValue.setBackgroundColor(BaseColor.WHITE);
-				phoneValue.setExtraParagraphSpace(5f);
-				table.addCell(phoneValue);
-			}
+					}
 			document.add(table);
 			document.close();
 			writer.close();
@@ -133,13 +119,12 @@ public class UtilServiceImpl implements UtilService {
 		}catch(Exception e) {
 			return false;
 		}
-	
-		
-		
-		
-		return false;
-		}
+
+	}
+
+	}
 
 	
 
-}
+
+

@@ -5,10 +5,16 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import com.multiplicandin.mts.model.Customer;
+import com.multiplicandin.mts.model.Modules;
 
 public interface UtilService {
 
-	boolean createPdf(List pdf, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+	boolean createPdf(Modules modules, ServletContext context);
+
+
 
 
 

@@ -94,6 +94,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 		entityManager.merge(persistedCustomer);
 		return persistedCustomer;
 	}
+
+	@Override
+	public List<Customer> findAll() {
+		// TODO Auto-generated method stub
+		return customerRepository.findAll();
+	}
 	
 	
 

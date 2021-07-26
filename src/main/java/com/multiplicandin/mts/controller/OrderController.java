@@ -175,16 +175,5 @@ public class OrderController {
         return modelAndView;
     }
 
-	@RequestMapping (value = {"admin/createPdf"}, method=RequestMethod.GET)
-	public ModelAndView createPdf(@Valid CustomerOrder customerOrder) {
-		Set<String> fieldNames= new HashSet<>();
-		fieldNames.add("Id");
-		fieldNames.add("OrderDate");
-		fieldNames.add("OrderStatus");
-		fieldNames.add("OrderTotal");
-		
 	
-		
-		utilService.createPdf(customerOrder,"orders",fieldNames);
-	}
 }

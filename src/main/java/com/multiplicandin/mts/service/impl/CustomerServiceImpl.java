@@ -113,5 +113,11 @@ public class CustomerServiceImpl implements CustomerService{
 		return true;
 		}
 	}
+
+	@Override
+	public List<Customer> findAll() {
+		// TODO Auto-generated method stub
+		return customerDAO.findAll();
+	}
 	
 }

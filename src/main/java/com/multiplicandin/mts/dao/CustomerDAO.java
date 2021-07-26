@@ -25,4 +25,6 @@ public interface CustomerDAO {
 
 	Customer changePassword(Customer customer1);
 
+	List<Customer> findAll();
+
 }
