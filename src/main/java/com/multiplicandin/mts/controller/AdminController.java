@@ -144,11 +144,11 @@ public class AdminController {
 	  @RequestMapping(value="/admin/createPdfForCustomer",method= RequestMethod.GET)
 		public void createPdf(HttpServletRequest request,HttpServletResponse response) {
 			boolean isFlag=false;
-				List<Customer> createPdf=new ArrayList<>();
-				
-				 createPdf=customerService.findAll();
+				List<Customer> customers=new ArrayList<>();
+				System.out.println("inside createpdf");
+				 customers=customerService.findAll();
 				Modules modules=new Modules();
-				modules.setCustomer(createPdf);
+				modules.setCustomer(customers);
 				isFlag=utilService.createPdf(modules,context);
 				 if(isFlag) {
 						String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"customers"+".pdf");
