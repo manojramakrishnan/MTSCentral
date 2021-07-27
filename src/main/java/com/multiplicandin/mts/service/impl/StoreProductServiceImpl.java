@@ -57,4 +57,10 @@ public class StoreProductServiceImpl implements StoreProductService{
 		// TODO Auto-generated method stub
 		return storeProductDAO.isMappingExist(productId);
 	}
+
+	@Override
+	public List<StoreProduct> findAll() {
+		// TODO Auto-generated method stub
+		return storeProductDAO.findAll();
+	}
 }

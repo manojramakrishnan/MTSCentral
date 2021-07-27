@@ -85,4 +85,10 @@ private StoreProductRepository storeProductRepository;
 	
 		}
 	}
+
+	@Override
+	public List<StoreProduct> findAll() {
+		// TODO Auto-generated method stub
+		return storeProductRepository.findAll();
+	}
 }

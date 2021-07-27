@@ -27,4 +27,6 @@ public interface StoreProductDAO {
 
 	boolean isMappingExist(Integer productId);
 
+	List<StoreProduct> findAll();
+
 }

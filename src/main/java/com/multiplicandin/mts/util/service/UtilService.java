@@ -14,7 +14,7 @@ public interface UtilService {
 
 	boolean createPdf(Modules modules, ServletContext context);
 
-
+	public void filedownload(String fullPath, HttpServletResponse response, String fileName);
 
 
 

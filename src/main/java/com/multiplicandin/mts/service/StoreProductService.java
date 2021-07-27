@@ -27,4 +27,6 @@ public interface StoreProductService {
 
 	boolean getMappingData(Integer productId);
 
+	List<StoreProduct> findAll();
+
 }
