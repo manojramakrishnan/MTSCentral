@@ -1,7 +1,11 @@
 package com.multiplicandin.mts.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.Estimate;
+import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.service.AlertService;
 import com.multiplicandin.mts.service.CustomerService;
 import com.multiplicandin.mts.service.EstimateService;
+import com.multiplicandin.mts.util.service.UtilService;
 
 @Controller
 public class EstimateController {
@@ -33,6 +39,13 @@ public class EstimateController {
 	
 	@Autowired
 	private AlertService alertService;
+	
+	@Autowired
+	private ServletContext context;
+	
+	@Autowired
+	private UtilService utilService;
+	
 	
 	@RequestMapping(value={"/admin/estimates"}, method = RequestMethod.GET)
     public ModelAndView estimateListScreen(){
@@ -196,5 +209,20 @@ public class EstimateController {
         
         return modelAndView;
     }
-
+	@RequestMapping(value="/admin/createPdfForEstimate",method= RequestMethod.GET)
+	public void createPdf(HttpServletRequest request,HttpServletResponse response) {
+		boolean isFlag=false;
+			List<Estimate> estimates=new ArrayList<>();
+			System.out.println("inside createpdf");
+			estimates=estimateService.findAll();
+			Modules modules=new Modules();
+			modules.setEstimate(estimates);
+			isFlag=utilService.createPdf(modules,context);
+			 if(isFlag) {
+					String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"estimates"+".pdf");
+					utilService.filedownload(fullPath,response,".pdf");
+				}
+		
+		
+	}
 }
