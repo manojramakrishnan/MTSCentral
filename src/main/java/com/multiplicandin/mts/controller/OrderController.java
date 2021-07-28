@@ -1,11 +1,15 @@
 package com.multiplicandin.mts.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.CustomerOrder;
+import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.service.AlertService;
 import com.multiplicandin.mts.service.CustomerService;
@@ -41,6 +46,12 @@ public class OrderController {
 	
 	@Autowired
 	private UtilService utilService;
+	
+	@Autowired
+	private ServletContext context;
+	
+
+	
 	
 	@RequestMapping (value = {"admin/orders"}, method=RequestMethod.GET)
 	public ModelAndView orderScreen() {
@@ -174,6 +185,22 @@ public class OrderController {
         
         return modelAndView;
     }
+	  @RequestMapping(value="/admin/createPdfForOrder",method= RequestMethod.GET)
+		public void createPdf(HttpServletRequest request,HttpServletResponse response) {
+			boolean isFlag=false;
+				List<CustomerOrder> customerOrders=new ArrayList<>();
+				System.out.println("inside createpdf");
+				customerOrders=orderService.findAll();
+				Modules modules=new Modules();
+				modules.setCustomerOrder(customerOrders);
+				isFlag=utilService.createPdf(modules,context);
+				 if(isFlag) {
+						String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"orders"+".pdf");
+						utilService.filedownload(fullPath,response,".pdf");
+					}
+			
+			
+		}
 
 	
 }

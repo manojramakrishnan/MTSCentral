@@ -1,7 +1,11 @@
 package com.multiplicandin.mts.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.CustomerOrder;
+import com.multiplicandin.mts.model.Estimate;
+import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.model.PaymentMethod;
 import com.multiplicandin.mts.model.Product;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.service.CustomerService;
 import com.multiplicandin.mts.service.PaymentService;
+import com.multiplicandin.mts.util.service.UtilService;
 
 @Controller
 public class PaymentController {
@@ -31,6 +38,13 @@ public class PaymentController {
 	
 	@Autowired
 	private PaymentService paymentService;
+	
+	@Autowired
+	private UtilService utilService;
+	
+	@Autowired
+	private ServletContext context;
+	
 
 	@RequestMapping (value = {"admin/payment"}, method=RequestMethod.GET)
 	public ModelAndView paymentScreen() {
@@ -150,6 +164,21 @@ public class PaymentController {
         
         return modelAndView;
     }
-	
+	@RequestMapping(value="/admin/createPdfForPayment",method= RequestMethod.GET)
+	public void createPdf(HttpServletRequest request,HttpServletResponse response) {
+		boolean isFlag=false;
+			List<PaymentMethod> paymentMethods=new ArrayList<>();
+			System.out.println("inside createpdf");
+			paymentMethods=paymentService.findAll();
+			Modules modules=new Modules();
+			modules.setPaymentMethod(paymentMethods);
+			isFlag=utilService.createPdf(modules,context);
+			 if(isFlag) {
+					String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"payment"+".pdf");
+					utilService.filedownload(fullPath,response,".pdf");
+				}
+		
+		
+	}
 	
 }	
