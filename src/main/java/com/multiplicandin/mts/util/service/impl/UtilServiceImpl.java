@@ -68,18 +68,19 @@ public class UtilServiceImpl implements UtilService {
 	  }
 	@Override
 	public boolean createPdf(Modules modules, ServletContext context) {
-		if(modules.getCustomer() != null) {
+		if(modules.getCustomer().size() > 0) {
+			System.out.println("inside ");
 			return createCustomerPdf(modules.getCustomer(),context);
 
 		}
-		else if (modules.getProduct() != null) {
+		else if (modules.getProduct().size() > 0) {
 			return createProductPdf(modules.getProduct(),context);
 		}
-		else if(modules.getCustomerOrder() != null) {
+		else if(modules.getCustomerOrder().size() > 0) {
 			return createOrderPdf(modules.getCustomerOrder(),context);
-		}else if(modules.getEstimate() !=null) {
+		}else if(modules.getEstimate().size() > 0) {
 			return createEstimatePdf(modules.getEstimate(),context);
-		}else if(modules.getPaymentMethod() !=null) {
+		}else if(modules.getPaymentMethod().size() > 0) {
 			return createPaymentPdf(modules.getPaymentMethod(),context);
 		}
 		else {
