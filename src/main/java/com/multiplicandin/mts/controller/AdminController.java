@@ -31,6 +31,7 @@ import com.multiplicandin.mts.service.RoleService;
 import com.multiplicandin.mts.util.service.UtilService;
 
 
+
 @Controller
 public class AdminController {
 
@@ -152,34 +153,23 @@ public class AdminController {
 				isFlag=utilService.createPdf(modules,context);
 				 if(isFlag) {
 						String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"customers"+".pdf");
-						filedownload(fullPath,response,".pdf");
+						utilService.filedownload(fullPath,response,".pdf");
 					}
 			
 			
 		}
-	  private void filedownload(String fullPath, HttpServletResponse response, String fileName) {
-			// TODO Auto-generated method stub
-			File file=new File(fullPath);
-			final int BUFFER_SIZE=4096;
-			if(file.exists()) {
-				try {
-					FileInputStream inputStream=new FileInputStream(file);
-					String mimeType=context.getMimeType(fullPath);
-					response.setContentType(mimeType);
-					response.setHeader("content-disposition","attachment;fileName="+ fileName);
-					OutputStream outputStream=response.getOutputStream();
-					byte[] buffer=new byte[BUFFER_SIZE];
-					int bytesRead= -1;
-					while((bytesRead=inputStream.read(buffer))!= -1){
-						outputStream.write(buffer,0,bytesRead);
-					}
-					inputStream.close();
-					outputStream.close();
-					file.delete();
-				}catch(Exception e){
-					e.printStackTrace();
-				}
+	  @RequestMapping(value="/admin/createExcelForCustomer",method= RequestMethod.GET)
+	  public void create(HttpServletRequest request,HttpServletResponse response) {
+		  boolean isFlag=false;
+		  List<Customer> customers= new ArrayList<>();
+		  customers=customerService.findAll();
+		  Modules modules=new Modules();
+		  modules.setCustomer(customers);
+		  isFlag=utilService.createExcel(modules,context);
+			if(isFlag) {
+				String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"customers"+".xls");
+			utilService.filedownload(fullPath,response,".xls");
 			}
-		
-	  }
+		}
+
 }

@@ -180,5 +180,18 @@ public class PaymentController {
 		
 		
 	}
-	
+	@RequestMapping(value="/admin/createExcelForPayment",method= RequestMethod.GET)
+	  public void create(HttpServletRequest request,HttpServletResponse response) {
+		  boolean isFlag=false;
+		  List<PaymentMethod> paymentMethods= new ArrayList<>();
+		  paymentMethods=paymentService.findAll();
+		  Modules modules=new Modules();
+		  modules.setPaymentMethod(paymentMethods);
+		  isFlag=utilService.createExcel(modules,context);
+			if(isFlag) {
+				String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"payment"+".xls");
+			utilService.filedownload(fullPath,response,".xls");
+			}
+		}
+
 }	

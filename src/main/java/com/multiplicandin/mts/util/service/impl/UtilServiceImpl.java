@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +48,6 @@ public class UtilServiceImpl implements UtilService {
 	
 
 	 public void filedownload(String fullPath, HttpServletResponse response, String fileName) {
-			// TODO Auto-generated method stub
 			File file=new File(fullPath);
 			final int BUFFER_SIZE=4096;
 			if(file.exists()) {
@@ -767,6 +772,146 @@ public class UtilServiceImpl implements UtilService {
 	}
 
 
+	}
+	@Override
+	public boolean createExcel(Modules modules, ServletContext context) {
+		if(modules.getCustomer().size() > 0) {
+			System.out.println("inside ");
+			return createCustomerExcel(modules.getCustomer(),context);
+
+		}
+//		else if (modules.getProduct().size() > 0) {
+//			return createProductExcel(modules.getProduct(),context);
+//		}
+//		else if(modules.getCustomerOrder().size() > 0) {
+//			return createOrderExcel(modules.getCustomerOrder(),context);
+//		}else if(modules.getEstimate().size() > 0) {
+//			return createEstimateExcel(modules.getEstimate(),context);
+//		}else if(modules.getPaymentMethod().size() > 0) {
+//			return createPaymentExcel(modules.getPaymentMethod(),context);
+//		}
+	else {
+			return createStoreProductExcel(modules.getStoreProduct(),context);
+		}
+			
+	
+			
+		
+	}
+
+	
+	
+	private boolean createCustomerExcel(List<Customer> customer, ServletContext context2) {
+		// TODO Auto-generated method stub
+		String filePath=context.getRealPath("/resources/reports");
+		File file=new File(filePath);
+		boolean exists=new File(filePath).exists();
+		if(!exists) {
+			new File(filePath).mkdirs();
+		}
+		try {
+			FileOutputStream outputStream=new FileOutputStream(file+"/"+"customers"+".xls");
+			HSSFWorkbook workbook=new HSSFWorkbook();
+			HSSFSheet workSheet=workbook.createSheet("Customers");
+			workSheet.setDefaultColumnWidth(30);
+			HSSFCellStyle headerCellStyle=workbook.createCellStyle();
+			headerCellStyle.setFillBackgroundColor(HSSFColor.BLUE.index);
+			headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			HSSFRow headerRow = workSheet.createRow(0);
+			HSSFCell customerId = headerRow.createCell(0);
+			customerId.setCellValue("Customer Id");
+			customerId.setCellStyle(headerCellStyle);
+			HSSFCell Name = headerRow.createCell(1);
+			Name.setCellValue("Name");
+			Name.setCellStyle(headerCellStyle);
+			HSSFCell email = headerRow.createCell(2);
+			email.setCellValue("Email");
+			email.setCellStyle(headerCellStyle);
+			int i=1;
+			for(Customer customers : customer) {
+				HSSFRow bodyRow=workSheet.createRow(i);
+				HSSFCellStyle bodyCellStyle=workbook.createCellStyle();
+				bodyCellStyle.setFillBackgroundColor(HSSFColor.WHITE.index);
+				HSSFCell customerIdValue=bodyRow.createCell(0);
+				customerIdValue.setCellValue(customers.getId());
+				customerIdValue.setCellStyle(bodyCellStyle);
+				HSSFCell NameValue=bodyRow.createCell(1);
+				NameValue.setCellValue(customers.getName());
+				NameValue.setCellStyle(bodyCellStyle);
+				HSSFCell emailValue=bodyRow.createCell(2);
+				emailValue.setCellValue(customers.getEmail());
+				emailValue.setCellStyle(bodyCellStyle);
+				i++;
+				
+			}
+			workbook.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+					
+		
+	}
+
+	private boolean createStoreProductExcel(List<StoreProduct> storeProduct, ServletContext context2) {
+		// TODO Auto-generated method stub
+		String filePath=context.getRealPath("/resources/reports");
+		File file=new File(filePath);
+		boolean exists=new File(filePath).exists();
+		if(!exists) {
+			new File(filePath).mkdirs();
+		}
+		try {
+			FileOutputStream outputStream=new FileOutputStream(file+"/"+"Storeproducts"+".xls");
+			HSSFWorkbook workbook=new HSSFWorkbook();
+			HSSFSheet workSheet=workbook.createSheet("Storeproducts");
+			workSheet.setDefaultColumnWidth(30);
+			HSSFCellStyle headerCellStyle=workbook.createCellStyle();
+			headerCellStyle.setFillBackgroundColor(HSSFColor.BLUE.index);
+			headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			HSSFRow headerRow = workSheet.createRow(0);
+			HSSFCell storeProductId = headerRow.createCell(0);
+			storeProductId.setCellValue("StoreProduct Id ");
+			storeProductId.setCellStyle(headerCellStyle);
+			HSSFCell Name = headerRow.createCell(1);
+			Name.setCellValue("Name");
+			Name.setCellStyle(headerCellStyle);
+			HSSFCell price = headerRow.createCell(2);
+			price.setCellValue("Price");
+			price.setCellStyle(headerCellStyle);
+			HSSFCell stock = headerRow.createCell(3);
+			stock.setCellValue("Stock");
+			stock.setCellStyle(headerCellStyle);
+			int i=1;
+			for(StoreProduct storeProducts : storeProduct) {
+				HSSFRow bodyRow=workSheet.createRow(i);
+				HSSFCellStyle bodyCellStyle=workbook.createCellStyle();
+				bodyCellStyle.setFillBackgroundColor(HSSFColor.WHITE.index);
+				HSSFCell storeProductIdValue=bodyRow.createCell(0);
+				storeProductIdValue.setCellValue(storeProducts.getId());
+				storeProductIdValue.setCellStyle(bodyCellStyle);
+				HSSFCell NameValue=bodyRow.createCell(1);
+				NameValue.setCellValue(storeProducts.getProduct().getProduct_name());
+				NameValue.setCellStyle(bodyCellStyle);
+				HSSFCell priceValue=bodyRow.createCell(2);
+				priceValue.setCellValue(storeProducts.getPrice());
+				priceValue.setCellStyle(bodyCellStyle);
+				HSSFCell stockValue=bodyRow.createCell(3);
+				stockValue.setCellValue(storeProducts.getQuantity());
+				stockValue.setCellStyle(bodyCellStyle);
+				i++;
+				
+			}
+			workbook.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+		
 	}
 	
 }

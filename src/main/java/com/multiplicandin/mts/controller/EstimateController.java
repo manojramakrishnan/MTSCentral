@@ -225,4 +225,18 @@ public class EstimateController {
 		
 		
 	}
+	 @RequestMapping(value="/admin/createExcelForEstimate",method= RequestMethod.GET)
+	  public void create(HttpServletRequest request,HttpServletResponse response) {
+		  boolean isFlag=false;
+		  List<Estimate> estimates= new ArrayList<>();
+		  estimates=estimateService.findAll();
+		  Modules modules=new Modules();
+		  modules.setEstimate(estimates);
+		  isFlag=utilService.createExcel(modules,context);
+			if(isFlag) {
+				String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"estimates"+".xls");
+			utilService.filedownload(fullPath,response,".xls");
+			}
+		}
+
 }

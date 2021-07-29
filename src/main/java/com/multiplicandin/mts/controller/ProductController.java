@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.Modules;
+import com.multiplicandin.mts.model.PaymentMethod;
 import com.multiplicandin.mts.model.Product;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.model.StoreProduct;
@@ -214,4 +215,18 @@ public class ProductController {
 
 
 	}
+	@RequestMapping(value="/admin/createExcelForProduct",method= RequestMethod.GET)
+	  public void create(HttpServletRequest request,HttpServletResponse response) {
+		  boolean isFlag=false;
+		  List<Product> products= new ArrayList<>();
+		  products=productService.findAll();
+		  Modules modules=new Modules();
+		  modules.setProduct(products);
+		  isFlag=utilService.createExcel(modules,context);
+			if(isFlag) {
+				String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"products"+".xls");
+			utilService.filedownload(fullPath,response,".xls");
+			}
+		}
+
 }

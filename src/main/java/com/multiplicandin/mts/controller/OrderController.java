@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.CustomerOrder;
+import com.multiplicandin.mts.model.Estimate;
 import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.service.AlertService;
@@ -201,6 +202,19 @@ public class OrderController {
 			
 			
 		}
+		 @RequestMapping(value="/admin/createExcelForOrder",method= RequestMethod.GET)
+		  public void create(HttpServletRequest request,HttpServletResponse response) {
+			  boolean isFlag=false;
+			  List<CustomerOrder> customerOrders= new ArrayList<>();
+			  customerOrders=orderService.findAll();
+			  Modules modules=new Modules();
+			  modules.setCustomerOrder(customerOrders);
+			  isFlag=utilService.createExcel(modules,context);
+				if(isFlag) {
+					String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"orders"+".xls");
+				utilService.filedownload(fullPath,response,".xls");
+				}
+			}
 
 	
 }
