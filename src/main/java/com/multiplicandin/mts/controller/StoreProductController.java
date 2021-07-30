@@ -236,18 +236,18 @@ public class StoreProductController {
 			
 			
 		}
-		@RequestMapping(value="/admin/createExcelForStoreProduct",method= RequestMethod.GET)
-		  public void create(HttpServletRequest request,HttpServletResponse response) {
-			  boolean isFlag=false;
-			  List<StoreProduct> storeProducts= new ArrayList<>();
-			  storeProducts=storeProductService.findAll();
-			  Modules modules=new Modules();
-			  modules.setStoreProduct(storeProducts);
-			  isFlag=utilService.createExcel(modules,context);
-				if(isFlag) {
-					String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"storeProducts"+".xls");
-					utilService.filedownload(fullPath, response,".xls");
-				}
+	  @RequestMapping(value="/admin/createExcelForStoreProduct",method= RequestMethod.GET)
+	  public void create(HttpServletRequest request,HttpServletResponse response) {
+		  boolean isFlag=false;
+		  List<StoreProduct> storeProducts= new ArrayList<>();
+		  storeProducts=storeProductService.findAll();
+		  Modules modules=new Modules();
+		  modules.setStoreProduct(storeProducts);
+		  isFlag=utilService.createExcel(modules,context);
+			if(isFlag) {
+				String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"storeProducts"+".xls");
+			utilService.filedownload(fullPath,response,".xls");
 			}
+		}
 
 }

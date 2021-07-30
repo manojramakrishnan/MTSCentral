@@ -776,20 +776,21 @@ public class UtilServiceImpl implements UtilService {
 	@Override
 	public boolean createExcel(Modules modules, ServletContext context) {
 		if(modules.getCustomer().size() > 0) {
-			System.out.println("inside ");
 			return createCustomerExcel(modules.getCustomer(),context);
 
 		}
-//		else if (modules.getProduct().size() > 0) {
-//			return createProductExcel(modules.getProduct(),context);
-//		}
-//		else if(modules.getCustomerOrder().size() > 0) {
-//			return createOrderExcel(modules.getCustomerOrder(),context);
-//		}else if(modules.getEstimate().size() > 0) {
-//			return createEstimateExcel(modules.getEstimate(),context);
-//		}else if(modules.getPaymentMethod().size() > 0) {
-//			return createPaymentExcel(modules.getPaymentMethod(),context);
-//		}
+		else if (modules.getProduct().size() > 0) {
+			return createProductExcel(modules.getProduct(),context);
+		}
+		else if(modules.getCustomerOrder().size() > 0) {
+			return createOrderExcel(modules.getCustomerOrder(),context);
+		}
+		else if(modules.getEstimate().size() > 0) {
+			return createEstimateExcel(modules.getEstimate(),context);
+		}
+		else if(modules.getPaymentMethod().size() > 0) {
+			return createPaymentExcel(modules.getPaymentMethod(),context);
+		}
 	else {
 			return createStoreProductExcel(modules.getStoreProduct(),context);
 		}
@@ -801,7 +802,11 @@ public class UtilServiceImpl implements UtilService {
 
 	
 	
-	private boolean createCustomerExcel(List<Customer> customer, ServletContext context2) {
+
+
+		
+	
+	private boolean createCustomerExcel(List<Customer> customer, ServletContext context) {
 		// TODO Auto-generated method stub
 		String filePath=context.getRealPath("/resources/reports");
 		File file=new File(filePath);
@@ -821,9 +826,9 @@ public class UtilServiceImpl implements UtilService {
 			HSSFCell customerId = headerRow.createCell(0);
 			customerId.setCellValue("Customer Id");
 			customerId.setCellStyle(headerCellStyle);
-			HSSFCell Name = headerRow.createCell(1);
-			Name.setCellValue("Name");
-			Name.setCellStyle(headerCellStyle);
+			HSSFCell name = headerRow.createCell(1);
+			name.setCellValue("Name");
+			name.setCellStyle(headerCellStyle);
 			HSSFCell email = headerRow.createCell(2);
 			email.setCellValue("Email");
 			email.setCellStyle(headerCellStyle);
@@ -835,9 +840,9 @@ public class UtilServiceImpl implements UtilService {
 				HSSFCell customerIdValue=bodyRow.createCell(0);
 				customerIdValue.setCellValue(customers.getId());
 				customerIdValue.setCellStyle(bodyCellStyle);
-				HSSFCell NameValue=bodyRow.createCell(1);
-				NameValue.setCellValue(customers.getName());
-				NameValue.setCellStyle(bodyCellStyle);
+				HSSFCell nameValue=bodyRow.createCell(1);
+				nameValue.setCellValue(customers.getName());
+				nameValue.setCellStyle(bodyCellStyle);
 				HSSFCell emailValue=bodyRow.createCell(2);
 				emailValue.setCellValue(customers.getEmail());
 				emailValue.setCellStyle(bodyCellStyle);
@@ -855,7 +860,7 @@ public class UtilServiceImpl implements UtilService {
 		
 	}
 
-	private boolean createStoreProductExcel(List<StoreProduct> storeProduct, ServletContext context2) {
+	private boolean createStoreProductExcel(List<StoreProduct> storeProduct, ServletContext context) {
 		// TODO Auto-generated method stub
 		String filePath=context.getRealPath("/resources/reports");
 		File file=new File(filePath);
@@ -892,9 +897,9 @@ public class UtilServiceImpl implements UtilService {
 				HSSFCell storeProductIdValue=bodyRow.createCell(0);
 				storeProductIdValue.setCellValue(storeProducts.getId());
 				storeProductIdValue.setCellStyle(bodyCellStyle);
-				HSSFCell NameValue=bodyRow.createCell(1);
-				NameValue.setCellValue(storeProducts.getProduct().getProduct_name());
-				NameValue.setCellStyle(bodyCellStyle);
+				HSSFCell nameValue=bodyRow.createCell(1);
+				nameValue.setCellValue(storeProducts.getProduct().getProduct_name());
+				nameValue.setCellStyle(bodyCellStyle);
 				HSSFCell priceValue=bodyRow.createCell(2);
 				priceValue.setCellValue(storeProducts.getPrice());
 				priceValue.setCellStyle(bodyCellStyle);
@@ -913,8 +918,275 @@ public class UtilServiceImpl implements UtilService {
 		}
 		
 	}
-	
+	private boolean createProductExcel(List<Product> product, ServletContext context) {
+		// TODO Auto-generated method stub
+		String filePath=context.getRealPath("/resources/reports");
+		File file=new File(filePath);
+		boolean exists=new File(filePath).exists();
+		if(!exists) {
+			new File(filePath).mkdirs();
+		}
+		try {
+			FileOutputStream outputStream=new FileOutputStream(file+"/"+"products"+".xls");
+			HSSFWorkbook workbook=new HSSFWorkbook();
+			HSSFSheet workSheet=workbook.createSheet("Products");
+			workSheet.setDefaultColumnWidth(30);
+			HSSFCellStyle headerCellStyle=workbook.createCellStyle();
+			headerCellStyle.setFillBackgroundColor(HSSFColor.BLUE.index);
+			headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			HSSFRow headerRow = workSheet.createRow(0);
+			HSSFCell productId = headerRow.createCell(0);
+			productId.setCellValue("Product Id");
+			productId.setCellStyle(headerCellStyle);
+			HSSFCell category = headerRow.createCell(1);
+			category.setCellValue("Category");
+			category.setCellStyle(headerCellStyle);
+			HSSFCell productCode = headerRow.createCell(2);
+			productCode.setCellValue("Product Code");
+			productCode.setCellStyle(headerCellStyle);
+			HSSFCell productName = headerRow.createCell(3);
+			productName.setCellValue("Product Name");
+			productName.setCellStyle(headerCellStyle);
+			HSSFCell quantity = headerRow.createCell(4);
+			quantity.setCellValue("Quantity");
+			quantity.setCellStyle(headerCellStyle);
+			
+			int i=1;
+			for(Product products : product) {
+				HSSFRow bodyRow=workSheet.createRow(i);
+				HSSFCellStyle bodyCellStyle=workbook.createCellStyle();
+				bodyCellStyle.setFillBackgroundColor(HSSFColor.WHITE.index);
+				HSSFCell customerIdValue=bodyRow.createCell(0);
+				customerIdValue.setCellValue(products.getId());
+				customerIdValue.setCellStyle(bodyCellStyle);
+				HSSFCell categoryValue=bodyRow.createCell(1);
+				categoryValue.setCellValue(products.getCategory());
+				categoryValue.setCellStyle(bodyCellStyle);
+				HSSFCell productCodeValue=bodyRow.createCell(2);
+				productCodeValue.setCellValue(products.getProduct_code());
+				productCodeValue.setCellStyle(bodyCellStyle);
+				HSSFCell productNameValue=bodyRow.createCell(3);
+				productNameValue.setCellValue(products.getProduct_name());
+				productNameValue.setCellStyle(bodyCellStyle);
+				HSSFCell quantityValue=bodyRow.createCell(4);
+				quantityValue.setCellValue(products.getQuantity());
+				quantityValue.setCellStyle(bodyCellStyle);
+				
+				i++;
+				
+			}
+			workbook.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
+
+	private boolean createEstimateExcel(List<Estimate> estimate, ServletContext context) {
+		// TODO Auto-generated method stub
+		String filePath=context.getRealPath("/resources/reports");
+		File file=new File(filePath);
+		boolean exists=new File(filePath).exists();
+		if(!exists) {
+			new File(filePath).mkdirs();
+		}
+		try {
+			FileOutputStream outputStream=new FileOutputStream(file+"/"+"estimates"+".xls");
+			HSSFWorkbook workbook=new HSSFWorkbook();
+			HSSFSheet workSheet=workbook.createSheet("Estimates");
+			workSheet.setDefaultColumnWidth(30);
+			HSSFCellStyle headerCellStyle=workbook.createCellStyle();
+			headerCellStyle.setFillBackgroundColor(HSSFColor.BLUE.index);
+			headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			HSSFRow headerRow = workSheet.createRow(0);
+			HSSFCell estimateId = headerRow.createCell(0);
+			estimateId.setCellValue("Estimate Id");
+			estimateId.setCellStyle(headerCellStyle);
+			HSSFCell brand = headerRow.createCell(1);
+			brand.setCellValue("Brand");
+			brand.setCellStyle(headerCellStyle);
+			HSSFCell size = headerRow.createCell(2);
+			size.setCellValue("Size");
+			size.setCellStyle(headerCellStyle);
+			HSSFCell sizeUnit = headerRow.createCell(3);
+			sizeUnit.setCellValue("Size Unit");
+			sizeUnit.setCellStyle(headerCellStyle);
+			HSSFCell total = headerRow.createCell(4);
+			total.setCellValue("Total");
+			total.setCellStyle(headerCellStyle);
+			HSSFCell price = headerRow.createCell(5);
+			price.setCellValue("Price");
+			price.setCellStyle(headerCellStyle);
+			
+			int i=1;
+			for(Estimate estimates : estimate) {
+				HSSFRow bodyRow=workSheet.createRow(i);
+				HSSFCellStyle bodyCellStyle=workbook.createCellStyle();
+				bodyCellStyle.setFillBackgroundColor(HSSFColor.WHITE.index);
+				HSSFCell estimateIdValue=bodyRow.createCell(0);
+				estimateIdValue.setCellValue(estimates.getId());
+				estimateIdValue.setCellStyle(bodyCellStyle);
+				HSSFCell brandValue=bodyRow.createCell(1);
+				brandValue.setCellValue(estimates.getBrand());
+				brandValue.setCellStyle(bodyCellStyle);
+				HSSFCell sizeValue=bodyRow.createCell(2);
+				sizeValue.setCellValue(estimates.getSize());
+				sizeValue.setCellStyle(bodyCellStyle);
+				HSSFCell sizeUnitValue=bodyRow.createCell(3);
+				sizeUnitValue.setCellValue(estimates.getSizeUnit());
+				sizeUnitValue.setCellStyle(bodyCellStyle);
+				HSSFCell totalValue=bodyRow.createCell(4);
+				totalValue.setCellValue(estimates.getTotal());
+				totalValue.setCellStyle(bodyCellStyle);
+				HSSFCell priceValue=bodyRow.createCell(5);
+				priceValue.setCellValue(estimates.getPrice());
+				priceValue.setCellStyle(bodyCellStyle);
+				
+				i++;
+				
+			}		
+				workbook.write(outputStream);
+				outputStream.flush();
+				outputStream.close();
+				return true;
+			}catch(Exception e) {
+				return false;
+			}
+						
 }
+				
+			
+	private boolean createOrderExcel(List<CustomerOrder> customerOrder, ServletContext context) {
+		// TODO Auto-generated method stub
+		String filePath=context.getRealPath("/resources/reports");
+		File file=new File(filePath);
+		boolean exists=new File(filePath).exists();
+		if(!exists) {
+			new File(filePath).mkdirs();
+		}
+		try {
+			FileOutputStream outputStream=new FileOutputStream(file+"/"+"orders"+".xls");
+			HSSFWorkbook workbook=new HSSFWorkbook();
+			HSSFSheet workSheet=workbook.createSheet("Orders");
+			workSheet.setDefaultColumnWidth(30);
+			HSSFCellStyle headerCellStyle=workbook.createCellStyle();
+			headerCellStyle.setFillBackgroundColor(HSSFColor.BLUE.index);
+			headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			HSSFRow headerRow = workSheet.createRow(0);
+			HSSFCell orderId = headerRow.createCell(0);
+			orderId.setCellValue("Order Id");
+			orderId.setCellStyle(headerCellStyle);
+			HSSFCell orderDate = headerRow.createCell(1);
+			orderDate.setCellValue("Order Date");
+			orderDate.setCellStyle(headerCellStyle);
+			HSSFCell orderStatus = headerRow.createCell(2);
+			orderStatus.setCellValue("Order Status");
+			orderStatus.setCellStyle(headerCellStyle);
+			HSSFCell orderTotal = headerRow.createCell(3);
+			orderTotal.setCellValue("OrderTotal");
+			orderTotal.setCellStyle(headerCellStyle);
+			int i=1;
+			for(CustomerOrder customerOrders : customerOrder) {
+				HSSFRow bodyRow=workSheet.createRow(i);
+				HSSFCellStyle bodyCellStyle=workbook.createCellStyle();
+				bodyCellStyle.setFillBackgroundColor(HSSFColor.WHITE.index);
+				HSSFCell orderIdValue=bodyRow.createCell(0);
+				orderIdValue.setCellValue(customerOrders.getId());
+				orderIdValue.setCellStyle(bodyCellStyle);
+				HSSFCell orderDateValue=bodyRow.createCell(1);
+				orderDateValue.setCellValue(customerOrders.getOrderDate());
+				orderDateValue.setCellStyle(bodyCellStyle);
+				HSSFCell orderStatusValue=bodyRow.createCell(2);
+				orderStatusValue.setCellValue(customerOrders.getOrderStatus());
+				orderStatusValue.setCellStyle(bodyCellStyle);
+				HSSFCell orderTotalValue=bodyRow.createCell(3);
+				orderTotalValue.setCellValue(String.valueOf(customerOrders.getOrderTotal()));
+				orderTotalValue.setCellStyle(bodyCellStyle);
+				
+				i++;
+				
+			}
+			workbook.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	
+	}
+
+	private boolean createPaymentExcel(List<PaymentMethod> paymentMethod, ServletContext context) {
+		// TODO Auto-generated method stub
+		String filePath=context.getRealPath("/resources/reports");
+		File file=new File(filePath);
+		boolean exists=new File(filePath).exists();
+		if(!exists) {
+			new File(filePath).mkdirs();
+		}
+		try {
+			FileOutputStream outputStream=new FileOutputStream(file+"/"+"payment"+".xls");
+			HSSFWorkbook workbook=new HSSFWorkbook();
+			HSSFSheet workSheet=workbook.createSheet("payment");
+			workSheet.setDefaultColumnWidth(30);
+			HSSFCellStyle headerCellStyle=workbook.createCellStyle();
+			headerCellStyle.setFillBackgroundColor(HSSFColor.BLUE.index);
+			headerCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			HSSFRow headerRow = workSheet.createRow(0);
+			HSSFCell ownerName = headerRow.createCell(0);
+			ownerName.setCellValue("Owner Name");
+			ownerName.setCellStyle(headerCellStyle);
+			HSSFCell creditCardNumber = headerRow.createCell(1);
+			creditCardNumber.setCellValue("Credit Card Number");
+			creditCardNumber.setCellStyle(headerCellStyle);
+			HSSFCell expirationMonth = headerRow.createCell(2);
+			expirationMonth.setCellValue("Expiration Month");
+			expirationMonth.setCellStyle(headerCellStyle);
+			HSSFCell expirationYear = headerRow.createCell(3);
+			expirationYear.setCellValue("Expiration Year");
+			expirationYear.setCellStyle(headerCellStyle);
+			int i=1;
+			for(PaymentMethod paymentMethods : paymentMethod) {
+				HSSFRow bodyRow=workSheet.createRow(i);
+				HSSFCellStyle bodyCellStyle=workbook.createCellStyle();
+				bodyCellStyle.setFillBackgroundColor(HSSFColor.WHITE.index);
+				HSSFCell ownerNameValue=bodyRow.createCell(0);
+				ownerNameValue.setCellValue(paymentMethods.getCardOwner());
+				ownerNameValue.setCellStyle(bodyCellStyle);
+				HSSFCell creditCardNumberValue=bodyRow.createCell(1);
+				creditCardNumberValue.setCellValue(paymentMethods.getCreditCardNumber());
+				creditCardNumberValue.setCellStyle(bodyCellStyle);
+				HSSFCell expirationMonthValue=bodyRow.createCell(2);
+				expirationMonthValue.setCellValue(paymentMethods.getExpirationMonth());
+				expirationMonthValue.setCellStyle(bodyCellStyle);
+				HSSFCell ExpirationYearValue=bodyRow.createCell(3);
+				ExpirationYearValue.setCellValue(String.valueOf(paymentMethods.getExpirationYear()));
+				ExpirationYearValue.setCellStyle(bodyCellStyle);
+				
+				i++;
+				
+			}
+			workbook.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	
+	}	
+
+
+}
+
+
+
+
+	
+	
+
 
 
 
