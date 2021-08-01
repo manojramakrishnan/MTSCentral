@@ -8,9 +8,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -46,11 +44,14 @@ public class UtilServiceImpl implements UtilService {
 	@Autowired
 	private ServletContext context;
 	
-
+	@Override
 	 public void filedownload(String fullPath, HttpServletResponse response, String fileName) {
 			File file=new File(fullPath);
-			final int BUFFER_SIZE=4096;
+			
+			System.out.println("inside file before if "+fullPath+"file data "+file.exists()+ "fileName" +fileName);
+			final int BUFFER_SIZE=6096;
 			if(file.exists()) {
+				System.out.println("inside file exists if");
 				try {
 					FileInputStream inputStream=new FileInputStream(file);
 					String mimeType=context.getMimeType(fullPath);

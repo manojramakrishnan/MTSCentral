@@ -1,5 +1,8 @@
 package com.multiplicandin.mts.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -245,9 +248,31 @@ public class StoreProductController {
 		  modules.setStoreProduct(storeProducts);
 		  isFlag=utilService.createExcel(modules,context);
 			if(isFlag) {
-				String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"storeProducts"+".xls");
-			utilService.filedownload(fullPath,response,".xls");
+				try {
+					Path tempFilePath = Files.createTempFile("baeldung", "exist-io");
+					String fullPath=request.getServletContext().getRealPath("/reports/"+"sps"+".xls");
+					System.out.println("full path is :: "+fullPath);
+				utilService.filedownload(tempFilePath.toString(),response,".xls");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 		}
+	  
+//	  @RequestMapping(value="/admin/createExcelForProduct",method= RequestMethod.GET)
+//	  public void createp(HttpServletRequest request,HttpServletResponse response) {
+//		  boolean isFlag=false;
+//		  List<Product> products= new ArrayList<>();
+//		  products=productService.findAll();
+//		  Modules modules=new Modules();
+//		  modules.setProduct(products);
+//		  isFlag=utilService.createExcel(modules,context);
+//			if(isFlag) {
+//				String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"products"+".xls");
+//			utilService.filedownload(fullPath,response,".xls");
+//			}
+//		}
 
 }
