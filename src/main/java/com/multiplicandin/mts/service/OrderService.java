@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+
+import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.CustomerOrder;
 
 public interface OrderService {
@@ -21,5 +24,7 @@ public interface OrderService {
 	CustomerOrder update(CustomerOrder customerOrder);
 
 	void deleteById(Integer id);
+
+	Page<CustomerOrder> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
 }

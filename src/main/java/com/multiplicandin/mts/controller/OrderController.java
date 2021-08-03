@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,8 +65,8 @@ public class OrderController {
     	List<CustomerOrder> customerOrder= orderService.findAll();
     	modelAndView.addObject("customerOrder",customerOrder);
     	modelAndView.addObject("customerName", customer.getName());
-    	modelAndView.setViewName("/admin/orders.html");
-    	return modelAndView;
+//    	modelAndView.setViewName("/admin/orders.html");
+    	return findPaginated(1, "Id", "asc");
     	
 	}
 	@RequestMapping (value = {"admin/orders/add"}, method=RequestMethod.GET)
@@ -93,8 +95,11 @@ public class OrderController {
         	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		Customer customer = customerService.findCustomerByEmail(auth.getName());
     		System.out.println("auth"+auth.getName());
-    		System.out.println("store id"+customer.getStore().getId());
+//    		System.out.println("store id"+customer.getStore().getId());
     		customerOrder.setActive(true);
+    		Store store = new Store();
+    		store.setId(1);
+    		customer.setStore(store);
         	customerOrder.setStore(customer.getStore());
         	customerOrder.setCustomer(customer);
         	customerOrder.getCustomer().setId(customer.getId());
@@ -215,6 +220,30 @@ public class OrderController {
 				utilService.filedownload(fullPath,response,".xls");
 				}
 			}
+		 
+		 @RequestMapping(value = "/admin/page/{pageNo}", method = RequestMethod.GET)
+		 public ModelAndView findPaginated(@PathVariable (value = "pageNo") int pageNo,
+		 @RequestParam("sortField") String sortField,
+		 @RequestParam("sortDir") String sortDir) {
+		 int pageSize = 5;
+		 ModelAndView md = new ModelAndView();
+
+		 Page<CustomerOrder> page = orderService.findPaginated(pageNo, pageSize, sortField, sortDir);
+		 List<CustomerOrder> customerOrder = page.getContent();
+
+		 md.addObject("currentPage", pageNo);
+		 md.addObject("totalPages", page.getTotalPages());
+		 md.addObject("totalItems", page.getTotalElements());
+
+		 md.addObject("sortField", sortField);
+		 md.addObject("sortDir", sortDir);
+		 md.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+		 md.addObject("customerOrder", customerOrder);
+		 md.setViewName("/admin/orders.html");
+		 return md;
+		 }
+
 
 	
 }

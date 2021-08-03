@@ -5,9 +5,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.multiplicandin.mts.dao.OrderDAO;
+import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.CustomerOrder;
 import com.multiplicandin.mts.service.OrderService;
 
@@ -57,6 +62,15 @@ public class OrderServiceImpl implements OrderService {
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		orderDAO.deleteById(id);
+	}
+
+	@Override
+	public Page<CustomerOrder> findPaginated(int pageNo, int pageSize, String sortField, String sortDir) {
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+			Sort.by(sortField).descending();
+		
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+		return orderDAO.findAll(pageable);
 	}
 
 }
