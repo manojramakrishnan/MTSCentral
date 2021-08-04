@@ -10,6 +10,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -99,6 +101,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List<Customer> findAll() {
 		// TODO Auto-generated method stub
 		return customerRepository.findAll();
+	}
+
+	@Override
+	public Page<Customer> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return customerRepository.findAll(pageable);
 	}
 	
 	

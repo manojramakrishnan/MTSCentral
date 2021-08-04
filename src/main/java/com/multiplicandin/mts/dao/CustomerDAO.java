@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.Role;
 
@@ -26,5 +29,7 @@ public interface CustomerDAO {
 	Customer changePassword(Customer customer1);
 
 	List<Customer> findAll();
+
+	Page<Customer> findAll(Pageable pageable);
 
 }

@@ -14,10 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,8 +69,9 @@ public class AdminController {
 	    	List<Customer> customers= customerService.findAllCustomers(role);
 	    	modelAndView.addObject("totalRegistrations", customers.size());
 	    	modelAndView.addObject("Customers", customers);
-	    	modelAndView.setViewName("admin/user-list");
-	    	return modelAndView;
+	  //  	modelAndView.setViewName("admin/user-list");
+	    	return findPaginated(1, "Id", "asc");
+	    	
 	    		  }
 	  @RequestMapping(value= {"/admin/user/add"}, method= RequestMethod.POST)
 	  public ModelAndView userAdd(@Valid Customer customer, BindingResult binding) {
@@ -171,5 +176,26 @@ public class AdminController {
 			utilService.filedownload(fullPath,response,".xls");
 			}
 		}
-
+	  @RequestMapping(value="/admin/user/page/{pageNo}", method= RequestMethod.GET)
+		public ModelAndView findPaginated(@RequestParam (value = "pageNo") int pageNo, 
+				@RequestParam("sortField") String sortField,
+				@RequestParam("sortDir") String sortDir) {
+			int pageSize = 5;
+			ModelAndView modelAndView=new ModelAndView();
+			System.out.println("pageNo " + pageNo);
+			Page<Customer> page = customerService.findPaginated(pageNo, pageSize, sortField, sortDir);
+			List<Customer> customers = page.getContent();
+			
+			modelAndView.addObject("currentPage", pageNo);
+			modelAndView.addObject("totalPages", page.getTotalPages());
+			modelAndView.addObject("totalItems", page.getTotalElements());
+			
+			modelAndView.addObject("sortField", sortField);
+			modelAndView.addObject("sortDir", sortDir);
+			modelAndView.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+			
+			modelAndView.addObject("Customers", customers);
+			modelAndView.setViewName("/admin/user-list.html");
+			return modelAndView;
+		}
 }

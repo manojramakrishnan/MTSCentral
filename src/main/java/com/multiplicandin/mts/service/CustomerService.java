@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.Role;
 
@@ -26,4 +28,7 @@ public interface CustomerService {
 	Customer changePassword(@Valid Customer customer, Customer customer1);
 
 	List<Customer> findAll();
+
+	Page<Customer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+
 }
