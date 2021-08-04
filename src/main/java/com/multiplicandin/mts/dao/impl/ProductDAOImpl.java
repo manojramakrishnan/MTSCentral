@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.multiplicandin.mts.Repositories.ProductRepository;
@@ -83,6 +85,12 @@ public class ProductDAOImpl implements ProductDAO {
 	public List<Product> fidnAllByProductId(@Valid Product product) {
 		// TODO Auto-generated method stub
 		return productRepository.findAllByProductId(product);
+	}
+
+	@Override
+	public Page<Product> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return productRepository.findAll(pageable);
 	}
 
 	

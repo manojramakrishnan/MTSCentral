@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+
 import com.multiplicandin.mts.model.PaymentMethod;
 
 public interface PaymentService {
@@ -19,6 +21,8 @@ public interface PaymentService {
 	PaymentMethod update(PaymentMethod paymentMethod);
 
 	void deleteById(Integer valueOf);
+
+	Page<PaymentMethod> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
 
 }

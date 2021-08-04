@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+
+import com.multiplicandin.mts.model.CustomerOrder;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.model.StoreProduct;
 
@@ -28,5 +31,6 @@ public interface StoreProductService {
 	boolean getMappingData(Integer productId);
 
 	List<StoreProduct> findAll();
+	Page<StoreProduct> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
 }

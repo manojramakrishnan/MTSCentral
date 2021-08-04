@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +58,7 @@ public class PaymentController {
     	modelAndView.addObject("paymentMethods",paymentMethod);
     	modelAndView.addObject("customerName", customer.getName());
     	modelAndView.setViewName("/admin/payment.html");
-    	return modelAndView;
+    	return findPaginated(1, "Id", "asc");
     	
 	}
 	@RequestMapping (value = {"admin/payment/add"}, method=RequestMethod.GET)
@@ -193,5 +195,28 @@ public class PaymentController {
 			utilService.filedownload(fullPath,response,".xls");
 			}
 		}
+	 @RequestMapping(value = "/admin/payment/page/{pageNo}", method = RequestMethod.GET)
+	 public ModelAndView findPaginated(@PathVariable (value = "pageNo") int pageNo,
+	 @RequestParam("sortField") String sortField,
+	 @RequestParam("sortDir") String sortDir) {
+	 int pageSize = 5;
+	 ModelAndView md = new ModelAndView();
+
+	 Page<PaymentMethod> page = paymentService.findPaginated(pageNo, pageSize, sortField, sortDir);
+	 List<PaymentMethod> paymentMethod = page.getContent();
+
+	 md.addObject("currentPage", pageNo);
+	 md.addObject("totalPages", page.getTotalPages());
+	 md.addObject("totalItems", page.getTotalElements());
+
+	 md.addObject("sortField", sortField);
+	 md.addObject("sortDir", sortDir);
+	 md.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+	 md.addObject("paymentMethod", paymentMethod);
+	 md.setViewName("/admin/payment.html");
+	 return md;
+	 }
+
 
 }	

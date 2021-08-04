@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.multiplicandin.mts.Repositories.PayementRepository;
@@ -78,6 +80,13 @@ public class PaymentDAOImpl implements PaymentDAO {
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		paymentRepository.deleteById(id);
+	}
+
+
+	@Override
+	public Page<PaymentMethod> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return paymentRepository.findAll(pageable);
 	}
 
 

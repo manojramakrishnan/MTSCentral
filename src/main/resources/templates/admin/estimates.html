@@ -117,12 +117,18 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Brand</th>
-                                <th>Size</th>
-                                <th>Size Unit</th>
-                                <th>Total</th>
-                                <th>Price</th>
+                                <th><a th:href="@{'/admin/estimate/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+							Id</a></th>
+                                <th><a th:href="@{'/admin/estimate/page/' + ${currentPage} + '?sortField=brand&sortDir=' + ${reverseSortDir}}">
+							Brand</a></th>
+                                <th><a th:href="@{'/admin/estimate/page/' + ${currentPage} + '?sortField=size&sortDir=' + ${reverseSortDir}}">
+							Size</a></th>
+                                <th><a th:href="@{'/admin/estimate/page/' + ${currentPage} + '?sortField=sizeUnit&sortDir=' + ${reverseSortDir}}">
+							Size Unit</a></th>
+                                <th><a th:href="@{'/admin/estimate/page/' + ${currentPage} + '?sortField=total&sortDir=' + ${reverseSortDir}}">
+							Total</a></th>
+                                <th><a th:href="@{'/admin/estimate/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">
+							Price</a></th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -153,6 +159,28 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div th:if = "${totalPages > 1}">
+			<div class = "row col-sm-10">
+				<div class = "col-sm-2">
+					Total Rows: [[${totalItems}]] 
+				</div>
+				<div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/admin/estimate/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+				</div>
+				<div class = "col-sm-1">
+					<a th:if="${currentPage < totalPages}" th:href="@{'/admin/estimate/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+				
+				 <div class="col-sm-1">
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/admin/estimate/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Last</span>
+   				 </div>
+			</div>
+		</div>
                 </div>
         </div>
         <footer class="bg-white sticky-footer">

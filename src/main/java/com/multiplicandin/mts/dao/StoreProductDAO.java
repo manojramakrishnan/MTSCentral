@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.model.StoreProduct;
 
@@ -28,5 +31,7 @@ public interface StoreProductDAO {
 	boolean isMappingExist(Integer productId);
 
 	List<StoreProduct> findAll();
+
+	Page<StoreProduct> findAll(Pageable pageable);
 
 }

@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.multiplicandin.mts.Repositories.EstimateRepository;
@@ -87,5 +89,11 @@ private EntityManager entityManager;
 	public void deleteById(Integer valueOf) {
 		estimateRepository.deleteById(valueOf);
 		
+	}
+
+	@Override
+	public Page<Estimate> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return estimateRepository.findAll(pageable);
 	}
 }

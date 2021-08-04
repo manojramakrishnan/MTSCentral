@@ -115,10 +115,14 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Owner Name</th>
-                                        <th>Credit Card Number</th>
-                                        <th>Expiration Month</th>
-                                        <th>Expiration Year</th>
+                                <th><a th:href="@{'/admin/payment/page/' + ${currentPage} + '?sortField=cardOwner&sortDir=' + ${reverseSortDir}}">
+							Owner Name</a></th>
+                                        <th><a th:href="@{'/admin/payment/page/' + ${currentPage} + '?sortField=creditCardNumber&sortDir=' + ${reverseSortDir}}">
+							Credit Card Number</a></th>
+                                        <th><a th:href="@{'/admin/payment/page/' + ${currentPage} + '?sortField=expirationMonth&sortDir=' + ${reverseSortDir}}">
+							Expiration Month</a></th>
+                                        <th><a th:href="@{'/admin/payment/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+							Expiration Year</a></th>
                                 
                                
                             </tr>
@@ -147,6 +151,28 @@
                             </tr>
                         </tbody>
                     </table>
+                        <div th:if = "${totalPages > 1}">
+			<div class = "row col-sm-10">
+				<div class = "col-sm-2">
+					Total Rows: [[${totalItems}]] 
+				</div>
+				<div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/admin/payment/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+				</div>
+				<div class = "col-sm-1">
+					<a th:if="${currentPage < totalPages}" th:href="@{'/admin/payment/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+				
+				 <div class="col-sm-1">
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/admin/payment/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Last</span>
+   				 </div>
+			</div>
+		</div>
                 </div>
         </div>
         <footer class="bg-white sticky-footer">

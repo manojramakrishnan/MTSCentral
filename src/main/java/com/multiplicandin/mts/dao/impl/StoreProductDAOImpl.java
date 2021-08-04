@@ -9,10 +9,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.multiplicandin.mts.Repositories.StoreProductRepository;
 import com.multiplicandin.mts.dao.StoreProductDAO;
+import com.multiplicandin.mts.model.CustomerOrder;
 import com.multiplicandin.mts.model.Product;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.model.StoreProduct;
@@ -90,5 +93,10 @@ private StoreProductRepository storeProductRepository;
 	public List<StoreProduct> findAll() {
 		// TODO Auto-generated method stub
 		return storeProductRepository.findAll();
+	}
+	@Override
+	public Page<StoreProduct> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return storeProductRepository.findAll(pageable);
 	}
 }

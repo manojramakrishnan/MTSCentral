@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
+import com.multiplicandin.mts.model.CustomerOrder;
 import com.multiplicandin.mts.model.Estimate;
 import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.model.Store;
@@ -76,7 +79,7 @@ public class EstimateController {
         modelAndView.addObject("customerFullName", customer.getName());
 
          modelAndView.setViewName("/admin/estimates.html");
-        return modelAndView;
+     	return findPaginated(1, "Id", "asc");
     }
 	
 	@RequestMapping(value = { "/admin/estimates/add" }, method = RequestMethod.GET)
@@ -238,5 +241,28 @@ public class EstimateController {
 			utilService.filedownload(fullPath,response,".xls");
 			}
 		}
+	 @RequestMapping(value = "/admin/estimate/page/{pageNo}", method = RequestMethod.GET)
+	 public ModelAndView findPaginated(@PathVariable (value = "pageNo") int pageNo,
+	 @RequestParam("sortField") String sortField,
+	 @RequestParam("sortDir") String sortDir) {
+	 int pageSize = 5;
+	 ModelAndView md = new ModelAndView();
+
+	 Page<Estimate> page = estimateService.findPaginated(pageNo, pageSize, sortField, sortDir);
+	 List<Estimate> estimate = page.getContent();
+
+	 md.addObject("currentPage", pageNo);
+	 md.addObject("totalPages", page.getTotalPages());
+	 md.addObject("totalItems", page.getTotalElements());
+
+	 md.addObject("sortField", sortField);
+	 md.addObject("sortDir", sortDir);
+	 md.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
+	 md.addObject("estimate", estimate);
+	 md.setViewName("/admin/estimates.html");
+	 return md;
+	 }
+
 
 }
