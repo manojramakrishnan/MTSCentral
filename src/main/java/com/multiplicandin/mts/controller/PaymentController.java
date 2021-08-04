@@ -53,11 +53,11 @@ public class PaymentController {
 		ModelAndView modelAndView=new ModelAndView();
     	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
     	Customer customer = customerService.findCustomerByEmail(auth.getName());
-    	modelAndView.addObject("totalPayments",paymentService.findAll().size());
+    	
     	List<PaymentMethod> paymentMethod= paymentService.findAll();
     	modelAndView.addObject("paymentMethods",paymentMethod);
     	modelAndView.addObject("customerName", customer.getName());
-    	modelAndView.setViewName("/admin/payment.html");
+//    	modelAndView.setViewName("/admin/payment.html");
     	return findPaginated(1, "Id", "asc");
     	
 	}
@@ -203,7 +203,7 @@ public class PaymentController {
 	 ModelAndView md = new ModelAndView();
 
 	 Page<PaymentMethod> page = paymentService.findPaginated(pageNo, pageSize, sortField, sortDir);
-	 List<PaymentMethod> paymentMethod = page.getContent();
+	 List<PaymentMethod> paymentMethods = page.getContent();
 
 	 md.addObject("currentPage", pageNo);
 	 md.addObject("totalPages", page.getTotalPages());
@@ -212,8 +212,8 @@ public class PaymentController {
 	 md.addObject("sortField", sortField);
 	 md.addObject("sortDir", sortDir);
 	 md.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-	 md.addObject("paymentMethod", paymentMethod);
+	 md.addObject("totalPayments",paymentService.findAll().size());
+	 md.addObject("PaymentMethods", paymentMethods);
 	 md.setViewName("/admin/payment.html");
 	 return md;
 	 }

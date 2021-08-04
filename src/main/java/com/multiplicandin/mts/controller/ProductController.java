@@ -62,12 +62,12 @@ public class ProductController {
 		ModelAndView modelAndView=new ModelAndView();
     	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
     	Customer customer = customerService.findCustomerByEmail(auth.getName());
-    	modelAndView.addObject("totalProducts",productService.findAll().size());
+    	
     	modelAndView.addObject("outOfStockProducts",productService.findAllOutOfStock().size());
     	List<Product> products= productService.findAll();
     	modelAndView.addObject("products", products);
     	modelAndView.addObject("customerName", customer.getName());
-    	modelAndView.setViewName("/admin/products.html");
+//    	modelAndView.setViewName("/admin/products.html");
     	return findPaginated(1, "Id", "asc");
 
 	}
@@ -239,7 +239,7 @@ public class ProductController {
 	 ModelAndView md = new ModelAndView();
 
 	 Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
-	 List<Product> product = page.getContent();
+	 List<Product> products = page.getContent();
 
 	 md.addObject("currentPage", pageNo);
 	 md.addObject("totalPages", page.getTotalPages());
@@ -248,8 +248,8 @@ public class ProductController {
 	 md.addObject("sortField", sortField);
 	 md.addObject("sortDir", sortDir);
 	 md.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-	 md.addObject("product", product);
+	 md.addObject("totalProducts",productService.findAll().size());
+	 md.addObject("products", products);
 	 md.setViewName("/admin/products.html");
 	 return md;
 	 }

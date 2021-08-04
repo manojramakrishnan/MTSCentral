@@ -81,15 +81,14 @@ public class StoreProductController {
         modelAndView.addObject("alertCount", alertCount);
         modelAndView.addObject("alerts", alerts);
 
-        modelAndView.addObject("totalProducts", storeProductService.findAllByStoreId(store).size());
-        modelAndView.addObject("outOfStockProducts", storeProductService.findAllOutOfStock(store).size());
+       
         for (StoreProduct sp : storeProducts) {
 		}
         modelAndView.addObject("storeProducts", storeProducts);
         modelAndView.addObject("storeName", store.getStore_name());
         modelAndView.addObject("customerFullName", customer.getName());
 
-         modelAndView.setViewName("/admin/storeproducts.html");
+//         modelAndView.setViewName("/admin/storeproducts.html");
     	return findPaginated(1, "Id", "asc");
     }
 	
@@ -285,7 +284,9 @@ public class StoreProductController {
 		 @RequestParam("sortDir") String sortDir) {
 		 int pageSize = 5;
 		 ModelAndView md = new ModelAndView();
-
+		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			Customer customer = customerService.findCustomerByEmail(auth.getName());
+	        Store store = customer.getStore();
 		 Page<StoreProduct> page = storeProductService.findPaginated(pageNo, pageSize, sortField, sortDir);
 		 List<StoreProduct> storeProduct = page.getContent();
 
@@ -296,9 +297,10 @@ public class StoreProductController {
 		 md.addObject("sortField", sortField);
 		 md.addObject("sortDir", sortDir);
 		 md.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-		 md.addObject("storeProduct", storeProduct);
-		 md.setViewName("/admin/storeProducts.html");
+		 md.addObject("totalProducts", storeProductService.findAllByStoreId(store).size());
+	        md.addObject("outOfStockProducts", storeProductService.findAllOutOfStock(store).size());
+		 md.addObject("storeProducts", storeProduct);
+		 md.setViewName("/admin/storeproducts.html");
 		 return md;
 		 }
 

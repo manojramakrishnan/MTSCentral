@@ -121,14 +121,14 @@
 							Credit Card Number</a></th>
                                         <th><a th:href="@{'/admin/payment/page/' + ${currentPage} + '?sortField=expirationMonth&sortDir=' + ${reverseSortDir}}">
 							Expiration Month</a></th>
-                                        <th><a th:href="@{'/admin/payment/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+                                        <th><a th:href="@{'/admin/payment/page/' + ${currentPage} + '?sortField=expirationYear&sortDir=' + ${reverseSortDir}}">
 							Expiration Year</a></th>
                                 
                                
                             </tr>
                         </thead>
                         <tbody>
-                           <tr th:each="paymentMethod : ${paymentMethods}">
+                           <tr th:each="paymentMethod : ${PaymentMethods}">
                                         <td><span th:text="${paymentMethod.cardOwner}"></span></td>
                                         <td><span th:text="${paymentMethod.creditCardNumber}"></span></td>
                                         <td><span th:text="${paymentMethod.expirationMonth}"></span></td>

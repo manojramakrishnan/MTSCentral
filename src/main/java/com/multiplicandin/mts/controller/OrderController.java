@@ -61,7 +61,7 @@ public class OrderController {
 		ModelAndView modelAndView=new ModelAndView();
     	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
     	Customer customer = customerService.findCustomerByEmail(auth.getName());
-    	modelAndView.addObject("totalOrders",orderService.findAll().size());
+    	
     	List<CustomerOrder> customerOrder= orderService.findAll();
     	modelAndView.addObject("customerOrder",customerOrder);
     	modelAndView.addObject("customerName", customer.getName());
@@ -238,7 +238,7 @@ public class OrderController {
 		 md.addObject("sortField", sortField);
 		 md.addObject("sortDir", sortDir);
 		 md.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
+		 md.addObject("totalOrders",orderService.findAll().size());
 		 md.addObject("customerOrder", customerOrder);
 		 md.setViewName("/admin/orders.html");
 		 return md;

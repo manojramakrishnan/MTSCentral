@@ -1,11 +1,6 @@
 package com.multiplicandin.mts.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -18,9 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,7 +60,7 @@ public class AdminController {
 	    	role.setRole("admin");
 	    	role.setId(3);
 	    	List<Customer> customers= customerService.findAllCustomers(role);
-	    	modelAndView.addObject("totalRegistrations", customers.size());
+	    	
 	    	modelAndView.addObject("Customers", customers);
 	  //  	modelAndView.setViewName("admin/user-list");
 	    	return findPaginated(1, "Id", "asc");
@@ -177,7 +170,7 @@ public class AdminController {
 			}
 		}
 	  @RequestMapping(value="/admin/user/page/{pageNo}", method= RequestMethod.GET)
-		public ModelAndView findPaginated(@RequestParam (value = "pageNo") int pageNo, 
+		public ModelAndView findPaginated(@PathVariable (value = "pageNo") int pageNo, 
 				@RequestParam("sortField") String sortField,
 				@RequestParam("sortDir") String sortDir) {
 			int pageSize = 5;
@@ -193,7 +186,7 @@ public class AdminController {
 			modelAndView.addObject("sortField", sortField);
 			modelAndView.addObject("sortDir", sortDir);
 			modelAndView.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-			
+			modelAndView.addObject("totalRegistrations", customers.size());
 			modelAndView.addObject("Customers", customers);
 			modelAndView.setViewName("/admin/user-list.html");
 			return modelAndView;

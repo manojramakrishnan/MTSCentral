@@ -71,14 +71,14 @@ public class EstimateController {
         modelAndView.addObject("alertCount", alertCount);
         modelAndView.addObject("alerts", alerts);
 
-        modelAndView.addObject("totalEstimates", estimateService.findAllByStoreId(store).size());
+        
         
        
         modelAndView.addObject("estimates", estimates);
         modelAndView.addObject("storeName", store.getStore_name());
         modelAndView.addObject("customerFullName", customer.getName());
 
-         modelAndView.setViewName("/admin/estimates.html");
+//         modelAndView.setViewName("/admin/estimates.html");
      	return findPaginated(1, "Id", "asc");
     }
 	
@@ -247,9 +247,12 @@ public class EstimateController {
 	 @RequestParam("sortDir") String sortDir) {
 	 int pageSize = 5;
 	 ModelAndView md = new ModelAndView();
+	 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = customerService.findCustomerByEmail(auth.getName());
+     Store store = customer.getStore();
 
 	 Page<Estimate> page = estimateService.findPaginated(pageNo, pageSize, sortField, sortDir);
-	 List<Estimate> estimate = page.getContent();
+	 List<Estimate> estimates = page.getContent();
 
 	 md.addObject("currentPage", pageNo);
 	 md.addObject("totalPages", page.getTotalPages());
@@ -258,8 +261,8 @@ public class EstimateController {
 	 md.addObject("sortField", sortField);
 	 md.addObject("sortDir", sortDir);
 	 md.addObject("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-	 md.addObject("estimate", estimate);
+	 md.addObject("totalEstimates", estimateService.findAllByStoreId(store).size());
+	 md.addObject("Estimates", estimates);
 	 md.setViewName("/admin/estimates.html");
 	 return md;
 	 }
