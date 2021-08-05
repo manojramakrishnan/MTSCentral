@@ -13,80 +13,17 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 public class Product {
 
-    public String getProduct_code() {
-		return product_code;
-	}
-
-	public void setProduct_code(String product_code) {
-		this.product_code = product_code;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public Set<StoreProduct> getProducts() {
-		return products;
-	}
 	
-	public Product() {}
+
+
 	
-	public Product(int id, String product_name, String product_code,
-			@NotEmpty(message = "*Can't be blank") String category, int quantity, Set<StoreProduct> products) {
-		super();
-		this.id = id;
-		this.product_name = product_name;
-		this.product_code = product_code;
-		this.category = category;
-		this.quantity = quantity;
-		this.products = products;
-	}
-
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", product_name=" + product_name + ", product_code=" + product_code + ", category="
-				+ category + ", quantity=" + quantity + ", products=" + products + "]";
-	}
-
-	public void setProducts(Set<StoreProduct> products) {
-		this.products = products;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getProduct_name() {
-		return product_name;
-	}
-
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String product_name;
+    private String productName;
 
-    private String product_code; // Ministry of Health Medicine Code
+    private String productCode; // Ministry of Health Medicine Code
 
     @Column(name = "category")
     @NotEmpty(message = "*Can't be blank")
@@ -98,5 +35,73 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     Set<StoreProduct> products;
+
+    public Product(int id, String productName, String productCode,
+			@NotEmpty(message = "*Can't be blank") String category, int quantity, Set<StoreProduct> products) {
+		super();
+		this.id = id;
+		this.productName = productName;
+		this.productCode = productCode;
+		this.category = category;
+		this.quantity = quantity;
+		this.products = products;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", productName=" + productName + ", productCode=" + productCode + ", category="
+				+ category + ", quantity=" + quantity + ", products=" + products + "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public Set<StoreProduct> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<StoreProduct> products) {
+		this.products = products;
+	}
+
+	public Product() {}
+
 }
 

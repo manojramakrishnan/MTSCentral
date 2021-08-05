@@ -68,7 +68,7 @@ public class ProductDAOImpl implements ProductDAO {
 
 		persistedProduct.setCategory(product.getCategory());
 		persistedProduct.setQuantity(product.getQuantity());
-		persistedProduct.setProduct_name(product.getProduct_name());
+		persistedProduct.setProductName(product.getProductName());
         entityManager.merge(persistedProduct);
         return persistedProduct;
 		

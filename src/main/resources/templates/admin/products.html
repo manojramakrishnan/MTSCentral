@@ -121,9 +121,9 @@
 							Id</a></th>
                                 <th><a th:href="@{'/admin/product/page/' + ${currentPage} + '?sortField=category&sortDir=' + ${reverseSortDir}}">
 							Category</a></th>
-                                <th><a th:href="@{'/admin/product/page/' + ${currentPage} + '?sortField=product_code&sortDir=' + ${reverseSortDir}}">
+                                <th><a th:href="@{'/admin/product/page/' + ${currentPage} + '?sortField=productCode&sortDir=' + ${reverseSortDir}}">
 							Product Code</a></th>
-                                <th><a th:href="@{'/admin/product/page/' + ${currentPage} + '?sortField=product_name&sortDir=' + ${reverseSortDir}}">
+                                <th><a th:href="@{'/admin/product/page/' + ${currentPage} + '?sortField=productName&sortDir=' + ${reverseSortDir}}">
 							Product Name</a></th>
                                 <th><a th:href="@{'/admin/product/page/' + ${currentPage} + '?sortField=quantity&sortDir=' + ${reverseSortDir}}">
 							Quantity</a></th>
@@ -135,8 +135,8 @@
                             <tr th:each="product : ${products}">
                                 <td><span th:text="${product.id}"></span></td>
                                 <td><span th:text="${product.category}"></span></td>
-                                <td><span th:text="${product.product_code}"></span></td>
-                                <td><span th:text="${product.product_name}"></span></td>   
+                                <td><span th:text="${product.productCode}"></span></td>
+                                <td><span th:text="${product.productName}"></span></td>   
                                 <td><span th:text="${product.quantity}"></span></td> 
                                  <td>
                                     <span>

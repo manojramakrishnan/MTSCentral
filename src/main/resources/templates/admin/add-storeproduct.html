@@ -124,7 +124,7 @@
                                                              <option value="">Product</option>
                                                              <option th:each="product : ${products}"
                                                                      th:value="${product.id}"
-                                                                     th:text="${product.product_name}"></option>
+                                                                     th:text="${product.productName}"></option>
                                                          </select>
                                                      </div>
                                                      <div class="form-group"><label for="quantity"><strong>Quantity</strong></label><input class="form-control" type="text" th:field="*{quantity}" placeholder="quantity" name="username"></div>

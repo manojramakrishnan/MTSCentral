@@ -138,7 +138,7 @@ public class ProductController {
         modelAndView.addObject("alertCount", alertCount);
         modelAndView.addObject("alerts", alerts);
         modelAndView.addObject("product", product);
-        modelAndView.addObject("productName",product.getProduct_name());
+        modelAndView.addObject("productName",product.getProductName());
         modelAndView.addObject("customerFullName", customer.getName());
 
         
@@ -149,8 +149,8 @@ public class ProductController {
 
 	@RequestMapping(value = "/admin/products/save", method = RequestMethod.POST)
     public ModelAndView saveProductDetails(@RequestParam(name="productId")String productId,
-                                        @RequestParam(name="product_name")String productName,
-                                        @RequestParam(name="product_code")String productCode,
+                                        @RequestParam(name="productName")String productName,
+                                        @RequestParam(name="productCode")String productCode,
                                         @RequestParam(name="category") String category,
                                         @RequestParam(name="quantity") Integer quantity)
                                
@@ -165,8 +165,8 @@ public class ProductController {
          
          
          Product product = productService.getOne(Integer.valueOf(productId));
-         product.setProduct_name(productName);
-         product.setProduct_code(productCode);
+         product.setProductName(productName);
+         product.setProductCode(productCode);
          product.setCategory(category);
          product.setQuantity(quantity);
          productService.update(product);

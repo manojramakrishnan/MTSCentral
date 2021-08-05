@@ -259,7 +259,7 @@ public class UtilServiceImpl implements UtilService {
 				storeProductIdValue.setBackgroundColor(BaseColor.WHITE);
 				storeProductIdValue.setExtraParagraphSpace(5f);
 				table.addCell(storeProductIdValue);
-				PdfPCell nameValue=new PdfPCell(new Paragraph(storeProducts.getProduct().getProduct_name(),tableBody));
+				PdfPCell nameValue=new PdfPCell(new Paragraph(storeProducts.getProduct().getProductName(),tableBody));
 				nameValue.setBorderColor(BaseColor.BLACK);
 				nameValue.setPaddingLeft(10);
 				nameValue.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -383,7 +383,7 @@ public class UtilServiceImpl implements UtilService {
 				categoryValue.setBackgroundColor(BaseColor.WHITE);
 				categoryValue.setExtraParagraphSpace(5f);
 				table.addCell(categoryValue);
-				PdfPCell productCodeValue=new PdfPCell(new Paragraph(products.getProduct_code(),tableBody));
+				PdfPCell productCodeValue=new PdfPCell(new Paragraph(products.getProductCode(),tableBody));
 				productCodeValue.setBorderColor(BaseColor.BLACK);
 				productCodeValue.setPaddingLeft(10);
 				productCodeValue.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -391,7 +391,7 @@ public class UtilServiceImpl implements UtilService {
 				productCodeValue.setBackgroundColor(BaseColor.WHITE);
 				productCodeValue.setExtraParagraphSpace(5f);
 				table.addCell(productCodeValue);
-				PdfPCell productNameValue=new PdfPCell(new Paragraph(products.getProduct_name(),tableBody));
+				PdfPCell productNameValue=new PdfPCell(new Paragraph(products.getProductName(),tableBody));
 				productNameValue.setBorderColor(BaseColor.BLACK);
 				productNameValue.setPaddingLeft(10);
 				productNameValue.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -899,7 +899,7 @@ public class UtilServiceImpl implements UtilService {
 				storeProductIdValue.setCellValue(storeProducts.getId());
 				storeProductIdValue.setCellStyle(bodyCellStyle);
 				HSSFCell nameValue=bodyRow.createCell(1);
-				nameValue.setCellValue(storeProducts.getProduct().getProduct_name());
+				nameValue.setCellValue(storeProducts.getProduct().getProductName());
 				nameValue.setCellStyle(bodyCellStyle);
 				HSSFCell priceValue=bodyRow.createCell(2);
 				priceValue.setCellValue(storeProducts.getPrice());
@@ -964,10 +964,10 @@ public class UtilServiceImpl implements UtilService {
 				categoryValue.setCellValue(products.getCategory());
 				categoryValue.setCellStyle(bodyCellStyle);
 				HSSFCell productCodeValue=bodyRow.createCell(2);
-				productCodeValue.setCellValue(products.getProduct_code());
+				productCodeValue.setCellValue(products.getProductCode());
 				productCodeValue.setCellStyle(bodyCellStyle);
 				HSSFCell productNameValue=bodyRow.createCell(3);
-				productNameValue.setCellValue(products.getProduct_name());
+				productNameValue.setCellValue(products.getProductName());
 				productNameValue.setCellStyle(bodyCellStyle);
 				HSSFCell quantityValue=bodyRow.createCell(4);
 				quantityValue.setCellValue(products.getQuantity());
