@@ -71,8 +71,14 @@ public class UserProfileController {
         Customer customer = customerService.findCustomerByEmail(auth.getName());
         address = userProfileService.getCustomerAddress(customer.getId());
         System.out.println("get Id "+customer.getId());
+        
         md.addObject("customer",customer);
+       if(address != null) {
         md.addObject("address", address);
+        }
+        else {
+        	md.addObject("address",new Address());
+        }
         
 //        md.addObject("id",customer.getId());
         md.setViewName("/admin/add-profile.html");
