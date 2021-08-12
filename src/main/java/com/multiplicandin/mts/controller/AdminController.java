@@ -25,6 +25,7 @@ import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.model.Role;
 import com.multiplicandin.mts.service.CustomerService;
 import com.multiplicandin.mts.service.RoleService;
+import com.multiplicandin.mts.service.UserProfileService;
 import com.multiplicandin.mts.util.service.UtilService;
 
 
@@ -34,6 +35,9 @@ public class AdminController {
 
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private UserProfileService userProfileService;
 	
 	@Autowired
 	private RoleService roleService;
@@ -128,6 +132,7 @@ public class AdminController {
 	    	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
 	    	Customer customer = customerService.findCustomerByEmail(auth.getName());
 	    	if(customer.getRole().getRole().equals("admin")) {
+	    		userProfileService.deleteByCustomerId(Integer.valueOf(customerId));
 	    		customerService.deleteById(Integer.valueOf(customerId));	
 	    	}
 	    	

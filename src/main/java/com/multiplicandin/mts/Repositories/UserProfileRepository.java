@@ -12,4 +12,7 @@ public interface UserProfileRepository extends JpaRepository<Address, Integer> {
 	@Query("SELECT a FROM Address a where a.customerId = :id")
 	Address getCustomerAddress(int id);
 
+	@Query("SELECT a FROM Address a where a.customerId = :customerId")
+	void deleteByCustomerId(Integer customerId);
+
 }

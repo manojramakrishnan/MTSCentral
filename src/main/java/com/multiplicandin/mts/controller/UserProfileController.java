@@ -84,4 +84,19 @@ public class UserProfileController {
         md.setViewName("/admin/add-profile.html");
         return md;
 	}
+	@RequestMapping(value={"/admin/addprofile"}, method = RequestMethod.POST)
+	public ModelAndView addAddressDetails(@Valid Address address ){
+		ModelAndView md = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("post email "+auth.getName());
+        Customer customer = customerService.findCustomerByEmail(auth.getName());
+//        customer.setId(customer1.getId());
+        address.setCustomerId(customer.getId());
+        Address address1 = userProfileService.saveCustomerAddress(address);
+        md.addObject("address",address1);
+        
+        md.setViewName("/admin/add-profile.html");
+        return md;
+
+	}
 }

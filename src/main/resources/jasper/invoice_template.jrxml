@@ -28,19 +28,19 @@
             <rightPen lineWidth="0.5" lineColor="#000000"/>
         </box>
     </style>
-    <subDataset name="products" uuid="89ff7b15-45c6-4732-a0cd-0d02809edba3">
-        <parameter name="order" class="com.stackextend.generatepdfdocument.model.OrderModel">
-            <defaultValueExpression><![CDATA[$P{order}]]></defaultValueExpression>
+    <subDataset name="customerOrder" uuid="89ff7b15-45c6-4732-a0cd-0d02809edba3">
+        <parameter name="customerOrder" class="com.multiplicandin.mts.model.CustomerOrder">
+            <defaultValueExpression><![CDATA[$P{customerOrder}]]></defaultValueExpression>
         </parameter>
         <queryString>
             <![CDATA[]]>
         </queryString>
-        <field name="productName" class="java.lang.String"/>
-        <field name="quantity" class="java.lang.Integer"/>
-        <field name="price" class="java.lang.Double"/>
+        <field name="orderDate" class="java.lang.String"/>
+        <field name="orderStatus" class="java.lang.String"/>
+        <field name="orderTotal" class="java.math.BigDecimal"/>
     </subDataset>
     <parameter name="logo" class="java.io.InputStream"/>
-    <parameter name="order" class="com.stackextend.generatepdfdocument.model.OrderModel"/>
+    <parameter name="customerOrder" class="com.multiplicandin.mts.model.CustomerOrder"/>
     <queryString>
         <![CDATA[]]>
     </queryString>
@@ -58,7 +58,7 @@
                 <textElement verticalAlignment="Middle">
                     <font fontName="Arial Black" size="16" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$R{jasper.invoice.title.label} + ": " + $P{order}.getCode()]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$R{jasper.invoice.title.label} + ": " + $P{customerOrder}.getOrderId()]]></textFieldExpression>
             </textField>
         </band>
     </title>
@@ -81,7 +81,7 @@
                     <textElement verticalAlignment="Top">
                         <font fontName="Arial" size="11" isBold="false"/>
                     </textElement>
-                    <textFieldExpression><![CDATA[$P{order}.getAddress().getFirstName()  + " " +  $P{order}.getAddress().getLastName()]]></textFieldExpression>
+                    <textFieldExpression><![CDATA[$P{customerOrder}.getAddress().getFirstName()  + " " +  $P{order}.getAddress().getLastName()]]></textFieldExpression>
                 </textField>
                 <textField>
                     <reportElement x="0" y="51" width="380" height="19" uuid="76193d2c-2228-4944-b5d1-999cd7ef6168"/>
