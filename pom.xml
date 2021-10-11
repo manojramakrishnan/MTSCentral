@@ -17,6 +17,8 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
@@ -27,6 +29,12 @@
 			<artifactId>jasperreports</artifactId>
 			<version>6.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.yy</groupId>
+			<artifactId>android-util</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-support</artifactId>
@@ -84,7 +92,7 @@
 			<artifactId>poi</artifactId>
 			<version>3.8</version>
 		</dependency>
-			<dependency>
+		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.17</version>
