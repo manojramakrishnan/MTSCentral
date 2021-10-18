@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/admin/admin_layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Delivery Home page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/pharmacy/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+</head>
+
+<body id="page-top">
+<div layout:fragment="content">
+    <div id="wrapper">
+       
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+
+            <div class="container-fluid">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Delivery</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-primary py-2">
+                            <div class="card-body">
+                            
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Total</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span th:text="${totaldelivery}"></span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-briefcase-medical fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-battery-empty fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+	<a th:href="@{'/admin/createExcelForDelivery'}" style="float:right;"><img th:src="@{/images/excel.png}" style="width:40px;margin-left:10px;"></a>
+	<a th:href="@{'/admin/createPdfForDelivery'}" style="float:right;"><img th:src="@{/images/pdf.png}" style="width:40px;"></a>
+                    </div>
+                </div>
+                <br>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><a th:href="@{'/admin/delivery/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+							Id</a></th>
+                                <th><a th:href="@{'/admin/delivery/page/' + ${currentPage} + '?sortField=orderId&sortDir=' + ${reverseSortDir}}">
+							Order Id</a></th>
+                                <th><a th:href="@{'/admin/delivery/page/' + ${currentPage} + '?sortField=customerId&sortDir=' + ${reverseSortDir}}">
+							Customer Id</a></th>
+                                <th><a th:href="@{'/admin/delivery/page/' + ${currentPage} + '?sortField=customerName&sortDir=' + ${reverseSortDir}}">
+							Customer Name</a></th>
+                                <th><a th:href="@{'/admin/delivery/page/' + ${currentPage} + '?sortField=orderAddress&sortDir=' + ${reverseSortDir}}">
+							Order Address</a></th>
+            
+                                   
+                                
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="delivery : ${delivery}">
+                                <td><span th:text="${delivery.id}"></span></td>
+                                <td><span th:text="${delivery.orderId}"></span></td>
+                                <td><span th:text="${delivery.customerId}"></span></td>
+                                <td><span th:text="${delivery.customerName}"></span></td>   
+                                <td><span th:text="${delivery.orderAddress}"></span></td>
+                                <td>
+                                    <span>
+                                        <form method="POST" th:action="@{/admin/delivery/edit(deliveryId=${delivery.id})}">
+                                            <input type="submit" value="Edit" class="btn btn-outline-primary" />
+                                        </form>
+                                    </span>
+                                </td>                   
+                                <td>
+                                    <span>
+                                        <form method="POST" th:action="@{/delivery/delete(deliveryId=${delivery.id})}">
+                                            <input type="submit" value="Delete" class="btn btn-outline-danger" />
+                                        </form>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div th:if = "${totalPages > 1}">
+			<div class = "row col-sm-10">
+				<div class = "col-sm-2">
+					Total Rows: [[${totalItems}]] 
+				</div>
+				<div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/admin/delivery/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+				</div>
+				<div class = "col-sm-1">
+					<a th:if="${currentPage < totalPages}" th:href="@{'/admin/delivery/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+				
+				 <div class="col-sm-1">
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/admin/delivery/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Last</span>
+   				 </div>
+			</div>
+		</div>
+                </div>
+        </div>
+        <footer class="bg-white sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright"><span>Copyright © MTS e-Store 2021</span></div>
+            </div>
+        </footer>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="/pharmacy/js/bs-charts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="/pharmacy/js/theme.js"></script>
+</body>
+
+</html> 
