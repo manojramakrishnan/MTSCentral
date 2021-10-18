@@ -22,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
-import com.multiplicandin.mts.model.CustomerOrder;
 import com.multiplicandin.mts.model.Delivery;
 import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.model.Store;
