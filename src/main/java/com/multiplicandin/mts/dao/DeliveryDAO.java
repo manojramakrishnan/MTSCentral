@@ -17,9 +17,9 @@ public interface DeliveryDAO {
 	Delivery getOne(Integer id);
 
 	Delivery update(Delivery delivery);
-
-	void deleteById(Integer id);
-
+//
+//	void deleteById(Integer id);
+//
 	Page<Delivery> findAll(Pageable pageable);
 
 

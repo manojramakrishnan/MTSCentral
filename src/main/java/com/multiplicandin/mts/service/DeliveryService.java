@@ -15,10 +15,12 @@ public interface DeliveryService {
 
 	Delivery update(Delivery delivery);
 
-	void deleteById(Integer id);
+	Delivery findById(Integer id);
+
+	
+//	void deleteById(Integer id);
 
 	Page<Delivery> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
-	Delivery findById(Integer id);
 
 }

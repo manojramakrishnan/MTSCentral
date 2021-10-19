@@ -28,12 +28,6 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return deliveryDAO.findAll();
 	}
 	@Override
-	public Delivery findById(Integer id) {
-		// TODO Auto-generated method stub
-		return deliveryDAO.findById(id);
-	}
-
-	@Override
 	public Delivery getOne(Integer id) {
 		// TODO Auto-generated method stub
 		return deliveryDAO.getOne(id);
@@ -46,10 +40,17 @@ public class DeliveryServiceImpl implements DeliveryService {
 	}
 
 	@Override
-	public void deleteById(Integer id) {
+	public Delivery findById(Integer id) {
 		// TODO Auto-generated method stub
-		deliveryDAO.deleteById(id);
+		return deliveryDAO.findById(id);
 	}
+
+
+//	@Override
+//	public void deleteById(Integer id) {
+//		// TODO Auto-generated method stub
+//		deliveryDAO.deleteById(id);
+//	}
 
 	@Override
 	public Page<Delivery> findPaginated(int pageNo, int pageSize, String sortField, String sortDir) {

@@ -59,7 +59,6 @@ public class DeliveryController {
     	List<Delivery> delivery= deliveryService.findAll();
     	modelAndView.addObject("delivery",delivery);
     	modelAndView.addObject("customerName", customer.getName());
-//    	modelAndView.setViewName("/admin/orders.html");
     	return findPaginated(1, "Id", "asc");
     	
 	}
@@ -121,50 +120,50 @@ public class DeliveryController {
         return modelAndView;
 
         }
-	@RequestMapping(value="/delivery/delete", method = RequestMethod.POST)
-    public ModelAndView deleteOrder (@RequestParam(name="deliveryId")String deliveryId) {
-		ModelAndView modelAndView = new ModelAndView();
-        deliveryService.deleteById(Integer.valueOf(deliveryId));
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Customer customer = customerService.findCustomerByEmail(auth.getName());
-
-        modelAndView.addObject("customerFullName", customer.getName());
-        
-
-        modelAndView.setViewName("redirect:/admin/delivery");
-        
-        return modelAndView;
-    }
-	  @RequestMapping(value="/admin/createPdfForDelivery",method= RequestMethod.GET)
-			public void createPdf(HttpServletRequest request,HttpServletResponse response) {
-				boolean isFlag=false;
-					List<Delivery> delivery=new ArrayList<>();
-					System.out.println("inside createpdf");
-					delivery=deliveryService.findAll();
-					Modules modules=new Modules();
-					modules.setDelivery(delivery);
-					isFlag=utilService.createPdf(modules,context);
-					 if(isFlag) {
-							String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"delivery"+".pdf");
-							utilService.filedownload(fullPath,response,".pdf");
-						}
-				
-				
-			}
-			 @RequestMapping(value="/admin/createExcelForDelivery",method= RequestMethod.GET)
-			  public void create(HttpServletRequest request,HttpServletResponse response) {
-				  boolean isFlag=false;
-				  List<Delivery> delivery= new ArrayList<>();
-				  delivery=deliveryService.findAll();
-				  Modules modules=new Modules();
-				  modules.setDelivery(delivery);;
-				  isFlag=utilService.createExcel(modules,context);
-					if(isFlag) {
-						String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"delivery"+".xls");
-					utilService.filedownload(fullPath,response,".xls");
-					}
-				}
+//	@RequestMapping(value="/delivery/delete", method = RequestMethod.POST)
+//    public ModelAndView deleteOrder (@RequestParam(name="deliveryId")String deliveryId) {
+//		ModelAndView modelAndView = new ModelAndView();
+//        deliveryService.deleteById(Integer.valueOf(deliveryId));
+//        
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Customer customer = customerService.findCustomerByEmail(auth.getName());
+//
+//        modelAndView.addObject("customerFullName", customer.getName());
+//        
+//
+//        modelAndView.setViewName("redirect:/admin/delivery");
+//        
+//        return modelAndView;
+//    }
+//	  @RequestMapping(value="/admin/createPdfForDelivery",method= RequestMethod.GET)
+//			public void createPdf(HttpServletRequest request,HttpServletResponse response) {
+//				boolean isFlag=false;
+//					List<Delivery> delivery=new ArrayList<>();
+//					System.out.println("inside createpdf");
+//					delivery=deliveryService.findAll();
+//					Modules modules=new Modules();
+//					modules.setDelivery(delivery);
+//					isFlag=utilService.createPdf(modules,context);
+//					 if(isFlag) {
+//							String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"delivery"+".pdf");
+//							utilService.filedownload(fullPath,response,".pdf");
+//						}
+//				
+//				
+//			}
+//			 @RequestMapping(value="/admin/createExcelForDelivery",method= RequestMethod.GET)
+//			  public void create(HttpServletRequest request,HttpServletResponse response) {
+//				  boolean isFlag=false;
+//				  List<Delivery> delivery= new ArrayList<>();
+//				  delivery=deliveryService.findAll();
+//				  Modules modules=new Modules();
+//				  modules.setDelivery(delivery);;
+//				  isFlag=utilService.createExcel(modules,context);
+//					if(isFlag) {
+//						String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"delivery"+".xls");
+//					utilService.filedownload(fullPath,response,".xls");
+//					}
+//				}
 			 
 			 @RequestMapping(value = "/admin/delivery/page/{pageNo}", method = RequestMethod.GET)
 			 public ModelAndView findPaginated(@PathVariable (value = "pageNo") int pageNo,
