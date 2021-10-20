@@ -57,11 +57,11 @@ private DeliveryRepository deliveryRepository;
 		entityManager.merge(persisteddelivery);
         return persisteddelivery;
 	}
-//	@Override
-//	public void deleteById(Integer id) {
-//		// TODO Auto-generated method stub
-//		deliveryRepository.deleteById(id);
-//	}
+	@Override
+	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
+		deliveryRepository.deleteById(id);
+	}
 	@Override
 	public Page<Delivery> findAll(Pageable pageable) {
 		// TODO Auto-generated method stub

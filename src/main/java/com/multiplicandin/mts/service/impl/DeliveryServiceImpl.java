@@ -46,11 +46,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 	}
 
 
-//	@Override
-//	public void deleteById(Integer id) {
-//		// TODO Auto-generated method stub
-//		deliveryDAO.deleteById(id);
-//	}
+	@Override
+	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
+		deliveryDAO.deleteById(id);
+	}
 
 	@Override
 	public Page<Delivery> findPaginated(int pageNo, int pageSize, String sortField, String sortDir) {

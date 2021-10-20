@@ -18,7 +18,7 @@ public interface DeliveryService {
 	Delivery findById(Integer id);
 
 	
-//	void deleteById(Integer id);
+	void deleteById(Integer id);
 
 	Page<Delivery> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 

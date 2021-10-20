@@ -120,21 +120,21 @@ public class DeliveryController {
         return modelAndView;
 
         }
-//	@RequestMapping(value="/delivery/delete", method = RequestMethod.POST)
-//    public ModelAndView deleteOrder (@RequestParam(name="deliveryId")String deliveryId) {
-//		ModelAndView modelAndView = new ModelAndView();
-//        deliveryService.deleteById(Integer.valueOf(deliveryId));
-//        
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        Customer customer = customerService.findCustomerByEmail(auth.getName());
-//
-//        modelAndView.addObject("customerFullName", customer.getName());
-//        
-//
-//        modelAndView.setViewName("redirect:/admin/delivery");
-//        
-//        return modelAndView;
-//    }
+	@RequestMapping(value="/delivery/delete", method = RequestMethod.POST)
+    public ModelAndView deleteOrder (@RequestParam(name="deliveryId")String deliveryId) {
+		ModelAndView modelAndView = new ModelAndView();
+        deliveryService.deleteById(Integer.valueOf(deliveryId));
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerService.findCustomerByEmail(auth.getName());
+
+        modelAndView.addObject("customerFullName", customer.getName());
+        
+
+        modelAndView.setViewName("redirect:/admin/delivery");
+        
+        return modelAndView;
+    }
 //	  @RequestMapping(value="/admin/createPdfForDelivery",method= RequestMethod.GET)
 //			public void createPdf(HttpServletRequest request,HttpServletResponse response) {
 //				boolean isFlag=false;
