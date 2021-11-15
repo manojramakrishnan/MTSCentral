@@ -125,6 +125,8 @@
 							Name</a></th>
                                         <th><a th:href="@{'/admin/user/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
 							Email Address</a></th>
+							<th><a th:href="@{'/admin/user/page/' + ${currentPage} + '?sortField=customerAddress&sortDir=' + ${reverseSortDir}}">
+							Customer Address</a></th>
                                         <th style="width: 10px"></th>
                                         <th style="width: 10px"></th>
                             </tr>
@@ -134,7 +136,7 @@
                                 <td><span th:text="${customer.id}"></span></td>
                                 <td><span th:text="${customer.name}"></span></td>
                                 <td><span th:text="${customer.email}"></span></td>
-                                
+                                <td><span th:text="${customer.customerAddress}"></span></td>
                                     <td>
                                     <span>
                                         <form method="POST" th:action="@{/admin/user/edit(customerId=${customer.id})}">

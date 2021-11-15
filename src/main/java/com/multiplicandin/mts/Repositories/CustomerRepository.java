@@ -19,6 +19,10 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 	@Query("SELECT c FROM Customer c where c.role != :role_id")
 	List<Customer> findAllWithoutAdminRole(@Param("role_id") Role role_id);
 
+	@Query("SELECT c FROM Customer c where c.role= :role_id")
+	Customer getCustomerDetailByRole(@Param("role_id") Role role_id);
+
+
 	
 
 }

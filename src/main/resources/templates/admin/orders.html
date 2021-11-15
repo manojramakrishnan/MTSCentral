@@ -69,8 +69,6 @@
 							Order Status</a></th>
                                 <th><a th:href="@{'/admin/page/' + ${currentPage} + '?sortField=orderTotal&sortDir=' + ${reverseSortDir}}">
 							Order Total</a></th>
-                                <th>Action </th>
-                                
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -78,10 +76,10 @@
                         <tbody>
                             <tr th:each="order : ${customerOrder}">
                                 <td><span th:text="${order.id}"></span></td>
-                                <td><span th:text="${order.orderDate}"></span></td>
+                                <td><span th:text="${#calendars.format(order.orderDate, 'dd/MM/yyyy')}"></span></td>
                                 <td><span th:text="${order.orderStatus}"></span></td>
                                 <td><span th:text="${order.orderTotal}"></span></td>   
-                                <td>
+                                 <td>
                                     <span>
                                         <form method="POST" th:action="@{/admin/orders/edit(orderId=${order.id})}">
                                             <input type="submit" value="Edit" class="btn btn-outline-primary" />
@@ -95,13 +93,14 @@
                                         </form>
                                     </span>
                                 </td>
-                              <td>
+                                <td>
                                     <span>
                                         <form method="POST" th:action="@{/admin/payment/process(orderId=${order.id})}">
                                             <input type="submit" value="Pay" class="btn btn-outline-danger" />
                                         </form>
-                                        </span>
-                                </td> 
+                                    </span>
+                                </td>
+                               
                             </tr>
                         </tbody>
                     </table>

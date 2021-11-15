@@ -60,6 +60,18 @@ public class DeliveryServiceImpl implements DeliveryService {
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
 		return deliveryDAO.findAll(pageable);
 	}
+	@Override
+	public void save(Delivery delivery) {
+		// TODO Auto-generated method stub
+		deliveryDAO.save(delivery);
+
+	}
+	@Override
+	public Delivery createNewDelivery(Delivery delivery) {
+		// TODO Auto-generated method stub
+		return deliveryDAO.createNewDelivery(delivery);
+
+	}
 
 
 

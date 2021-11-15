@@ -71,7 +71,12 @@
 							Customer Name</a></th>
                                 <th><a th:href="@{'/admin/delivery/page/' + ${currentPage} + '?sortField=orderAddress&sortDir=' + ${reverseSortDir}}">
 							Order Address</a></th>
-            
+							     <th><a th:href="@{'/admin/delivery/page/' + ${currentPage} + '?sortField=deliveryStatus&sortDir=' + ${reverseSortDir}}">
+							Delivery Status</a></th>
+							      <th><a th:href="@{'/admin/delivery/page/' + ${currentPage} + '?sortField=deliveryGuyName&sortDir=' + ${reverseSortDir}}">
+							Delivery Guy Name</a></th>
+							
+								            
                                    
                                 
                                 <th></th>
@@ -85,6 +90,9 @@
                                 <td><span th:text="${delivery.customerId}"></span></td>
                                 <td><span th:text="${delivery.customerName}"></span></td>   
                                 <td><span th:text="${delivery.orderAddress}"></span></td>
+                                <td><span th:text="${delivery.deliveryStatus}"></span></td>
+                                <td><span th:text="${delivery.deliveryGuyName}"></span></td>
+								
                                 <td>
                                     <span>
                                         <form method="POST" th:action="@{/admin/delivery/edit(deliveryId=${delivery.id})}">

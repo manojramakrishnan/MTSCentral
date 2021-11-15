@@ -22,5 +22,9 @@ public interface DeliveryDAO {
 
 	Page<Delivery> findAll(Pageable pageable);
 
+	void save(Delivery delivery);
+
+	Delivery createNewDelivery(Delivery delivery);
+
 
 }

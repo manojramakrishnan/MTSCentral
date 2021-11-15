@@ -32,4 +32,7 @@ public interface CustomerDAO {
 
 	Page<Customer> findAll(Pageable pageable);
 
+	Customer getCustomerDetailByRole(Role role);
+
+
 }

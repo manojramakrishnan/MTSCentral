@@ -26,6 +26,12 @@ public class Delivery {
 	@Column(name="orderAddress")
 	private String orderAddress;
 	
+	@Column(name="deliveryStatus")
+	private String deliveryStatus;
+	
+	@Column(name="deliveryGuyName")
+	private String deliveryGuyName;
+	
 	public Delivery() {
 		}
 
@@ -69,21 +75,40 @@ public class Delivery {
 		this.orderAddress = orderAddress;
 	}
 
+	public String getDeliveryStatus() {
+		return deliveryStatus;
+	}
+
+	public void setDeliveryStatus(String deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
+	}
+
+	public String getDeliveryGuyName() {
+		return deliveryGuyName;
+	}
+
+	public void setDeliveryGuyName(String deliveryGuyName) {
+		this.deliveryGuyName = deliveryGuyName;
+	}
+
 	@Override
 	public String toString() {
 		return "Delivery [id=" + id + ", orderId=" + orderId + ", customerId=" + customerId + ", customerName="
-				+ customerName + ", orderAddress=" + orderAddress + "]";
+				+ customerName + ", orderAddress=" + orderAddress + ", deliveryStatus=" + deliveryStatus
+				+ ", deliveryGuyName=" + deliveryGuyName + "]";
 	}
 
-	public Delivery(int id, int orderId, int customerId, String customerName, String orderAddress) {
+	public Delivery(int id, int orderId, int customerId, String customerName, String orderAddress,
+			String deliveryStatus, String deliveryGuyName) {
 		super();
 		this.id = id;
 		this.orderId = orderId;
 		this.customerId = customerId;
 		this.customerName = customerName;
 		this.orderAddress = orderAddress;
+		this.deliveryStatus = deliveryStatus;
+		this.deliveryGuyName = deliveryGuyName;
 	}
-
 
 		
 }

@@ -108,6 +108,16 @@ public class CustomerDAOImpl implements CustomerDAO {
 		// TODO Auto-generated method stub
 		return customerRepository.findAll(pageable);
 	}
+
+	@Override
+	public Customer getCustomerDetailByRole(Role role) {
+		// TODO Auto-generated method stub
+		return customerRepository.getCustomerDetailByRole(role) ;
+	}
+
+	
+
+	
 	
 	
 

@@ -126,8 +126,10 @@ public class CustomerOrder {
     private boolean submitted; // yes or no
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "order_date")
     private java.util.Date orderDate;
 
+    @Column(name = "order_status")
     private String orderStatus;
 
     private BigDecimal orderTotal;

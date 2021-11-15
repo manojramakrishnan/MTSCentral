@@ -16,7 +16,7 @@ import com.multiplicandin.mts.dao.DeliveryDAO;
 import com.multiplicandin.mts.model.CustomerOrder;
 import com.multiplicandin.mts.model.Delivery;
 
-@Component("deliveryDAOImpl")
+@Component("deliveryDAO")
 public class DeliveryDAOImpl implements DeliveryDAO {
 
 private DeliveryRepository deliveryRepository;
@@ -66,6 +66,17 @@ private DeliveryRepository deliveryRepository;
 	public Page<Delivery> findAll(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return deliveryRepository.findAll(pageable);
+	}
+	@Override
+	public void save(Delivery delivery) {
+		// TODO Auto-generated method stub
+		deliveryRepository.save(delivery);
+		
+	}
+	@Override
+	public Delivery createNewDelivery(Delivery delivery) {
+		// TODO Auto-generated method stub
+		return deliveryRepository.save(delivery);
 	}
 	
 	

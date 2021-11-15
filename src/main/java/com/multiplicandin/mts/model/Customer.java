@@ -42,6 +42,8 @@ public class Customer {
 	@JoinColumn
 	private Store store;
 	
+	private String customerAddress;
+	
 	@Column(name = "active")
     private int active;
 	    public int getActive() {
@@ -140,19 +142,17 @@ public class Customer {
 		this.role = role;
 	}
 
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", email=" + email + ", role=" + role + ", roles=" + roles + ", store=" + store
-				+ ", active=" + active + ", password=" + password + ", name=" + name + ", newPassword=" + newPassword
-				+ ", rePassword=" + rePassword + "]";
+
+	public String getCustomerAddress() {
+		return customerAddress;
 	}
 
-	public Customer() {
-		
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
 	}
 
 	public Customer(int id, @NotEmpty(message = "*Can't be blank") String email, Role role, Set<Role> roles,
-			Store store, int active, @NotEmpty(message = "*Can't be blank") String password,
+			Store store, String customerAddress, int active, @NotEmpty(message = "*Can't be blank") String password,
 			@NotEmpty(message = "*Can't be blank") String name, String newPassword, String rePassword) {
 		super();
 		this.id = id;
@@ -160,11 +160,23 @@ public class Customer {
 		this.role = role;
 		this.roles = roles;
 		this.store = store;
+		this.customerAddress = customerAddress;
 		this.active = active;
 		this.password = password;
 		this.name = name;
 		this.newPassword = newPassword;
 		this.rePassword = rePassword;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", email=" + email + ", role=" + role + ", roles=" + roles + ", store=" + store
+				+ ", customerAddress=" + customerAddress + ", active=" + active + ", password=" + password + ", name="
+				+ name + ", newPassword=" + newPassword + ", rePassword=" + rePassword + "]";
+	}
+
+	public Customer() {
+		
 	}
 
 	

@@ -1,11 +1,11 @@
 package com.multiplicandin.mts.controller;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +27,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.CustomerOrder;
-import com.multiplicandin.mts.model.Estimate;
+import com.multiplicandin.mts.model.Delivery;
 import com.multiplicandin.mts.model.Modules;
+import com.multiplicandin.mts.model.Role;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.service.AlertService;
 import com.multiplicandin.mts.service.CustomerService;
+import com.multiplicandin.mts.service.DeliveryService;
 import com.multiplicandin.mts.service.OrderService;
+import com.multiplicandin.mts.service.RoleService;
 import com.multiplicandin.mts.util.service.UtilService;
 
 @Controller
@@ -53,8 +56,13 @@ public class OrderController {
 	@Autowired
 	private ServletContext context;
 	
-
+	@Autowired
+	private DeliveryService deliveryService;
 	
+	@Autowired
+	private RoleService roleService;
+	
+
 	
 	@RequestMapping (value = {"admin/orders"}, method=RequestMethod.GET)
 	public ModelAndView orderScreen() {
@@ -91,7 +99,7 @@ public class OrderController {
     public ModelAndView addOrder(@Valid CustomerOrder customerOrder , BindingResult result){
         ModelAndView modelAndView = new ModelAndView();
 
-        	
+        	System.err.println("orderDate"+customerOrder.getOrderDate());
         	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		Customer customer = customerService.findCustomerByEmail(auth.getName());
     		System.out.println("auth"+auth.getName());
@@ -105,10 +113,13 @@ public class OrderController {
         	customerOrder.getCustomer().setId(customer.getId());
         	customerOrder.getStore().setId(customer.getStore().getId());
         	customerOrder.setSubmitted(true);
+        	
     		CustomerOrder customerOrder1 = orderService.createNewOrder(customerOrder);
     		CustomerOrder customerOrders = orderService.findAllByOrderId(customerOrder1.getId());
             modelAndView.addObject("totalOrders", orderService.findAll().size());
             List<CustomerOrder> customerOrders1 =orderService.findAll();
+            
+            
             
             modelAndView.addObject("customerOrder", customerOrders1);
             modelAndView.addObject("customerFullName", customer.getName());
@@ -131,11 +142,38 @@ public class OrderController {
         if(null != alerts) {
         	alertCount = alerts.size();
         }
-        modelAndView.addObject("alertCount", alertCount);
-        modelAndView.addObject("alerts", alerts);
-        modelAndView.addObject("customerOrder", customerOrder);
-        modelAndView.addObject("orderDate",customerOrder.getOrderDate());
-        modelAndView.addObject("customerFullName", customer.getName());
+       
+        SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy"); 
+		if(null != customerOrder.getOrderDate())
+		try
+		{
+		String yyyy = customerOrder.getOrderDate().toString().substring(0, 4);
+		System.out.println(yyyy);
+		String mm = customerOrder.getOrderDate().toString().substring(5,7);
+		System.out.println(mm);
+		String dd = customerOrder.getOrderDate().toString().substring(8,10);
+		System.out.println(dd);
+		StringBuffer sb = new StringBuffer();
+		sb.append(dd);
+		sb.append("/");
+		sb.append(mm);
+		sb.append("/");
+		sb.append(yyyy);
+		System.out.println(sb.toString());
+		Date date = formatter.parse(sb.toString());
+		System.out.println(date);
+		customerOrder.setOrderDate(date);
+		System.out.println(formatter.format(date));
+		 modelAndView.addObject("alertCount", alertCount);
+	        modelAndView.addObject("alerts", alerts);
+	        modelAndView.addObject("customerOrder", customerOrder);
+     modelAndView.addObject("orderDate",formatter.format(date));
+     modelAndView.addObject("customerFullName", customer.getName());
+		
+		}catch (ParseException e) {
+		e.printStackTrace();
+		}
+		
 
         
 
@@ -158,9 +196,33 @@ public class OrderController {
          Authentication auth = SecurityContextHolder.getContext().getAuthentication();
          Customer customer = customerService.findCustomerByEmail(auth.getName());
          
-         
+//         
          CustomerOrder customerOrder = orderService.getOne(Integer.valueOf(orderId));
-         customerOrder.setOrderDate(orderDate);;
+//         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+//         Date orderDt;
+//		try {
+//			orderDt = format.parse(orderDate);
+			customerOrder.setOrderDate(orderDate);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		       if(orderStatus.equals("paid")) {
+		        	 Delivery delivery =new Delivery();
+		        	 delivery.setCustomerId(customer.getId());
+		        	 delivery.setCustomerName(customer.getName());
+		        	 Role role = roleService.findById(3);
+		        	 Customer customer1 = customerService.getCustomerDetailByRole(role);
+		        	 delivery.setDeliveryGuyName(customer1.getName());
+		        	 delivery.setDeliveryStatus("Undelivered");
+		        	 delivery.setId(delivery.getId());
+		        	 delivery.setOrderAddress(customer.getCustomerAddress());
+		        	 delivery.setOrderId(customerOrder.getId());
+		        	 Delivery delivery1 = deliveryService.createNewDelivery(delivery);
+		        	 
+		         }
+		 
+         
          customerOrder.setOrderStatus(orderStatus);
          customerOrder.setOrderTotal(orderTotal);
         

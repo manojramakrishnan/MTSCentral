@@ -134,5 +134,14 @@ public class CustomerServiceImpl implements CustomerService{
 		return this.customerDAO.findAll(pageable);
 	
 	}
+
+	@Override
+	public Customer getCustomerDetailByRole(Role role) {
+		// TODO Auto-generated method stub
+		return customerDAO.getCustomerDetailByRole(role);
+	}
+
+	
+
 	
 }

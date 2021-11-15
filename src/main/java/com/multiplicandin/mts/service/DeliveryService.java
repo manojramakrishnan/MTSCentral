@@ -22,5 +22,9 @@ public interface DeliveryService {
 
 	Page<Delivery> findPaginated(int pageNo, int pageSize, String sortField, String sortDir);
 
+	void save(Delivery delivery);
+
+	Delivery createNewDelivery(Delivery delivery);
+
 
 }

@@ -31,4 +31,7 @@ public interface CustomerService {
 
 	Page<Customer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
+	Customer getCustomerDetailByRole(Role role);
+
+
 }

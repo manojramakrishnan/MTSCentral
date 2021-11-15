@@ -103,13 +103,14 @@ public class AdminController {
 	  }
 	  @RequestMapping(value= {"/admin/user/save"}, method= RequestMethod.POST)
 	  public ModelAndView editCustomerDetails(@RequestParam(name="customerId") String customerId, @RequestParam(name="name") String name,
-			  @RequestParam(name="email") String email ) {
+			  @RequestParam(name="email") String email, @RequestParam(name="customerAddress") String customerAddress) {
 	    	ModelAndView modelAndView = new ModelAndView();
 	    	Authentication auth= SecurityContextHolder.getContext().getAuthentication();
 	    	Customer customer1 = customerService.findCustomerByEmail(auth.getName());
 	    	Customer customer= customerService.getOne(Integer.valueOf(customerId));
 	    	customer.setName(name);
 	    	customer.setEmail(email);
+	    	customer.setCustomerAddress(customerAddress);
 	    	customerService.update(customer);
 	    	modelAndView.addObject("customer", customer);
 	    	modelAndView.addObject("customername", customer.getName());
