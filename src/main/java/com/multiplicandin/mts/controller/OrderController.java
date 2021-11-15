@@ -215,7 +215,7 @@ public class OrderController {
 		        	 Customer customer1 = customerService.getCustomerDetailByRole(role);
 		        	 delivery.setDeliveryGuyName(customer1.getName());
 		        	 delivery.setDeliveryStatus("Undelivered");
-		        	 delivery.setId(delivery.getId());
+		        	 //delivery.setId(delivery.getId());
 		        	 delivery.setOrderAddress(customer.getCustomerAddress());
 		        	 delivery.setOrderId(customerOrder.getId());
 		        	 Delivery delivery1 = deliveryService.createNewDelivery(delivery);
