@@ -30,6 +30,8 @@ public class Customer {
 	@NotEmpty(message = "*Can't be blank")
 	private String email;
 
+	private String contactNo;
+	
 	@ManyToOne
 	@JoinColumn
 	private Role role;
@@ -151,33 +153,44 @@ public class Customer {
 		this.customerAddress = customerAddress;
 	}
 
-	public Customer(int id, @NotEmpty(message = "*Can't be blank") String email, Role role, Set<Role> roles,
-			Store store, String customerAddress, int active, @NotEmpty(message = "*Can't be blank") String password,
-			@NotEmpty(message = "*Can't be blank") String name, String newPassword, String rePassword) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.role = role;
-		this.roles = roles;
-		this.store = store;
-		this.customerAddress = customerAddress;
-		this.active = active;
-		this.password = password;
-		this.name = name;
-		this.newPassword = newPassword;
-		this.rePassword = rePassword;
-	}
-
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", email=" + email + ", role=" + role + ", roles=" + roles + ", store=" + store
-				+ ", customerAddress=" + customerAddress + ", active=" + active + ", password=" + password + ", name="
-				+ name + ", newPassword=" + newPassword + ", rePassword=" + rePassword + "]";
-	}
-
-	public Customer() {
+		public Customer() {
 		
 	}
+
+		public String getContactNo() {
+			return contactNo;
+		}
+
+		public void setContactNo(String contactNo) {
+			this.contactNo = contactNo;
+		}
+
+		public Customer(int id, @NotEmpty(message = "*Can't be blank") String email, String contactNo, Role role,
+				Set<Role> roles, Store store, String customerAddress, int active,
+				@NotEmpty(message = "*Can't be blank") String password,
+				@NotEmpty(message = "*Can't be blank") String name, String newPassword, String rePassword) {
+			super();
+			this.id = id;
+			this.email = email;
+			this.contactNo = contactNo;
+			this.role = role;
+			this.roles = roles;
+			this.store = store;
+			this.customerAddress = customerAddress;
+			this.active = active;
+			this.password = password;
+			this.name = name;
+			this.newPassword = newPassword;
+			this.rePassword = rePassword;
+		}
+
+		@Override
+		public String toString() {
+			return "Customer [id=" + id + ", email=" + email + ", contactNo=" + contactNo + ", role=" + role
+					+ ", roles=" + roles + ", store=" + store + ", customerAddress=" + customerAddress + ", active="
+					+ active + ", password=" + password + ", name=" + name + ", newPassword=" + newPassword
+					+ ", rePassword=" + rePassword + "]";
+		}
 
 	
 	

@@ -28,14 +28,18 @@ import com.multiplicandin.mts.model.Alert;
 import com.multiplicandin.mts.model.Customer;
 import com.multiplicandin.mts.model.CustomerOrder;
 import com.multiplicandin.mts.model.Delivery;
+import com.multiplicandin.mts.model.Email;
 import com.multiplicandin.mts.model.Modules;
 import com.multiplicandin.mts.model.Role;
+import com.multiplicandin.mts.model.Sms;
 import com.multiplicandin.mts.model.Store;
 import com.multiplicandin.mts.service.AlertService;
 import com.multiplicandin.mts.service.CustomerService;
 import com.multiplicandin.mts.service.DeliveryService;
+import com.multiplicandin.mts.service.EmailService;
 import com.multiplicandin.mts.service.OrderService;
 import com.multiplicandin.mts.service.RoleService;
+import com.multiplicandin.mts.service.SmsService;
 import com.multiplicandin.mts.util.service.UtilService;
 
 @Controller
@@ -61,6 +65,12 @@ public class OrderController {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private SmsService smsService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 
 	
@@ -209,7 +219,7 @@ public class OrderController {
 //		}
 		       if(orderStatus.equals("paid")) {
 		        	 Delivery delivery =new Delivery();
-		        	 delivery.setCustomerId(customer.getId());
+		     	     delivery.setCustomerId(customer.getId());
 		        	 delivery.setCustomerName(customer.getName());
 		        	 Role role = roleService.findById(3);
 		        	 Customer customer1 = customerService.getCustomerDetailByRole(role);
@@ -219,8 +229,20 @@ public class OrderController {
 		        	 delivery.setOrderAddress(customer.getCustomerAddress());
 		        	 delivery.setOrderId(customerOrder.getId());
 		        	 Delivery delivery1 = deliveryService.createNewDelivery(delivery);
-		        	 
-		         }
+		        	 Sms sms = new Sms();
+		        	sms.setTo(customer.getContactNo());
+		        	sms.setMessage("items are ready for delivery");
+		        	
+		        	sendSmsForDelivery(sms);
+		       
+		        	Email email = new Email();
+		        	email.setDeliveryEmailId(customer1.getEmail());
+		        	email.setMessage(sms.getMessage());
+		        	
+		        	
+		        	sendEmailForDelivery(email,delivery.getOrderId());
+		        	
+		       }
 		 
          
          customerOrder.setOrderStatus(orderStatus);
@@ -237,6 +259,22 @@ public class OrderController {
         return modelAndView;
 
         }
+	
+	private void sendEmailForDelivery(Email email, int orderId) {
+		// TODO Auto-generated method stub
+		emailService.sendSimpleEmail(email.getDeliveryEmailId(),email.getMessage()+orderId, "Ready For Delivery");
+	}
+		
+	
+	private void sendSmsForDelivery(Sms sms) {
+		// TODO Auto-generated method stub
+		smsService.send(sms);
+	
+	
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/orders/delete", method = RequestMethod.POST)
     public ModelAndView deleteOrder (@RequestParam(name="orderId")String orderId) {
