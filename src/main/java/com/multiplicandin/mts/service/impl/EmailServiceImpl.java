@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.multiplicandin.mts.service.EmailService;
 
-@Service
+@Service("emailService")
 public class EmailServiceImpl implements EmailService {
 
 	@Autowired
@@ -19,7 +19,7 @@ public class EmailServiceImpl implements EmailService {
 		SimpleMailMessage message1 = new SimpleMailMessage();
 
 		
-		message1.setFrom("akhilmurali662@gmail.com");
+		message1.setFrom("manoj.rgv@gmail.com");
 		message1.setTo(deliveryEmailId);
 		message1.setText(message);
 		message1.setSubject(subject);
