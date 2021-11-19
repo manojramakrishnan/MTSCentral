@@ -1,6 +1,7 @@
 package com.multiplicandin.mts.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -32,6 +33,11 @@ public interface CustomerService {
 	Page<Customer> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
 	Customer getCustomerDetailByRole(Role role);
+
+	Optional<Customer> findCustomerByResetToken(String resetToken);
+
+	Optional<Customer> finduserByEmail(String email);
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.multiplicandin.mts.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -33,6 +34,10 @@ public interface CustomerDAO {
 	Page<Customer> findAll(Pageable pageable);
 
 	Customer getCustomerDetailByRole(Role role);
+
+	Optional<Customer> findByResetToken(String resetToken);
+
+	Optional<Customer> findByMail(String email);
 
 
 }

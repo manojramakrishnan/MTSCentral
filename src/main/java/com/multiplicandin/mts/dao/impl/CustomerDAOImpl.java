@@ -115,6 +115,17 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return customerRepository.getCustomerDetailByRole(role) ;
 	}
 
+	@Override
+	public Optional<Customer> findByResetToken(String resetToken) {
+		// TODO Auto-generated method stub
+		return customerRepository.findByResetToken(resetToken);	}
+
+	@Override
+	public Optional<Customer> findByMail(String email) {
+		// TODO Auto-generated method stub
+		return customerRepository.findByEmail(email);
+	}
+
 	
 
 	

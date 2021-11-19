@@ -3,6 +3,7 @@ package com.multiplicandin.mts.service.impl;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -139,6 +140,17 @@ public class CustomerServiceImpl implements CustomerService{
 	public Customer getCustomerDetailByRole(Role role) {
 		// TODO Auto-generated method stub
 		return customerDAO.getCustomerDetailByRole(role);
+	}
+
+	@Override
+	public Optional<Customer> findCustomerByResetToken(String resetToken) {
+		// TODO Auto-generated method stub
+		return customerDAO.findByResetToken(resetToken);	}
+
+	@Override
+	public Optional<Customer> finduserByEmail(String email) {
+		// TODO Auto-generated method stub
+		return customerDAO.findByMail(email);
 	}
 
 	

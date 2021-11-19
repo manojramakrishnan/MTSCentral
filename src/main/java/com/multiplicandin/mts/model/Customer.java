@@ -1,5 +1,6 @@
 package com.multiplicandin.mts.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -73,6 +74,66 @@ public class Customer {
 
 	@Transient
     private String rePassword;
+	
+	private Date lastLogin; 
+	
+	private String resetToken;
+	
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public Customer(int id, @NotEmpty(message = "*Can't be blank") String email, String contactNo, Role role,
+			Set<Role> roles, Store store, String customerAddress, int active,
+			@NotEmpty(message = "*Can't be blank") String password, @NotEmpty(message = "*Can't be blank") String name,
+			String newPassword, String rePassword, Date lastLogin, String resetToken, boolean enabled) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.contactNo = contactNo;
+		this.role = role;
+		this.roles = roles;
+		this.store = store;
+		this.customerAddress = customerAddress;
+		this.active = active;
+		this.password = password;
+		this.name = name;
+		this.newPassword = newPassword;
+		this.rePassword = rePassword;
+		this.lastLogin = lastLogin;
+		this.resetToken = resetToken;
+		this.enabled = enabled;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", email=" + email + ", contactNo=" + contactNo + ", role=" + role + ", roles="
+				+ roles + ", store=" + store + ", customerAddress=" + customerAddress + ", active=" + active
+				+ ", password=" + password + ", name=" + name + ", newPassword=" + newPassword + ", rePassword="
+				+ rePassword + ", lastLogin=" + lastLogin + ", resetToken=" + resetToken + ", enabled=" + enabled + "]";
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public String getResetToken() {
+		return resetToken;
+	}
+
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	private boolean enabled;
 	
 	public int getId() {
 		return id;
@@ -163,33 +224,6 @@ public class Customer {
 
 		public void setContactNo(String contactNo) {
 			this.contactNo = contactNo;
-		}
-
-		public Customer(int id, @NotEmpty(message = "*Can't be blank") String email, String contactNo, Role role,
-				Set<Role> roles, Store store, String customerAddress, int active,
-				@NotEmpty(message = "*Can't be blank") String password,
-				@NotEmpty(message = "*Can't be blank") String name, String newPassword, String rePassword) {
-			super();
-			this.id = id;
-			this.email = email;
-			this.contactNo = contactNo;
-			this.role = role;
-			this.roles = roles;
-			this.store = store;
-			this.customerAddress = customerAddress;
-			this.active = active;
-			this.password = password;
-			this.name = name;
-			this.newPassword = newPassword;
-			this.rePassword = rePassword;
-		}
-
-		@Override
-		public String toString() {
-			return "Customer [id=" + id + ", email=" + email + ", contactNo=" + contactNo + ", role=" + role
-					+ ", roles=" + roles + ", store=" + store + ", customerAddress=" + customerAddress + ", active="
-					+ active + ", password=" + password + ", name=" + name + ", newPassword=" + newPassword
-					+ ", rePassword=" + rePassword + "]";
 		}
 
 	
